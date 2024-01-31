@@ -1,1 +1,1 @@
-# CS_Capstone-Gamified-Chatroom
+# CS Capstone - Gamified Chatroom
