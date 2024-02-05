@@ -5,7 +5,7 @@
 
 **Motivation -** No friends, want to make friends
 
-**Target Audience -**Our target audience will be people who are looking to make friends but not sure where to start. They don't want to put in the research when it comes to which servers/groupchats to join and just want a quick and direct way to meet people.
+**Target Audience -** Our target audience will be people who are looking to make friends but not sure where to start. They don't want to put in the research when it comes to which servers/groupchats to join and just want a quick and direct way to meet people.
 
 **Planned MVP Features -** Homepage, Login+Register, Character design, Chatting, Shop, Profile, Character assets
 
