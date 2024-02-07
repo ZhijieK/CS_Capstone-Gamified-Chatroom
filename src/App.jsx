@@ -13,7 +13,7 @@ function App() {
     {path: "login/", element: <Login />},
     {path: "register/", element: <Register />},
     {path: "chat/*", element: <Home />},
-    {path: "shop_page/", element: <ShopPage />},
+    {path: "shop_page/*", element: <ShopPage />},
   ])
 
   return (
