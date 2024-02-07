@@ -15,14 +15,14 @@ const ShopTabs = () => {
     // console.log(category)
     // console.log(items[0].ref)
     let choiceBoxes = items.map((item) => (
-        <div>
+        <div className="indItem" key={item.itemName}>
             {item.image}
         </div>
     ))
 
     
     return (
-        <div>
+        <div className="choiceBoxCont">
             {/* {category.category} */}
             {choiceBoxes}
         </div>

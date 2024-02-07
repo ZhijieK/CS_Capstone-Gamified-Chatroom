@@ -1,59 +1,74 @@
-.view{
-    background-color: antiquewhite;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
-    gap: 20px;
-    margin: auto;
-    max-height: 100vh;
-    border: 1px solid #A18585;
-    border-radius: 10px;
-    width: 65%;
-    padding: 10px;
-    height: 80vh;
+.view {
+  background-color: antiquewhite;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 20px;
+  margin: auto;
+  max-height: 100vh;
+  border: 1px solid #a18585;
+  border-radius: 10px;
+  width: 65%;
+  padding: 10px;
+  height: 80vh;
 }
 
-.charaScreen, .shopPanel{
-    border: 1px solid #A18585;
-    border-radius: 10px;
-    padding: 5px;
-    justify-content: center;
-    text-align: center;
-    height: 90%;
+.charaScreen,
+.shopPanel {
+  border: 1px solid #a18585;
+  border-radius: 10px;
+  padding: 5px;
+  justify-content: center;
+  text-align: center;
+  height: 90%;
 }
 
-.charaScreen{
-    width: 30%;
+.charaScreen {
+  width: 30%;
 }
 
-.shopPanel{
-    width: 60%;
+.shopPanel {
+  width: 60%;
 }
 
-.tabName{
-    margin: 5px;
-    display: flex;
-    justify-content: space-evenly;
+.tabName {
+  margin: 5px;
+  display: flex;
+  justify-content: space-evenly;
 }
 
-.box{
-    width: 50px;
-    height: 50px;
-    background-color: #A18585;
-    border-radius: 10px;
-    padding: 5px;
+.tabLinks {
+  a:link {
+    text-decoration: none;
+    color: #a18585;
+  }
+
+  a:link:hover{
+    background-color: #c6aeae;
+    padding: 3px;
+    border-radius: 5px;
+  }
 }
 
-.tabDisplay{
-    border: 1px solid #A18585;
-    margin: 10px;
-    border-radius: 10px;
-    padding: 5px;
-    justify-content: center;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-content: flex-start;
+.choiceBoxCont {
+  border: 1px solid #a18585;
+  margin: 10px;
+  border-radius: 10px;
+  padding: 5px;
+  padding-left: 6px;
+  justify-content: center;
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  background-color: #a18585;
+}
+
+.indItem {
+  /* background-color: #ffffff; */
+  background-color: antiquewhite;
+  border: 1px solid #a18585;
+  border-radius: 10px;
 }

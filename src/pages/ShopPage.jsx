@@ -26,10 +26,9 @@ const ShopPage = () => {
     <div className="view">
       <div className="charaScreen">character</div>
       <div className="shopPanel">
-        Shop Panel
         {/* display the tabls */}
         <div className="tabName">{renderedTabs}</div>
-        <div className="tabDisplay">
+        <div>
             {tabLinkElements}
         </div>
       </div>
