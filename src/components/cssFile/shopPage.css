@@ -57,9 +57,8 @@
   border-radius: 10px;
   padding: 5px;
   padding-left: 6px;
-  justify-content: center;
   display: flex;
-  gap: 9px;
+  gap: 7px;
   flex-wrap: wrap;
   justify-content: flex-start;
   align-content: flex-start;
