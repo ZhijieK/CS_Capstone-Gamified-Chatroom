@@ -13,7 +13,7 @@ const ShopPage = () => {
       {path: ":category", element : <ShopTabs />}
     ])
 
-    let shopTabsName = ["Hair", "Eyes", "Tops"];
+    let shopTabsName = ["Skin", "Hair", "Eyes", "Mouth", "Tops"];
     let renderedTabs = shopTabsName.map((tabName) => (
     <div key={tabName} className="tabLinks">
         <Link to={tabName.toLowerCase()}>
