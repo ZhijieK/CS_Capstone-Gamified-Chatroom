@@ -10,9 +10,11 @@ import ShopItems from "./shopItem"
 
 const ShopTabs = () => {
     const category = useParams()
+    console.log(category)
+    // catergory === null 
     const items = ShopItems.filter(item => item.itemCategory === category.category)
 
-    // console.log(category)
+    
     // console.log(items[0].ref)
     let choiceBoxes = items.map((item) => (
         <div className="indItem" key={item.itemName}>

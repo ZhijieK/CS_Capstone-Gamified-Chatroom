@@ -1,5 +1,5 @@
 .view {
-  background-color: antiquewhite;
+  background-color: #faebd7;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -39,34 +39,38 @@
 }
 
 .tabLinks {
+  
+
   a:link {
     text-decoration: none;
     color: #a18585;
+    padding: 5px 15px;
   }
 
-  a:link:hover{
+  a:link:hover {
     background-color: #c6aeae;
-    padding: 3px;
+    padding: 5px 15px;
     border-radius: 5px;
   }
 }
 
 .choiceBoxCont {
   border: 1px solid #a18585;
-  margin: 10px;
+  margin: auto;
   border-radius: 10px;
   padding: 5px;
   padding-left: 6px;
   display: flex;
-  gap: 7px;
+  gap: 5px;
   flex-wrap: wrap;
   justify-content: flex-start;
   align-content: flex-start;
   background-color: #a18585;
+  overflow: auto;
+  max-width: 530px;
 }
 
 .indItem {
-  /* background-color: #ffffff; */
   background-color: antiquewhite;
   border: 1px solid #a18585;
   border-radius: 10px;
