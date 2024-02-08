@@ -6,18 +6,30 @@ import { useParams } from "react-router"
 
 //components
 import ShopItems from "./shopItem"
-// import ChoiceBox from "./ChoiceBox"
+
 
 const ShopTabs = () => {
     const category = useParams()
-    console.log(category)
-    // catergory === null 
-    const items = ShopItems.filter(item => item.itemCategory === category.category)
+    // console.log(category)
 
-    
-    // console.log(items[0].ref)
+    const items = ShopItems.filter(item => item.itemCategory === category.category);
+
+    let handleItemSelection = (clickedItem) => {
+       
+        const allItems = document.querySelectorAll('.indItem')
+        console.log(allItems.nodeName);
+
+        allItems.forEach(item => {
+            if (item.id === clickedItem.item.itemName) {
+                item.style.backgroundColor = "#c6aeae";
+            } else {
+                item.style.backgroundColor = "#faebd7";
+            }
+        });
+    };
+
     let choiceBoxes = items.map((item) => (
-        <div className="indItem" key={item.itemName}>
+        <div className="indItem" key={item.itemName} id={item.itemName} onClick={(event) => handleItemSelection({item})}>
             {item.image}
         </div>
     ))
@@ -25,7 +37,6 @@ const ShopTabs = () => {
     
     return (
         <div className="choiceBoxCont">
-            {/* {category.category} */}
             {choiceBoxes}
         </div>
     )

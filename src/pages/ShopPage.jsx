@@ -6,7 +6,6 @@ import "../components/cssFile/shopPage.css";
 
 //components
 import ShopTabs from "../components/shopComponents/ShopTabs";
-import ChoiceBox from "../components/shopComponents/ChoiceBox";
 
 const ShopPage = () => {
   const tabLinkElements = useRoutes([
@@ -14,18 +13,18 @@ const ShopPage = () => {
   ]);
 
   let shopTabsName = ["Skin", "Hair", "Eyes", "Mouth", "Clothes"];
-  let handleTabClick = (event, tabName) => {
+
+  let handleTabClick = (tabName) => {
     const tabNameA = document.querySelectorAll(".tabNameA");
-    tabNameA.forEach(tabNameA => {
-      console.log(tabNameA.textContent)
-      console.log(tabName.tabName)
-      if (tabNameA.textContent === tabName.tabName){
-        tabNameA.style.backgroundColor = '#c6aeae';
-        tabNameA.style.borderRadius = '5px';
-        // border-radius: 5px;
-      }
-      else{
-        tabNameA.style.backgroundColor = '#faebd7';
+    // console.log(tabNameA);
+    tabNameA.forEach((tabNameA) => {
+      // console.log(tabNameA.textContent);
+      // console.log(tabName.tabName);
+      if (tabNameA.textContent === tabName.tabName) {
+        tabNameA.style.backgroundColor = "#c6aeae";
+        tabNameA.style.borderRadius = "5px";
+      } else {
+        tabNameA.style.backgroundColor = "#faebd7";
       }
     });
   };
@@ -35,9 +34,11 @@ const ShopPage = () => {
       key={tabName}
       className="tabLinks"
       id={tabName}
-      onClick={(event) => handleTabClick(event, { tabName })}
+      onClick={(event) => handleTabClick({ tabName })}
     >
-      <Link to={tabName.toLowerCase()} className="tabNameA">{tabName}</Link>
+      <Link to={tabName.toLowerCase()} className="tabNameA">
+        {tabName}
+      </Link>
     </div>
   ));
 
