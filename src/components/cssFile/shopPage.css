@@ -29,10 +29,9 @@
   position: relative;
 }
 
-.coinCont {
+.coinCont,
+.goBack {
   margin-top: 10%;
-  margin-right: 10px#f00;
-  float: right;
   background-color: #a18585;
   color: #faebd7;
   padding: 10px;
@@ -40,6 +39,25 @@
   border-radius: 20px;
   border: 3px solid #faebd7; /* Outer border */
   box-shadow: 0 0 0 3px #a18585; /* Inner border */
+}
+
+.coinCont {
+  float: right;
+  margin-right: 10px;
+}
+
+.goBack {
+  float: left;
+  margin-left: 10px;
+
+  a {
+    text-decoration: none;
+    color: #faebd7;
+  }
+}
+
+.goBack:hover {
+  background-color: #c6aeae;
 }
 
 .itemCont {
@@ -69,12 +87,13 @@
 .tabName {
   margin: 5px;
   display: flex;
-  height: 25px;
+  height: 30px;
   justify-content: space-evenly;
   overflow: auto;
 }
 
 .tabLinks {
+  margin-top: 5px;
   a:link {
     text-decoration: none;
     color: #a18585;
@@ -109,4 +128,12 @@
   background-color: antiquewhite;
   border: 1px solid #a18585;
   border-radius: 10px;
+}
+
+.addToCartButton {
+  margin: 2px 1px;
+  width: 95px;
+  background-color: #cdb4b4;
+  border-radius: 10px;
+  border: 2px solid antiquewhite;
 }

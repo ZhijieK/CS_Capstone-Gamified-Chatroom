@@ -11,10 +11,12 @@ const ShopTabs = () => {
   const category = useParams();
   // console.log(category)
 
+  //filter items for the specific catergory
   const items = ShopItems.filter(
     (item) => item.itemCategory === category.category
   );
 
+  //handle click selection
   let handleItemSelection = (clickedItem) => {
     const allItems = document.querySelectorAll(".indItem");
     allItems.forEach((item) => {
@@ -25,11 +27,12 @@ const ShopTabs = () => {
       }
     });
 
-    //selects the container
+    //selects the container that will hold the item
     const itemToAppear = document.querySelector(
       `.${clickedItem.item.itemCategory}Cont`
     );
 
+    //checks if there is an item already in the container
     // console.log(itemToAppear.hasChildNodes());
     if (itemToAppear.hasChildNodes()){
         // console.log("true, item removed")
@@ -37,23 +40,34 @@ const ShopTabs = () => {
         itemToAppear.removeChild(itemToAppear.lastChild)
     }
 
+    //if yes, remove item from container and add selected item
     let itemToAppearImg = document.createElement("img");
     itemToAppearImg.src = clickedItem.item.image.props.src;
     itemToAppear.appendChild(itemToAppearImg);
+
+    //displays the add to cart field
   };
 
   let choiceBoxes = items.map((item) => (
-    <div
-      className="indItem"
-      key={item.itemName}
-      id={item.itemName}
-      onClick={(event) => handleItemSelection({ item })}
+    <div>
+        {/* image item */}
+        <div className="indItem"
+        key={item.itemName}
+        id={item.itemName}
+        onClick={(event) => handleItemSelection({ item })}
     >
-      {item.image}
+      {item.image}            
+        </div>
+        <div className="addToCartButton">
+            Add to Cart
+        </div>
     </div>
   ));
 
-  return <div className="choiceBoxCont">{choiceBoxes}</div>;
+  return (
+    <div className="choiceBoxCont">
+        {choiceBoxes}
+    </div>);
 };
 
 export default ShopTabs;

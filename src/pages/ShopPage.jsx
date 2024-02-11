@@ -51,6 +51,7 @@ const ShopPage = () => {
   return (
     <div className="view">
       <div className="charaScreen">
+        <div className="goBack"> <Link to="../">  Go Back </Link> </div>
         <div className="coinCont"> {coinAmount} </div>
         <div className="itemCont backgroundFill"></div>
         <div className="skinCont itemCont">{ShopItems[9].image}</div>
