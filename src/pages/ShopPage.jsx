@@ -6,20 +6,25 @@ import "../components/cssFile/shopPage.css";
 
 //components
 import ShopTabs from "../components/shopComponents/ShopTabs";
+import ShopItems from "../components/shopComponents/shopItem";
 
 const ShopPage = () => {
+  // console.log();
+
+  //routes
   const tabLinkElements = useRoutes([
     { path: ":category", element: <ShopTabs /> },
   ]);
 
+  //variables
   let shopTabsName = ["Skin", "Hair", "Eyes", "Mouth", "Clothes"];
+  let coinAmount = 100;
 
+  //handle click function
   let handleTabClick = (tabName) => {
     const tabNameA = document.querySelectorAll(".tabNameA");
     // console.log(tabNameA);
     tabNameA.forEach((tabNameA) => {
-      // console.log(tabNameA.textContent);
-      // console.log(tabName.tabName);
       if (tabNameA.textContent === tabName.tabName) {
         tabNameA.style.backgroundColor = "#c6aeae";
         tabNameA.style.borderRadius = "5px";
@@ -29,6 +34,7 @@ const ShopPage = () => {
     });
   };
 
+  //render tabs
   let renderedTabs = shopTabsName.map((tabName) => (
     <div
       key={tabName}
@@ -44,7 +50,15 @@ const ShopPage = () => {
 
   return (
     <div className="view">
-      <div className="charaScreen">character</div>
+      <div className="charaScreen">
+        <div className="coinCont"> {coinAmount} </div>
+        <div className="itemCont backgroundFill"></div>
+        <div className="skinCont itemCont">{ShopItems[9].image}</div>
+        <div className="eyesCont itemCont">3</div>
+        <div className="mouthCont itemCont">4</div>
+        <div className="hairCont itemCont">1</div>
+        <div className="clothesCont itemCont">5</div>
+      </div>
       <div className="shopPanel">
         {/* display the tabls */}
         <div className="tabName">{renderedTabs}</div>

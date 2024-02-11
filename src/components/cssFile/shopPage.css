@@ -26,7 +26,41 @@
 
 .charaScreen {
   width: 30%;
+  position: relative;
 }
+
+.coinCont {
+  margin-top: 10%;
+  margin-right: 10px#f00;
+  float: right;
+  background-color: #a18585;
+  color: #faebd7;
+  padding: 10px;
+  width: 20%;
+  border-radius: 20px;
+  border: 3px solid #faebd7; /* Outer border */
+  box-shadow: 0 0 0 3px #a18585; /* Inner border */
+}
+
+.itemCont {
+  width: 95%; /* Take up 100% of the width of charaScreen */
+  aspect-ratio: 1/1;
+  position: absolute;
+  margin-top: 30%;
+}
+
+.itemCont img {
+  width: 100%;
+  /* height: 100%; */
+  aspect-ratio: 1/1;
+}
+
+.backgroundFill {
+  background-color: #c6aeae;
+  border-radius: 50px;
+  border: 3px solid #a18585;
+}
+/* , .skinCont, .eyeCont, .mouthCont,  .clotheCont*/
 
 .shopPanel {
   width: 60%;
@@ -35,12 +69,12 @@
 .tabName {
   margin: 5px;
   display: flex;
+  height: 25px;
   justify-content: space-evenly;
+  overflow: auto;
 }
 
 .tabLinks {
-  
-
   a:link {
     text-decoration: none;
     color: #a18585;
@@ -68,6 +102,7 @@
   background-color: #a18585;
   overflow: auto;
   max-width: 530px;
+  overflow: auto;
 }
 
 .indItem {

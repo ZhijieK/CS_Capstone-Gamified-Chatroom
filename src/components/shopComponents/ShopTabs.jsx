@@ -1,45 +1,59 @@
 //style sheet
-import "../cssFile/shopPage.css"
+import "../cssFile/shopPage.css";
 
 //packages
-import { useParams } from "react-router"
+import { useParams } from "react-router";
 
 //components
-import ShopItems from "./shopItem"
-
+import ShopItems from "./shopItem";
 
 const ShopTabs = () => {
-    const category = useParams()
-    // console.log(category)
+  const category = useParams();
+  // console.log(category)
 
-    const items = ShopItems.filter(item => item.itemCategory === category.category);
+  const items = ShopItems.filter(
+    (item) => item.itemCategory === category.category
+  );
 
-    let handleItemSelection = (clickedItem) => {
-       
-        const allItems = document.querySelectorAll('.indItem')
-        console.log(allItems.nodeName);
+  let handleItemSelection = (clickedItem) => {
+    const allItems = document.querySelectorAll(".indItem");
+    allItems.forEach((item) => {
+      if (item.id === clickedItem.item.itemName) {
+        item.style.backgroundColor = "#c6aeae";
+      } else {
+        item.style.backgroundColor = "#faebd7";
+      }
+    });
 
-        allItems.forEach(item => {
-            if (item.id === clickedItem.item.itemName) {
-                item.style.backgroundColor = "#c6aeae";
-            } else {
-                item.style.backgroundColor = "#faebd7";
-            }
-        });
-    };
+    //selects the container
+    const itemToAppear = document.querySelector(
+      `.${clickedItem.item.itemCategory}Cont`
+    );
 
-    let choiceBoxes = items.map((item) => (
-        <div className="indItem" key={item.itemName} id={item.itemName} onClick={(event) => handleItemSelection({item})}>
-            {item.image}
-        </div>
-    ))
+    // console.log(itemToAppear.hasChildNodes());
+    if (itemToAppear.hasChildNodes()){
+        // console.log("true, item removed")
+        console.log(itemToAppear.lastChild)
+        itemToAppear.removeChild(itemToAppear.lastChild)
+    }
 
-    
-    return (
-        <div className="choiceBoxCont">
-            {choiceBoxes}
-        </div>
-    )
-}
+    let itemToAppearImg = document.createElement("img");
+    itemToAppearImg.src = clickedItem.item.image.props.src;
+    itemToAppear.appendChild(itemToAppearImg);
+  };
 
-export default ShopTabs
+  let choiceBoxes = items.map((item) => (
+    <div
+      className="indItem"
+      key={item.itemName}
+      id={item.itemName}
+      onClick={(event) => handleItemSelection({ item })}
+    >
+      {item.image}
+    </div>
+  ));
+
+  return <div className="choiceBoxCont">{choiceBoxes}</div>;
+};
+
+export default ShopTabs;
