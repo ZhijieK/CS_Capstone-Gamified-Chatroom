@@ -125,7 +125,7 @@
 }
 
 .indItem {
-  background-color: antiquewhite;
+  background-color: #faebd7;
   border: 1px solid #a18585;
   border-radius: 10px;
 }
@@ -136,4 +136,9 @@
   background-color: #cdb4b4;
   border-radius: 10px;
   border: 2px solid antiquewhite;
+}
+
+.addToCartButton:hover{
+  background-color: #a18585;
+  color: #faebd7;
 }

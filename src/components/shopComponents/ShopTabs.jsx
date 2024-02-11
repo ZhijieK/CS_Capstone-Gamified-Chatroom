@@ -8,7 +8,9 @@ import { useParams } from "react-router";
 import ShopItems from "./shopItem";
 
 const ShopTabs = () => {
+  //variables
   const category = useParams();
+  const itemCost = 50;
   // console.log(category)
 
   //filter items for the specific catergory
@@ -34,10 +36,10 @@ const ShopTabs = () => {
 
     //checks if there is an item already in the container
     // console.log(itemToAppear.hasChildNodes());
-    if (itemToAppear.hasChildNodes()){
-        // console.log("true, item removed")
-        console.log(itemToAppear.lastChild)
-        itemToAppear.removeChild(itemToAppear.lastChild)
+    if (itemToAppear.hasChildNodes()) {
+      // console.log("true, item removed")
+      console.log(itemToAppear.lastChild);
+      itemToAppear.removeChild(itemToAppear.lastChild);
     }
 
     //if yes, remove item from container and add selected item
@@ -50,24 +52,21 @@ const ShopTabs = () => {
 
   let choiceBoxes = items.map((item) => (
     <div>
-        {/* image item */}
-        <div className="indItem"
+      {/* image item */}
+      <div style={{color: "#faebd7"}}>{itemCost} Coins</div>
+      <div
+        className="indItem"
         key={item.itemName}
         id={item.itemName}
         onClick={(event) => handleItemSelection({ item })}
-    >
-      {item.image}            
-        </div>
-        <div className="addToCartButton">
-            Add to Cart
-        </div>
+      >
+        {item.image}
+      </div>
+      <div className="addToCartButton">Add to Cart</div>
     </div>
   ));
 
-  return (
-    <div className="choiceBoxCont">
-        {choiceBoxes}
-    </div>);
+  return <div className="choiceBoxCont">{choiceBoxes}</div>;
 };
 
 export default ShopTabs;
