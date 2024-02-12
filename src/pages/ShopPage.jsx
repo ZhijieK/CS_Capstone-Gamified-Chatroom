@@ -59,6 +59,8 @@ const ShopPage = () => {
         <div className="mouthCont itemCont">4</div>
         <div className="hairCont itemCont">1</div>
         <div className="clothesCont itemCont">5</div>
+
+        <div className="viewCartButton"> Cart Image </div>
       </div>
       <div className="shopPanel">
         {/* display the tabls */}
