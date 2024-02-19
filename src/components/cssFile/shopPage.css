@@ -1,0 +1,154 @@
+.view {
+  background-color: #faebd7;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 20px;
+  margin: auto;
+  max-height: 100vh;
+  border: 1px solid #a18585;
+  border-radius: 10px;
+  width: 65%;
+  padding: 10px;
+  height: 80vh;
+}
+
+.charaScreen,
+.shopPanel {
+  border: 1px solid #a18585;
+  border-radius: 10px;
+  padding: 5px;
+  justify-content: center;
+  text-align: center;
+  height: 90%;
+}
+
+.charaScreen {
+  width: 30%;
+  position: relative;
+}
+
+.coinCont,
+.goBack,
+.viewCartButton {
+  margin-top: 10%;
+  background-color: #a18585;
+  color: #faebd7;
+  padding: 10px;
+  border-radius: 20px;
+  border: 3px solid #faebd7; /* Outer border */
+  box-shadow: 0 0 0 3px #a18585; /* Inner border */
+}
+
+.coinCont {
+  float: right;
+  width: 20%;
+  margin-right: 10px;
+}
+
+.goBack {
+  float: left;
+  width: 20%;
+  margin-left: 10px;
+
+  a {
+    text-decoration: none;
+    color: #faebd7;
+  }
+}
+
+.goBack:hover,
+.viewCartButton:hover {
+  background-color: #c6aeae;
+}
+
+.viewCartButton {
+  position: absolute;
+  margin-top: 460px;
+  margin-left: 190px;
+  /* background-color: white; */
+}
+
+.itemCont {
+  width: 95%; /* Take up 100% of the width of charaScreen */
+  aspect-ratio: 1/1;
+  position: absolute;
+  margin-top: 30%;
+}
+
+.itemCont img {
+  width: 100%;
+  /* height: 100%; */
+  aspect-ratio: 1/1;
+}
+
+.backgroundFill {
+  background-color: #c6aeae;
+  border-radius: 50px;
+  border: 3px solid #a18585;
+}
+/* , .skinCont, .eyeCont, .mouthCont,  .clotheCont*/
+
+.shopPanel {
+  width: 60%;
+}
+
+.tabName {
+  margin: 5px;
+  display: flex;
+  height: 30px;
+  justify-content: space-evenly;
+  overflow: auto;
+}
+
+.tabLinks {
+  margin-top: 5px;
+  a:link {
+    text-decoration: none;
+    color: #a18585;
+    padding: 5px 15px;
+  }
+
+  a:link:hover {
+    background-color: #c6aeae;
+    padding: 5px 15px;
+    border-radius: 5px;
+  }
+}
+
+.choiceBoxCont {
+  border: 1px solid #a18585;
+  margin: auto;
+  border-radius: 10px;
+  padding: 5px;
+  padding-left: 6px;
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  background-color: #a18585;
+  overflow: auto;
+  max-width: 530px;
+  overflow: auto;
+}
+
+.indItem {
+  background-color: #faebd7;
+  border: 1px solid #a18585;
+  border-radius: 10px;
+}
+
+.addToCartButton {
+  margin: 2px 1px;
+  width: 95px;
+  background-color: #cdb4b4;
+  border-radius: 10px;
+  border: 2px solid antiquewhite;
+}
+
+.addToCartButton:hover {
+  background-color: #a18585;
+  color: #faebd7;
+}
