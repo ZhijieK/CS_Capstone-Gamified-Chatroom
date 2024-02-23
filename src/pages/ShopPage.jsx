@@ -36,6 +36,14 @@ const ShopPage = () => {
     });
   };
 
+  let clickViewCart = () => {
+    //grabs the cart element by class
+    //checks the displlay, make it visible
+    let cartTab = document.querySelector('.cartTab');
+    console.log(cartTab)
+    cartTab.style.display == "none" ? cartTab.style.display = "Block" : cartTab.style.display = "none"
+  };
+
   //render tabs
   let renderedTabs = shopTabsName.map((tabName) => (
     <div
@@ -62,7 +70,8 @@ const ShopPage = () => {
         <div className="hairCont itemCont"></div>
         <div className="clothesCont itemCont"></div>
 
-        <div className="viewCartButton"> Cart Image </div>
+        <div className="viewCartButton" onClick={clickViewCart}> Cart Image </div>
+        <div className="cartTab"> Cart </div>
       </div>
       <div className="shopPanel">
         {/* display the tabls */}

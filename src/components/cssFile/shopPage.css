@@ -163,3 +163,19 @@
   color: #faebd7;
   cursor: pointer;
 }
+
+.cartTab{
+  width: 75%;
+  min-height: 30%;
+  background-color: #faebd7;
+  border: solid 3px #a18585;
+  position: absolute;
+  margin-top: 105%;
+  margin-left: -20%;
+  border-radius: 25px;
+  border-bottom-right-radius: 0px;
+
+  text-align: center;
+  padding: 10px 3px;
+  display: none;
+}

@@ -50,6 +50,10 @@ const ShopTabs = () => {
     //displays the add to cart field
   };
 
+  let clickAddToCart = () => {
+    
+  };
+
   let choiceBoxes = items.map((item) => (
     <div>
       {/* image item */}
