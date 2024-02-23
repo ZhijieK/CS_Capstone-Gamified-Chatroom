@@ -61,6 +61,7 @@
 .goBack:hover,
 .viewCartButton:hover {
   background-color: #c6aeae;
+  cursor: pointer;
 }
 
 .viewCartButton {
@@ -111,10 +112,14 @@
   }
 
   a:link:hover {
-    background-color: #c6aeae;
     padding: 5px 15px;
     border-radius: 5px;
   }
+}
+
+.tabNameA:hover {
+  color: #faebd7;
+  background-color: #cdb4b4;
 }
 
 .choiceBoxCont {
@@ -140,6 +145,11 @@
   border-radius: 10px;
 }
 
+.indItem:hover {
+  cursor: pointer;
+  background-color: rgb(201, 168, 161);
+}
+
 .addToCartButton {
   margin: 2px 1px;
   width: 95px;
@@ -151,4 +161,5 @@
 .addToCartButton:hover {
   background-color: #a18585;
   color: #faebd7;
+  cursor: pointer;
 }
