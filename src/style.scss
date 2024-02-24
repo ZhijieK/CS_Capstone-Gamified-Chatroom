@@ -83,11 +83,11 @@ body {
             .navbar{
                 display: flex;
                 align-items: center;
-                background-color: burlywood;
+                background-color: #624f4f;
                 height: 50px;
                 padding: 10px;
                 justify-content: space-between;
-                color: #624f4f;
+                color: white;
                 font-family: 'Courier New', Courier, monospace;
 
                 .logo{
@@ -175,6 +175,128 @@ body {
 
         .chat{
             flex: 2;
+
+            .chatInfo{
+                height: 50px;
+                background-color: #AD8B73;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 10px;
+                color: white;
+            }
+
+            .chatIcons{
+                display: flex;
+                gap: 10px;
+
+                img {
+                    height: 24px;
+                    cursor: pointer;
+                }
+                
+            }
+
+            .messages{
+                background-color: #FFFBE9;
+                padding: 10px;
+                height: calc(100% - 160px);
+                overflow: scroll;
+                overflow-x: hidden;
+
+                .message{
+                    display: flex;
+                    gap: 20px;
+                    margin-bottom: 20px;
+
+                    .messageInfo{
+                        display: flex;
+                        flex-direction: column;
+                        color: gray;
+                        font-weight: 300;
+
+                        img{
+                            width: 40px;
+                            height: 40px;
+                            border-radius: 50%;
+                            object-fit: cover;
+                        }
+                    }
+                    .messageContent{
+                        max-width: 80%;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+
+                        p{
+                            background-color: white;
+                            padding: 10px 20px;
+                            border-radius: 0px 10px 10px 10px;
+                            max-width: max-content;
+                        }
+                        img{
+                            width: 50%;
+                        }
+                    }
+
+                    &.owner{
+                        flex-direction: row-reverse;
+
+                        .messageContent{
+                            align-items: flex-end;
+                            p{
+                                background-color: #AD8B73;
+                                color: white;
+                                border-radius: 10px 0px 10px 10px;
+                            }
+
+                        }
+                    }
+                }
+            }
+
+            .input{
+                height: 50px;
+                background-color: #E3CAA5;
+                padding: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                img{
+                    height: 20px;
+                }
+
+                input{
+                    width: 100%;
+                    border: none;
+                    outline: none;
+                    font-size: 20px;
+                    background-color: #E3CAA5;
+                }
+
+                .send{
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    padding-left: 10px;
+
+                    img{
+                        height: 25px;
+                        padding-top: 5px;
+                        cursor: pointer;
+                    }
+
+                    button{
+                        border: none;
+                        pad: 10px 15px;
+                        color: white;
+                        background-color: #AD8B73;
+                        cursor: pointer;
+                        padding: 5px;
+                    }
+                }
+            }
         }
     }
 }

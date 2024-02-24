@@ -55,10 +55,6 @@ const ShopPage = () => {
         <div className="coinCont"> {coinAmount} </div>
         <div className="itemCont backgroundFill"></div>
         <div className="skinCont itemCont">{ShopItems[9].image}</div>
-        <div className="eyesCont itemCont">3</div>
-        <div className="mouthCont itemCont">4</div>
-        <div className="hairCont itemCont">1</div>
-        <div className="clothesCont itemCont">5</div>
 
         <div className="viewCartButton"> Cart Image </div>
       </div>
