@@ -1,6 +1,6 @@
 import React from 'react'
-import Add from './images/Add.png'
-import Options from './images/Options.png'
+import Add from '../images/generalIcons/Add.png'
+import Options from '../images/generalIcons/Options.png'
 import Messages from './Messages'
 import Input from "./Input"
 

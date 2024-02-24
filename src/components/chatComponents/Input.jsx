@@ -1,5 +1,5 @@
 import React from 'react'
-import File from './images/File.png'
+import File from '../images/generalIcons/File.png'
 
 const Input = () => {
   return (

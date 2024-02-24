@@ -17,17 +17,7 @@ function App() {
   ])
 
   return (
-    <div>
-      <Link to="/login"> Login </Link> 
-      <br></br>
-      <Link to="/register"> Register </Link>
-      <br></br>
-      <Link to="/chat"> Chat </Link>
-      <br></br>
-      <Link to="/shop_page"> Shop Page </Link>
-
-      {linkElements}
-    </div>
+    <Home/>
 
   )
 }
