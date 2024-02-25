@@ -144,6 +144,7 @@ body {
                         font-size: 10px;
                         padding: 5px;
                         border: none;
+                        border-radius: 5px;
                         cursor: pointer;
                         @include mobile{
                             position: absolute;
@@ -330,6 +331,7 @@ body {
                         color: white;
                         background-color: $coffee;
                         cursor: pointer;
+                        border-radius: 5px;
                         padding: 5px;
                         font-family: 'pixelFont';
                     }
