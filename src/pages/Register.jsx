@@ -27,7 +27,7 @@ const Register = () => {
     })
     navigate('/');
     //userChats database
-    await setDoc(doc(db, "userChats", res.user.uid));
+    await setDoc(doc(db, "userChats", res.user.uid), {});
 
     
     } catch(err){
