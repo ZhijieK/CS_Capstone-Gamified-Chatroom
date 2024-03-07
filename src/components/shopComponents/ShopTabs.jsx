@@ -57,28 +57,6 @@ const ShopTabs = () => {
   useEffect(() => {
     addNewItemsToDatabase();
   }, []);
-  // useEffect(()=> {
-  //   const shopItems = db.collection('shopItems');
-
-  //   shopItems.get().then((snapshot)=>{
-  //     if (snapshot.empty){
-  //       const batch = db.batch();
-
-  //       ShopItems.forEach((item) => {
-  //         const doc = shopItems.doc();
-  //         batch.set(doc, item);
-  //       });
-
-  //       batch.commit().then(() => {
-  //         console.log('Initial shop items added successfully')
-  //       }).catch((error) => {
-  //         console.log('Error adding initial shop items')
-  //       });
-  //     }
-  //   }).catch((error) => {
-  //     console.log('Error checking shopItems collection', error)
-  //   });
-  // }, []);
 
   //variables
   const category = useParams();
