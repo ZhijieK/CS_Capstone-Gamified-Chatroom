@@ -9,53 +9,56 @@ import { useEffect, useState } from "react";
 import ShopItems from "./shopItem";
 
 //firebase related packages
-import { db, auth } from "../../firebase";
+import { db, auth, storage } from "../../firebase";
 import { doc, collection, getDoc, query, setDoc } from "firebase/firestore";
+import { getStorage, ref } from "firebase/storage";
 
 
 const ShopTabs = () => {
-
-  const itemConverter = {
-    toFirestore: (item) => {
-      return {
-        itemName: item.itemName,
-        itemCategory: item.itemCategory,
-        image: item.image
-      };
-    }
-  };
   //creates a shop database
-  const addNewItemsToDatabase = async () => {
+  const getItemsFromDatabase = async (storageRef) => {
+    // console.log(storageRef)
+    //goes and check if new items needs to be added into the database
     try {
       await Promise.all(
         ShopItems.map(async (item) => {
-          console.log(item.itemName, item.itemCategory)
+          // console.log(item.itemName, item.itemCategory)
           const shopItemRef = doc(db, "shopItems", item.itemName);
+          const imageRef = item.itemCategory + "/" + item.itemName + ".png"
+          console.log(imageRef)
           const docSnapshot = await getDoc(shopItemRef);
-          if (docSnapshot.exists()) {
-            console.log("Item already exists:", docSnapshot.data());
-          } else {
+          if (!docSnapshot.exists()) {
             console.log("Adding new item:");
-            // const newItemRef = doc(db, item).withConverter(itemConverter);
-            // console.log(newItemRef)
-            // const data = itemConverter.toFirestore(item)
             await setDoc(doc(db, "shopItems", item.itemName), 
               {
                 itemName: item.itemName,
                 itemCategory: item.itemCategory,
+                imageRef: imageRef,
               }
             );
-            // await setDoc(doc(db, "chats", combinedId), {messages:[]});
           }
         })
       );
     } catch (error) {
       console.log("Fetching data base failed", error);
     }
+
+    //get all items from the database
+
+
+
   };
 
   useEffect(() => {
-    addNewItemsToDatabase();
+    // gets the storage ref
+    try{
+      const storageRef = ref(getStorage());
+      // console.log(storageRef)
+      getItemsFromDatabase(storageRef);
+    }
+    catch(error){
+      console.log("Cannot get storage link", error)
+    }
   }, []);
 
   //variables
