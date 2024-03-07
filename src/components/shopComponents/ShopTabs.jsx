@@ -3,11 +3,83 @@ import "../cssFile/shopPage.css";
 
 //packages
 import { useParams } from "react-router";
+import { useEffect, useState } from "react";
 
 //components
 import ShopItems from "./shopItem";
 
+//firebase related packages
+import { db, auth } from "../../firebase";
+import { doc, collection, getDoc, query, setDoc } from "firebase/firestore";
+
+
 const ShopTabs = () => {
+
+  const itemConverter = {
+    toFirestore: (item) => {
+      return {
+        itemName: item.itemName,
+        itemCategory: item.itemCategory,
+        image: item.image
+      };
+    }
+  };
+  //creates a shop database
+  const addNewItemsToDatabase = async () => {
+    try {
+      await Promise.all(
+        ShopItems.map(async (item) => {
+          console.log(item.itemName, item.itemCategory)
+          const shopItemRef = doc(db, "shopItems", item.itemName);
+          const docSnapshot = await getDoc(shopItemRef);
+          if (docSnapshot.exists()) {
+            console.log("Item already exists:", docSnapshot.data());
+          } else {
+            console.log("Adding new item:");
+            // const newItemRef = doc(db, item).withConverter(itemConverter);
+            // console.log(newItemRef)
+            // const data = itemConverter.toFirestore(item)
+            await setDoc(doc(db, "shopItems", item.itemName), 
+              {
+                itemName: item.itemName,
+                itemCategory: item.itemCategory,
+              }
+            );
+            // await setDoc(doc(db, "chats", combinedId), {messages:[]});
+          }
+        })
+      );
+    } catch (error) {
+      console.log("Fetching data base failed", error);
+    }
+  };
+
+  useEffect(() => {
+    addNewItemsToDatabase();
+  }, []);
+  // useEffect(()=> {
+  //   const shopItems = db.collection('shopItems');
+
+  //   shopItems.get().then((snapshot)=>{
+  //     if (snapshot.empty){
+  //       const batch = db.batch();
+
+  //       ShopItems.forEach((item) => {
+  //         const doc = shopItems.doc();
+  //         batch.set(doc, item);
+  //       });
+
+  //       batch.commit().then(() => {
+  //         console.log('Initial shop items added successfully')
+  //       }).catch((error) => {
+  //         console.log('Error adding initial shop items')
+  //       });
+  //     }
+  //   }).catch((error) => {
+  //     console.log('Error checking shopItems collection', error)
+  //   });
+  // }, []);
+
   //variables
   const category = useParams();
   const itemCost = 50;
@@ -50,14 +122,12 @@ const ShopTabs = () => {
     //displays the add to cart field
   };
 
-  let clickAddToCart = () => {
-    
-  };
+  let clickAddToCart = () => {};
 
   let choiceBoxes = items.map((item) => (
     <div>
       {/* image item */}
-      <div style={{color: "#faebd7"}}>{itemCost} Coins</div>
+      <div style={{ color: "#faebd7" }}>{itemCost} Coins</div>
       <div
         className="indItem"
         key={item.itemName}
