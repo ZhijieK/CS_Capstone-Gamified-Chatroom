@@ -4,7 +4,7 @@ import Chat from '../components/chatComponents/Chat'
 
 const Home = () => {
   return (
-    <div className='homepage'>
+    <div className='chatroom'>
       <div className="container">
         <Sidebar/>
         <Chat/>

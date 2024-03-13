@@ -1,5 +1,7 @@
-import React from 'react';
-import Avatar from '../components/Avatar';
+//import React from 'react';
+import React, { useContext } from 'react'
+import Avatar from '../components/profileComponents/Avatar.jsx';
+import { Link } from 'react-router-dom';
 
 //Clothes
 import red_shirt from '../components/images/characterAssets/clothes/red_shirt.png'
@@ -36,7 +38,7 @@ const Profile = () => {
     return(
         <div className="profile">
             <Avatar />
-            
+        
             <div className="container2"> {/*right side*/}
                 <h1>Inventory</h1>
                 <table>
@@ -74,8 +76,8 @@ const Profile = () => {
                         </tr>
                     </tbody>
                 </table>
-                <p style={{padding:"10px"}}>Buy more in the shop!</p>
-                <button onClick="">Click here!</button>
+                <h1 style={{padding:"10px"}}>Buy more in the shop!</h1>
+                <Link to="../shop_page" style={{color: 'black'}}> <div className="button"> Shop </div> </Link>
             </div>
         </div>
 
