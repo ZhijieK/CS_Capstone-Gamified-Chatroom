@@ -27,86 +27,72 @@ const ShopItems = [
     {
         itemName: "red_shirt", 
         itemCategory: "clothes", 
-        cost: 100,
         image: <img src={red_shirt}/>,
     },
     {
         itemName: "suit",
         itemCategory: "clothes",
-        cost: 100,
         image: <img src={suit}/>, 
     },
     {
-        itemName: "short__black_hair",
+        itemName: "black_short_hair",
         itemCategory: "hair",
-        cost: 100,
         image: <img src={short__black_hair}/>
     },
     {
         itemName: "blonde_bob",
         itemCategory: "hair",
-        cost: 100,
         image: <img src={blonde_bob}/>
     },
     {
         itemName: "blue_eyes",
         itemCategory: "eyes",
-        cost: 100,
         image: <img src={blue_eyes}/>,
     },
     {
         itemName: "brown_eyes",
         itemCategory: "eyes",
-        cost: 100,
         image: <img src={brown_eyes}/>,
     },
     {
         itemName: "green_eyes",
         itemCategory: "eyes",
-        cost: 100,
         image: <img src={green_eyes}/>,
     },
     {
         itemName: "smile_with_teeth",
         itemCategory: "mouth",
-        cost: 100,
         image: <img src={smile_with_teeth}/>,
     },
     {
         itemName: "smile",
         itemCategory: "mouth",
-        cost: 100,
         image: <img src={smile}/>,
     },
     {
         itemName: "skin1",
         itemCategory: "skin",
-        cost: 100,
         image: <img src={skin1}/>,
     },
     {
         itemName: "skin2",
         itemCategory: "skin",
         inInventory : false, 
-        cost: 100,
         image: <img src={skin2}/>,
     },
     {
         itemName: "skin3",
         itemCategory: "skin",
-        cost: 100,
         image: <img src={skin3}/>,
     },
     {
         itemName: "skin4",
         itemCategory: "skin",
-        cost: 100,
         image: <img src={skin4}/>,
     },
     {
         itemName: "skin5",
         itemCategory: "skin",
-        cost: 100,
         image: <img src={skin5}/>,
     }
 

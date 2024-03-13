@@ -10,68 +10,122 @@ import ShopItems from "./shopItem";
 
 //firebase related packages
 import { db, auth, storage } from "../../firebase";
-import { doc, collection, getDoc, query, setDoc } from "firebase/firestore";
-import { getStorage, ref } from "firebase/storage";
-
+import {
+  doc,
+  collection,
+  getDoc,
+  query,
+  setDoc,
+  getDocs,
+  where,
+} from "firebase/firestore";
+import { getDownloadURL, getStorage, list, ref } from "firebase/storage";
 
 const ShopTabs = () => {
+  //variables
+
+  const category = useParams().category;
+  // console.log(category);
+  const [containsItems, setContainsItems] = useState(false);
+  const [choiceBoxes, setChoiceBoxes] = useState([]);
+
   //creates a shop database
-  const getItemsFromDatabase = async (storageRef) => {
+  const addItemsToDatabase = async (storageRef) => {
     // console.log(storageRef)
     //goes and check if new items needs to be added into the database
     try {
       await Promise.all(
         ShopItems.map(async (item) => {
           // console.log(item.itemName, item.itemCategory)
-          const shopItemRef = doc(db, "shopItems", item.itemName);
-          const imageRef = item.itemCategory + "/" + item.itemName + ".png"
-          console.log(imageRef)
-          const docSnapshot = await getDoc(shopItemRef);
-          if (!docSnapshot.exists()) {
+          //attempts to grab the doc from collection
+          const shopItemRef = await getDoc(doc(db, "shopItems", item.itemName));
+          //creates the image link
+          const imageRef = item.itemCategory + "/" + item.itemName + ".png";
+          //random number generator from 50-200
+          const cost = (Math.floor(Math.random() * 21) + 10) * 5;
+          // console.log(imageRef)
+          if (!shopItemRef.exists()) {
             console.log("Adding new item:");
-            await setDoc(doc(db, "shopItems", item.itemName), 
-              {
-                itemName: item.itemName,
-                itemCategory: item.itemCategory,
-                imageRef: imageRef,
-              }
-            );
+            await setDoc(doc(db, "shopItems", item.itemName), {
+              itemName: item.itemName,
+              itemCategory: item.itemCategory,
+              cost: cost,
+              imageRef: imageRef,
+            });
           }
         })
       );
     } catch (error) {
       console.log("Fetching data base failed", error);
     }
+  };
 
-    //get all items from the database
+  const getItemsFromDatabase = async () => {
+    //get all items from the database that matches the category
+    let listOfItems = [];
+    let promises = [];
+    // var box = [];
+    const itemSnapshot = await getDocs(
+      query(collection(db, "shopItems"), where("itemCategory", "==", category))
+    );
 
+    //query the snapshot to get the item attributes and url link for the array
+    itemSnapshot.forEach((doc) => {
+      let promise = getDownloadURL(ref(storage, doc.data().imageRef))
+        .then((url) => {
+          listOfItems.push({
+            cost: doc.data().cost,
+            imageRef: url,
+            itemCategory: doc.data().itemCategory,
+            itemName: doc.data().itemName,
+          });
+        })
+        .catch((error) => {
+          console.log("Error fetching image url", error);
+        });
+      promises.push(promise);
+    });
 
-
+    Promise.all(promises)
+      .then(() => {
+        // listOfItems.map((item) => {
+        //   console.log(item.cost, item.itemName, item.imageRef)
+        // })
+        let box = listOfItems.map((item) => {
+          return ( // Add this return statement
+            <div>
+              <div style={{ color: "#faebd7" }}>{item.cost} Coins</div>
+              <div
+                className="indItem"
+                key={item.itemName}
+                id={item.itemName}
+                onClick={(event) => handleItemSelection({ item })}
+              >
+                <img src={item.imageRef} alt={item.itemName}/>
+              </div>
+              <div className="addToCartButton">Add to Cart</div>
+            </div>
+          );
+        });
+        setChoiceBoxes(box);
+      })
+      .catch((error) => {
+        console.log("Error fecthing all urls", error);
+      });
   };
 
   useEffect(() => {
     // gets the storage ref
-    try{
+    try {
       const storageRef = ref(getStorage());
-      // console.log(storageRef)
-      getItemsFromDatabase(storageRef);
+      addItemsToDatabase(storageRef);
+    } catch (error) {
+      console.log("Cannot get storage link", error);
     }
-    catch(error){
-      console.log("Cannot get storage link", error)
-    }
-  }, []);
+    getItemsFromDatabase();
+  }, [category]);
 
-  //variables
-  const category = useParams();
-  const itemCost = 50;
-  // console.log(category)
-
-  //filter items for the specific catergory
-  const items = ShopItems.filter(
-    (item) => item.itemCategory === category.category
-  );
-
-  //handle click selection
+  // //handle click selection
   let handleItemSelection = (clickedItem) => {
     const allItems = document.querySelectorAll(".indItem");
     allItems.forEach((item) => {
@@ -96,32 +150,25 @@ const ShopTabs = () => {
     }
 
     //if yes, remove item from container and add selected item
-    let itemToAppearImg = document.createElement("img");
-    itemToAppearImg.src = clickedItem.item.image.props.src;
-    itemToAppear.appendChild(itemToAppearImg);
+    console.log("hello")
+    // let itemToAppearImg = document.createElement("img");
+    // itemToAppearImg.src = clickedItem.item.image.props.src;
+    // itemToAppear.appendChild(itemToAppearImg);
 
     //displays the add to cart field
   };
 
   let clickAddToCart = () => {};
 
-  let choiceBoxes = items.map((item) => (
+  return (
     <div>
-      {/* image item */}
-      <div style={{ color: "#faebd7" }}>{itemCost} Coins</div>
-      <div
-        className="indItem"
-        key={item.itemName}
-        id={item.itemName}
-        onClick={(event) => handleItemSelection({ item })}
-      >
-        {item.image}
-      </div>
-      <div className="addToCartButton">Add to Cart</div>
+      {choiceBoxes ? (
+        <div> {choiceBoxes} </div>
+      ) : (
+        <div> No Items In This Category</div>
+      )}
     </div>
-  ));
-
-  return <div className="choiceBoxCont">{choiceBoxes}</div>;
+  );
 };
 
 export default ShopTabs;
