@@ -1,3 +1,11 @@
+.shopBackground{
+  background-color: #faebd7;
+  height:100vh;
+  display:flex;
+  align-items: center;
+
+}
+
 .view {
   background-color: #faebd7;
   display: flex;

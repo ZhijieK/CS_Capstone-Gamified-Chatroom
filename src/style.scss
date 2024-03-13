@@ -9,10 +9,29 @@
     src: url(./components/fonts/PixelifySans-VariableFont_wght.ttf); /* Path to the font file */
 }
 
+@keyframes fadeIn {
+    from {
+        opacity:0%;
+    }
+
+    to {
+        opacity:100%;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
 
 $dark_brown: #624f4f;
 $brown: #A18585;
-$beige: #F5EBE0;
+$beige: #faebd7;
 $coffee: #AD8B73;
 $light_coffee: #E3CAA5;
 $cream: #FFFBE9;
@@ -21,66 +40,171 @@ body {
     margin: 0;
 }
 
-.form_container{
+.homepage{ /* Home page :O */
     background-color: $beige;
+    font-family: 'pixelFont';
     height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
 
-    .form_wrapper{
-        background-color: white;
-        padding: 45px 40px;
-        border-radius: 10%;
+    p{
+        padding:0;
+        margin:0;
+    }
+
+    .homebar{ /* Home page navbar */
+        height:15%;
+        width:100%;
         display: flex;
-        flex-direction: column;
-        gap: 10px;
+        justify-content: space-between;
         align-items: center;
-        
-        .login_avatar{
-            width: 50px;
-            padding-bottom: 10px;
-        }
 
-        .logo{
-            font-family: 'Courier New', Courier, monospace;
-            color: $brown;
-            font-weight: bold;
-            font-size: 24px;
-        }
-    
-        .title{
-            font-size: 12px;
-        }
-
-        form{
+        .left{ /* Tiny logo and title */
             display: flex;
-            flex-direction: column;
-            gap: 15px;
+            align-items: center;
+            gap:30px;
 
-            input {
-                padding: 5px;
-                border: none;
-                border-bottom: 1px solid black;
+            img{
+                height: 104px;
+                width: 104px;
+                border-radius: 50%;
+                object-fit: cover;
             }
 
-            button {
-                border-radius: 10px;
-                border: 1px solid black;
-                padding: 5px;
-                cursor: pointer;
+            h1:hover{
+                animation: spin 1s forwards;
             }
         }
 
-        p {
-            margin-top: 10px;
-            font-size: 12px;
+        .right{ /* Login and Sign up buttons */
+            width: 400px;
+            display:flex;
+            justify-content: space-evenly;
+
+            a {
+                text-decoration: none;
+                font-size: 160%;
+                color: black;
+            }
+
+            .loginbuttons{
+                background-color: #a18585;
+                height:50px;
+                width:120px;
+                border-radius:20px;
+                display:flex;
+                justify-content: center;
+                align-items: center;
+
+                transition: transform 0.3s, background-color 0.3s;
+            }
+
+            .loginbuttons:hover{
+                background-color: #c6aeae;
+                cursor: pointer;
+                transform: translateY(-5px);
+            }
         }
     }
 
+    .homecontent{ /* Home page main content */
+        height:85%;
+        width:100%;
+        display:flex;
+        justify-content: space-evenly;
+        align-items: center;
+        
+        .home_img{
+            margin-right:280px;
+        }
+
+        .home_msg{
+            opacity: 0%;
+            transition: transform 0.3s;
+            animation: fadeIn 1s 0.2s forwards;
+        }
+
+        .home_msg:hover{
+            transform: translateY(-5px);
+        }
+    
+        .login_box{ /* Login/Register box */
+            background-color: #a18585;
+            height:50%;
+            width:16%;
+            padding: 40px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap:30px;
+            opacity:0%;
+            animation: fadeIn 1s 0.3s forwards;
+            
+            .title{
+                font-size: 40px;
+            }
+
+            .title2{
+                font-size: 20px;
+            }
+
+            .login_pic{
+                width: 50px;
+                padding-bottom: 10px;
+            }
+
+            form{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+
+                input {
+                    background-color: #a18585;
+                    padding: 5px;
+                    border: none;
+                    border-bottom: 1px solid white;
+                    width:200px;
+                }
+                
+                input::placeholder{
+                    color:white;
+                }
+
+                button {
+                    background-color: #faebd7;
+                    border-radius: 20px;
+                    border:none;
+                    height:30px;
+                    width:100px;
+                    padding: 5px;
+                    cursor: pointer;
+                    font-family: 'pixelFont';
+                    font-size: 15px;
+                }
+
+                button:hover{
+                    background-color: #c6aeae;
+                    cursor: pointer;
+                }
+            }
+
+            p {
+                font-size: 12px;
+
+                a{
+                    text-decoration: none;
+                }
+            }
+        }
+    }
 }
 
-.homepage{
+.chatroom{
     background-color: $beige;
     height: 100vh;
     display: flex;
@@ -342,7 +466,7 @@ body {
     }
 }
 
-.profile{
+.profile{ /* Profile Page styling */
     background-color: #faebd7;
     height: 100vh;
     display: flex;
@@ -360,7 +484,7 @@ body {
         margin:0;
     }
 
-    .container{
+    .container{ /* Box that contains the profile */
         background-color: #faebd7;
         border: 1px solid #a18585;
         height:80%;
@@ -381,27 +505,28 @@ body {
         .button:hover {
         background-color: #c6aeae;
         cursor: pointer;
+        transform: translateY(-5px);
         }
 
-        .button {
+        .button { /* Back button */
             background-color: #a18585;
             padding:10px;
             border-radius:30px;
             position:absolute;
+            top:25px;
             left:20px;
-    
-            a {
-                text-decoration: none;
-                color: black;
-            }
+
+            transition: transform 0.3s, background-color 0.3s;
         }
 
-        .button2 {
+        .button2 { /* Edit button */
             background-color: #a18585;
             padding:10px;
             border-radius:30px;
             position:absolute;
             right:20px;
+
+            transition: transform 0.3s, background-color 0.3s;
     
             img{
                 height: 25px;
@@ -411,7 +536,7 @@ body {
             }
         }
         
-        .circle{
+        .circle{ /* Box that holds the avatar */
             background-color: #a18585;
             height:300px;
             width:300px;
@@ -426,8 +551,25 @@ body {
                 left:30px;
             }
         }
+
+        .bio{
+            display:flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            word-wrap:break-word;
+            width:70%;
+        }
+        
+        .stats{
+            display:flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top:5px;
+        }
     }
-    .container2{
+
+    .container2{ /* Box that contains the inventory */
         background-color: #faebd7;
         border: 1px solid #a18585;
         height:80%;
@@ -442,18 +584,21 @@ body {
         .button:hover {
             background-color: #c6aeae;
             cursor: pointer;
+            transform: translateY(-5px);
         }
 
-        .button {
+        .button { /* Shop button */
             background-color: #a18585;
             padding:10px;
             border-radius:30px;
             position:absolute;
             top:25px;
             left:20px;
+
+            transition: transform 0.3s, background-color 0.3s;
         }
 
-        table{
+        table{ /* Inventory */
             border-collapse: collapse;
             width: 90%;
         }
@@ -462,14 +607,14 @@ body {
             border:1px solid black;
         }
 
-        th{
+        th{ /* Inventory labels */
             background-color: #a18585;
             text-align:center;
             font-weight:1;
             padding:8px;
         }
 
-        td{
+        td{ /* Inventory items */
             background-color: #e1d3c1;
             height:100px;
             width:100px;
@@ -486,7 +631,5 @@ body {
                 position:center;
             }
         }
-
-
     }
 }
