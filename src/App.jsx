@@ -24,7 +24,7 @@ function App() {
     {path: "/", element: <ProtectedRoute><Home /></ProtectedRoute>, index: true},
     {path: "login/", element: <Login />},
     {path: "register/", element: <Register />},
-    {path: "shop_page/", element: <ShopPage />},
+    {path: "shop_page/*", element: <ShopPage />},
     {path: "profile/", element: <ProfilePage />},
   ])
   
