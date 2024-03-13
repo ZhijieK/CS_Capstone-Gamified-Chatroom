@@ -1,5 +1,5 @@
 //modules
-import { useRoutes, Link } from "react-router-dom";
+import { useRoutes, Link, useParams } from "react-router-dom";
 
 // styling
 import "../components/cssFile/shopPage.css";
@@ -9,8 +9,6 @@ import ShopTabs from "../components/shopComponents/ShopTabs";
 import ShopItems from "../components/shopComponents/shopItem";
 
 const ShopPage = () => {
-  // console.log();
-
   //routes
   const tabLinkElements = useRoutes([
     { path: ":category", element: <ShopTabs /> },
