@@ -1,5 +1,5 @@
 //modules
-import { useRoutes, Link, useParams } from "react-router-dom";
+import { useRoutes, Link, useParams, Navigate } from "react-router-dom";
 
 // styling
 import "../components/cssFile/shopPage.css";
@@ -11,6 +11,7 @@ import ShopItems from "../components/shopComponents/shopItem";
 const ShopPage = () => {
   //routes
   const tabLinkElements = useRoutes([
+    { path: "/", element: <Navigate replace to="skin" /> },
     { path: ":category", element: <ShopTabs /> },
   ]);
 
@@ -37,9 +38,11 @@ const ShopPage = () => {
   let clickViewCart = () => {
     //grabs the cart element by class
     //checks the displlay, make it visible
-    let cartTab = document.querySelector('.cartTab');
-    console.log(cartTab)
-    cartTab.style.display == "none" ? cartTab.style.display = "Block" : cartTab.style.display = "none"
+    let cartTab = document.querySelector(".cartTab");
+    console.log(cartTab);
+    cartTab.style.display == "none"
+      ? (cartTab.style.display = "Block")
+      : (cartTab.style.display = "none");
   };
 
   //render tabs
@@ -60,7 +63,10 @@ const ShopPage = () => {
     <div className="shopBackground">
       <div className="view">
         <div className="charaScreen">
-          <Link to="../profile"> <div className="goBack"> Back </div> </Link>
+          <Link to="../profile">
+            {" "}
+            <div className="goBack"> Back </div>{" "}
+          </Link>
           <div className="coinCont"> {coinAmount} </div>
           <div className="charaTryOnView">
             <div className="itemCont backgroundFill"></div>
@@ -71,7 +77,10 @@ const ShopPage = () => {
             <div className="clothesCont itemCont"></div>
           </div>
 
-          <div className="viewCartButton" onClick={clickViewCart}>Cart</div>
+          <div className="viewCartButton" onClick={clickViewCart}>
+            {" "}
+            Cart
+          </div>
           <div className="cartTab"> Cart </div>
         </div>
         <div className="shopPanel">
