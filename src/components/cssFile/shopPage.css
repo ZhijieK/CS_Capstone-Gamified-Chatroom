@@ -1,23 +1,17 @@
-@media all and (min-width: 1000px) {
-}
-
-@media all and (min-width: 800px) and (max-width: 100px) {
-}
-
-@media all and (max-width: 800px) {
+@media all and (min-width: 800px) {
   .view {
     background-color: #faead6;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    justify-content: space-evenly;
     margin: auto;
     margin-top: 25px;
     border: 1px solid #a18585;
     border-radius: 10px;
-    width: 500px;
+    width: 800px;
     padding: 10px;
     height: fit-content;
+    margin: auto;
   }
 
   .charaScreen,
@@ -27,18 +21,19 @@
     padding: 5px;
     justify-content: center;
     text-align: center;
-    width: 95%;
   }
 
-  .shopPanel{
-    margin-top: 20px;
-    height: fit-content;
+  .shopPanel {
+    height: 400px;
+    margin-left: 20px;
+    width: 460px;
   }
 
-  .charaScreen{
-    height: 200px;
+  .charaScreen {
+    width: 300px;
+    height: 400px;
     position: relative;
-    background-color: #c6aeae;
+    background-color: rgb(198, 174, 174, 0.3);
   }
 
   .coinCont,
@@ -48,8 +43,8 @@
     color: #faebd7;
     padding: 10px;
     border-radius: 20px;
-    border: 3px solid #faebd7; 
-    box-shadow: 0 0 0 3px #a18585; 
+    border: 3px solid #faebd7;
+    box-shadow: 0 0 0 3px #a18585;
     min-width: fit-content;
     max-width: fit-content;
     margin-top: 10px;
@@ -80,12 +75,12 @@
     margin-top: -15%;
   }
 
-  .charaTryOnView{
+  .charaTryOnView {
     margin: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 200px;
+    width: 300px;
     background-color: 100%;
     aspect-ratio: 1/1;
     justify-self: center;
@@ -98,7 +93,7 @@
     margin-top: -100%;
   }
 
-  .itemCont:first-child{
+  .itemCont:first-child {
     margin-top: 0;
   }
 
@@ -134,17 +129,37 @@
   }
 
   .itemTabCont {
-    width: 400px;
+    width: 420px;
+    height: 350px;
     margin: auto;
     margin-top: 15px;
     border-radius: 5px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: flex-start;
+    overflow-y: scroll;
   }
 
-  .itemCard{
+  .itemTabCont::-webkit-scrollbar {
+    width: 12px; /* Set the width of the scrollbar */
+  }
+  
+  .itemTabCont::-webkit-scrollbar-track {
+    background: rgb(205, 180, 180, 0.2); /* Set the background color of the scrollbar track */
+    border-radius: 10px;
+  }
+  
+  .itemTabCont::-webkit-scrollbar-thumb {
+    background: #6b4949; /* Set the background color of the scrollbar thumb */
+    border-radius: 6px; /* Optional: Add border-radius to the scrollbar thumb */
+  }
+  
+  .itemTabCont::-webkit-scrollbar-thumb:hover {
+    background: #c6aeae; /* Set the background color of the scrollbar thumb when hovered */
+  }
+
+  .itemCard {
     width: 120px;
     height: 150px;
     border: 1px solid #a18585;
@@ -159,7 +174,7 @@
     margin-right: auto; /* Push all items to the right */
   }
 
-  .costText{
+  .costText {
     color: #362c2c;
     width: 100%;
     margin-top: 7px;
@@ -168,14 +183,231 @@
     z-index: 1;
   }
 
-  .indItem{
+  .indItem {
     width: 100px;
     height: 90px;
     border-radius: 10px;
     margin-bottom: 3px;
   }
 
-  .indItem img{
+  .indItem img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+
+  .indItem:hover {
+    cursor: pointer;
+    background-color: rgb(201, 168, 161, 0.2);
+  }
+
+  .addToCartButton {
+    margin: 2px 1px;
+    width: 95px;
+    background-color: #cdb4b4;
+    border-radius: 10px;
+    border: 2px solid antiquewhite;
+  }
+
+  .addToCartButton:hover {
+    background-color: #a18585;
+    color: #faebd7;
+    cursor: pointer;
+  }
+}
+
+@media all and (max-width: 800px) {
+  .view {
+    background-color: #faead6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 25px;
+    border: 1px solid #a18585;
+    border-radius: 10px;
+    width: 500px;
+    padding: 10px;
+    height: fit-content;
+    margin: auto;
+  }
+
+  .charaScreen,
+  .shopPanel {
+    border: 1px solid #a18585;
+    border-radius: 10px;
+    padding: 5px;
+    justify-content: center;
+    text-align: center;
+    width: 95%;
+  }
+
+  .shopPanel {
+    margin-top: 20px;
+    height: fit-content;
+  }
+
+  .charaScreen {
+    height: 200px;
+    position: relative;
+    background-color: rgb(198, 174, 174, 0.3);
+  }
+
+  .coinCont,
+  .goBack,
+  .viewCartButton {
+    background-color: #a18585;
+    color: #faebd7;
+    padding: 10px;
+    border-radius: 20px;
+    border: 3px solid #faebd7;
+    box-shadow: 0 0 0 3px #a18585;
+    min-width: fit-content;
+    max-width: fit-content;
+    margin-top: 10px;
+    margin: 10px;
+  }
+
+  .coinCont {
+    float: right;
+  }
+
+  .goBack {
+    float: left;
+
+    a {
+      text-decoration: none;
+      color: #faebd7;
+    }
+  }
+
+  .goBack:hover,
+  .viewCartButton:hover {
+    background-color: #c6aeae;
+    cursor: pointer;
+  }
+
+  .viewCartButton {
+    float: left;
+    margin-top: -15%;
+  }
+
+  .charaTryOnView {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 200px;
+    background-color: 100%;
+    aspect-ratio: 1/1;
+    justify-self: center;
+    align-self: center;
+  }
+
+  .itemCont {
+    width: 100%;
+    height: 100%;
+    margin-top: -100%;
+  }
+
+  .itemCont:first-child {
+    margin-top: 0;
+  }
+
+  .itemCont img {
+    width: 100%;
+    aspect-ratio: 1/1;
+  }
+
+  .tabName {
+    margin: 5px;
+    display: flex;
+    height: 20px;
+    justify-content: space-evenly;
+  }
+
+  .tabLinks {
+    margin-top: 5px;
+    a:link {
+      text-decoration: none;
+      color: #a18585;
+      padding: 5px 15px;
+    }
+
+    a:link:hover {
+      padding: 5px 15px;
+      border-radius: 5px;
+    }
+  }
+
+  .tabNameA:hover {
+    color: #faebd7;
+    background-color: #cdb4b4;
+  }
+
+  .itemTabCont {
+    width: 420px;
+    height: 350px;
+    margin: auto;
+    margin-top: 15px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    overflow-y: scroll;
+  }
+
+  .itemTabCont::-webkit-scrollbar {
+    width: 12px; /* Set the width of the scrollbar */
+  }
+  
+  .itemTabCont::-webkit-scrollbar-track {
+    background: rgb(205, 180, 180, 0.2); /* Set the background color of the scrollbar track */
+    border-radius: 10px;
+  }
+  
+  .itemTabCont::-webkit-scrollbar-thumb {
+    background: #6b4949; /* Set the background color of the scrollbar thumb */
+    border-radius: 6px; /* Optional: Add border-radius to the scrollbar thumb */
+  }
+  
+  .itemTabCont::-webkit-scrollbar-thumb:hover {
+    background: #c6aeae; /* Set the background color of the scrollbar thumb when hovered */
+  }
+
+  .itemCard {
+    width: 120px;
+    height: 150px;
+    border: 1px solid #a18585;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 5px;
+  }
+
+  .itemCard:last-child {
+    margin-right: auto; /* Push all items to the right */
+  }
+
+  .costText {
+    color: #362c2c;
+    width: 100%;
+    margin-top: 7px;
+    /* margin-bottom: -13px; */
+    background-color: #faebd7;
+    z-index: 1;
+  }
+
+  .indItem {
+    width: 100px;
+    height: 90px;
+    border-radius: 10px;
+    margin-bottom: 3px;
+  }
+
+  .indItem img {
     width: 100px;
     height: 100px;
     object-fit: cover;
@@ -228,8 +460,6 @@
   visibility: hidden;
 } */
 
-
-
 /* .charaScreen {
   width: 30%;
   position: relative;
@@ -274,8 +504,6 @@
   float: left;
   margin-top: 20%;
 } */
-
-
 
 /* .itemCont {
   width: 95%;
