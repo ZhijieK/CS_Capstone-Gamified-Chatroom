@@ -29,8 +29,6 @@ const ShopPage = () => {
         tabNameA.style.borderRadius = "5px";
       } else {
         tabNameA.style.backgroundColor = "#faebd7";
-        // tabNameA:hover.style.color = "faebd7";
-        // tabNameA:hover.style.backgroundColor = "#cdb4b4";
       }
     });
   };
@@ -41,7 +39,7 @@ const ShopPage = () => {
     let cartTab = document.querySelector(".cartTab");
     console.log(cartTab);
     cartTab.style.display == "none"
-      ? (cartTab.style.display = "Block")
+      ? (cartTab.style.display = "block")
       : (cartTab.style.display = "none");
   };
 
@@ -82,10 +80,11 @@ const ShopPage = () => {
             </div>
 
             <div className="viewCartButton" onClick={clickViewCart}>
-              {" "}
               Cart
             </div>
-            <div className="cartTab"> Cart </div>
+          </div>
+          <div className="cartTab"> Cart 
+            <div className="close-button" onClick={clickViewCart}> <b> X </b> </div>
           </div>
           <div className="shopPanel">
             {/* display the tabls */}

@@ -14,13 +14,13 @@
     margin: auto;
   }
 
-  .storeCont{
+  .storeCont {
     display: flex;
     flex-direction: row;
   }
 
-  .shopBanner{
-    font-family: 'pixelFont';
+  .shopBanner {
+    font-family: "pixelFont";
     margin-top: -10px;
     margin-bottom: -10px;
   }
@@ -84,6 +84,7 @@
   .viewCartButton {
     float: left;
     margin-top: -15%;
+    position: absolute;
   }
 
   .charaTryOnView {
@@ -135,8 +136,7 @@
   }
 
   .tabNameA:hover {
-    color: #faebd7;
-    background-color: #cdb4b4;
+    color: #cdb4b4;
   }
 
   .itemTabCont {
@@ -155,17 +155,22 @@
   .itemTabCont::-webkit-scrollbar {
     width: 12px; /* Set the width of the scrollbar */
   }
-  
+
   .itemTabCont::-webkit-scrollbar-track {
-    background: rgb(205, 180, 180, 0.2); /* Set the background color of the scrollbar track */
+    background: rgb(
+      205,
+      180,
+      180,
+      0.2
+    ); /* Set the background color of the scrollbar track */
     border-radius: 10px;
   }
-  
+
   .itemTabCont::-webkit-scrollbar-thumb {
     background: #6b4949; /* Set the background color of the scrollbar thumb */
     border-radius: 6px; /* Optional: Add border-radius to the scrollbar thumb */
   }
-  
+
   .itemTabCont::-webkit-scrollbar-thumb:hover {
     background: #c6aeae; /* Set the background color of the scrollbar thumb when hovered */
   }
@@ -225,6 +230,41 @@
     color: #faebd7;
     cursor: pointer;
   }
+
+  .cartTab {
+    background-color: #faead6;
+    min-height: 200px;
+    border-radius: 10px;
+    border: 1px solid #6b4949;
+    display: none;
+    position: absolute;
+    z-index: 10;
+    width: 200px;
+    padding: 5px;
+    text-align: center;
+    margin-top: 195px;
+    margin-left: 0px;
+    padding-top: 10px;
+  }
+
+  .close-button {
+    float: right;
+    margin-right: 3px;
+    margin-left: -30px;
+    margin-top: -5px;
+    background-color: #a18585;
+    width: 20px;
+    height: 18px;
+    padding: 2px;
+    border-radius: 20px;
+    font-family: "pixelFont";
+    color: #faead6;
+  }
+
+  .close-button:hover {
+    background-color: #6b4949;
+    cursor: pointer;
+  }
 }
 
 @media all and (max-width: 800px) {
@@ -241,10 +281,11 @@
     padding: 10px;
     height: 100vh;
     margin: 20px;
+    position: relative;
   }
 
-  .shopBanner{
-    font-family: 'pixelFont';
+  .shopBanner {
+    font-family: "pixelFont";
     margin-top: -90px;
     margin-bottom: -50px;
   }
@@ -259,7 +300,6 @@
     width: 95%;
   }
 
-  
   .shopPanel {
     margin-top: 20px;
     height: 290px;
@@ -360,14 +400,14 @@
   }
 
   .tabNameA:hover {
-    color: #faebd7;
-    background-color: #cdb4b4;
+    color: #cdb4b4;
   }
 
   .itemTabCont {
     width: 420px;
     height: 250px;
     margin: auto;
+    margin-right: 10px;
     margin-top: 15px;
     border-radius: 5px;
     display: flex;
@@ -380,17 +420,22 @@
   .itemTabCont::-webkit-scrollbar {
     width: 12px; /* Set the width of the scrollbar */
   }
-  
+
   .itemTabCont::-webkit-scrollbar-track {
-    background: rgb(205, 180, 180, 0.2); /* Set the background color of the scrollbar track */
+    background: rgb(
+      205,
+      180,
+      180,
+      0.2
+    ); /* Set the background color of the scrollbar track */
     border-radius: 10px;
   }
-  
+
   .itemTabCont::-webkit-scrollbar-thumb {
     background: #6b4949; /* Set the background color of the scrollbar thumb */
     border-radius: 6px; /* Optional: Add border-radius to the scrollbar thumb */
   }
-  
+
   .itemTabCont::-webkit-scrollbar-thumb:hover {
     background: #c6aeae; /* Set the background color of the scrollbar thumb when hovered */
   }
@@ -416,7 +461,6 @@
     margin-top: 7px;
     /* margin-bottom: -13px; */
     background-color: #faebd7;
-    z-index: 1;
   }
 
   .indItem {
@@ -448,6 +492,40 @@
   .addToCartButton:hover {
     background-color: #a18585;
     color: #faebd7;
+    cursor: pointer;
+  }
+
+  .cartTab {
+    background-color: #faead6;
+    min-height: 200px;
+    border-radius: 10px;
+    border: 2px solid #362c2c;
+    display: none;
+    position: absolute;
+    z-index: 10;
+    width: 200px;
+    padding: 5px;
+    text-align: center;
+    margin-top: -212px;
+    padding-top: 10px;
+  }
+
+  .close-button {
+    float: right;
+    margin-right: 3px;
+    margin-left: -30px;
+    margin-top: -5px;
+    background-color: #a18585;
+    width: 20px;
+    height: 18px;
+    padding: 2px;
+    border-radius: 20px;
+    font-family: "pixelFont";
+    color: #faead6;
+  }
+
+  .close-button:hover {
+    background-color: #6b4949;
     cursor: pointer;
   }
 }
