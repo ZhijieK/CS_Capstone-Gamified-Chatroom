@@ -62,31 +62,36 @@ const ShopPage = () => {
   return (
     <div className="shopBackground">
       <div className="view">
-        <div className="charaScreen">
-          <Link to="../profile">
-            {" "}
-            <div className="goBack"> Back </div>{" "}
-          </Link>
-          <div className="coinCont"> {coinAmount} </div>
-          <div className="charaTryOnView">
-            <div className="itemCont backgroundFill"></div>
-            <div className="skinCont itemCont">{ShopItems[9].image}</div>
-            <div className="eyesCont itemCont"></div>
-            <div className="mouthCont itemCont"></div>
-            <div className="hairCont itemCont"></div>
-            <div className="clothesCont itemCont"></div>
-          </div>
-
-          <div className="viewCartButton" onClick={clickViewCart}>
-            {" "}
-            Cart
-          </div>
-          <div className="cartTab"> Cart </div>
+        <div className="shopBanner">
+          <h1> Shop </h1>
         </div>
-        <div className="shopPanel">
-          {/* display the tabls */}
-          <div className="tabName">{renderedTabs}</div>
-          <div>{tabLinkElements}</div>
+        <div className="storeCont">
+          <div className="charaScreen">
+            <Link to="../profile">
+              {" "}
+              <div className="goBack"> Back </div>{" "}
+            </Link>
+            <div className="coinCont"> {coinAmount} </div>
+            <div className="charaTryOnView">
+              <div className="itemCont backgroundFill"></div>
+              <div className="skinCont itemCont">{ShopItems[9].image}</div>
+              <div className="eyesCont itemCont"></div>
+              <div className="mouthCont itemCont"></div>
+              <div className="hairCont itemCont"></div>
+              <div className="clothesCont itemCont"></div>
+            </div>
+
+            <div className="viewCartButton" onClick={clickViewCart}>
+              {" "}
+              Cart
+            </div>
+            <div className="cartTab"> Cart </div>
+          </div>
+          <div className="shopPanel">
+            {/* display the tabls */}
+            <div className="tabName">{renderedTabs}</div>
+            <div>{tabLinkElements}</div>
+          </div>
         </div>
       </div>
     </div>
