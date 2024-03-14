@@ -83,8 +83,17 @@
 
   .viewCartButton {
     float: left;
-    margin-top: -15%;
+    margin-left: 10px;
+    margin-top: -5%;
     position: absolute;
+    padding: 5px;
+  }
+
+  .viewCartButton img{
+    margin-top: 2px;
+    width: 30px;
+    height: 25px;
+    filter: invert(88%) sepia(39%) saturate(108%) hue-rotate(349deg) brightness(99%) contrast(97%);
   }
 
   .charaTryOnView {
@@ -348,7 +357,15 @@
 
   .viewCartButton {
     float: left;
-    margin-top: -15%;
+    margin-top: -12%;
+    padding: 5px;
+  }
+
+  .viewCartButton img{
+    margin-top: 2px;
+    width: 30px;
+    height: 25px;
+    filter: invert(88%) sepia(39%) saturate(108%) hue-rotate(349deg) brightness(99%) contrast(97%);
   }
 
   .charaTryOnView {

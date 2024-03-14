@@ -73,6 +73,7 @@ const ShopTabs = () => {
     itemSnapshot.forEach((doc) => {
       let promise = getDownloadURL(ref(storage, doc.data().imageRef))
         .then((url) => {
+          console.log(url);
           listOfItems.push({
             cost: doc.data().cost,
             imageRef: url,
@@ -92,16 +93,17 @@ const ShopTabs = () => {
         //   console.log(item.cost, item.itemName, item.imageRef)
         // })
         let box = listOfItems.map((item) => {
-          return ( // Add this return statement
+          return (
+            // Add this return statement
             <div className="itemCard">
-              <div className = "costText"> {item.cost} Coins</div>
+              <div className="costText"> {item.cost} Coins</div>
               <div
                 className="indItem"
                 key={item.itemName}
                 id={item.itemName}
                 onClick={(event) => handleItemSelection({ item })}
               >
-                <img src={item.imageRef} alt={item.itemName}/>
+                <img src={item.imageRef} alt={item.itemName} />
               </div>
               <div className="addToCartButton">Add to Cart</div>
             </div>
@@ -129,6 +131,7 @@ const ShopTabs = () => {
   let handleItemSelection = (clickedItem) => {
     const allItems = document.querySelectorAll(".indItem");
     allItems.forEach((item) => {
+      //shows that an item has been selected by changing the background color
       if (item.id === clickedItem.item.itemName) {
         item.style.backgroundColor = "#c6aeae";
       } else {
@@ -140,22 +143,20 @@ const ShopTabs = () => {
     const itemToAppear = document.querySelector(
       `.${clickedItem.item.itemCategory}Cont`
     );
-
     //checks if there is an item already in the container
     // console.log(itemToAppear.hasChildNodes());
     if (itemToAppear.hasChildNodes()) {
-      // console.log("true, item removed")
+      console.log("true, item removed");
       console.log(itemToAppear.lastChild);
       itemToAppear.removeChild(itemToAppear.lastChild);
     }
 
     //if yes, remove item from container and add selected item
-    console.log("hello")
-    // let itemToAppearImg = document.createElement("img");
-    // itemToAppearImg.src = clickedItem.item.image.props.src;
-    // itemToAppear.appendChild(itemToAppearImg);
-
-    //displays the add to cart field
+    console.log("hello");
+    let itemToAppearImg = document.createElement("img");
+    console.log(clickedItem.item.imageRef);
+    itemToAppearImg.src = clickedItem.item.imageRef;
+    itemToAppear.appendChild(itemToAppearImg);
   };
 
   let clickAddToCart = () => {};

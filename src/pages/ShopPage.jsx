@@ -3,6 +3,7 @@ import { useRoutes, Link, useParams, Navigate } from "react-router-dom";
 
 // styling
 import "../components/cssFile/shopPage.css";
+import shopBasket from '../components/images/generalIcons/shoppingBasket.png'
 
 //components
 import ShopTabs from "../components/shopComponents/ShopTabs";
@@ -80,10 +81,10 @@ const ShopPage = () => {
             </div>
 
             <div className="viewCartButton" onClick={clickViewCart}>
-              Cart
+              <img src={shopBasket}/>
             </div>
           </div>
-          <div className="cartTab"> Cart 
+          <div className="cartTab"> Cart
             <div className="close-button" onClick={clickViewCart}> <b> X </b> </div>
           </div>
           <div className="shopPanel">
