@@ -93,8 +93,8 @@ const ShopTabs = () => {
         // })
         let box = listOfItems.map((item) => {
           return ( // Add this return statement
-            <div>
-              <div style={{ color: "#faebd7" }}>{item.cost} Coins</div>
+            <div className="itemCard">
+              <div className = "costText"> {item.cost} Coins</div>
               <div
                 className="indItem"
                 key={item.itemName}
@@ -161,12 +161,8 @@ const ShopTabs = () => {
   let clickAddToCart = () => {};
 
   return (
-    <div>
-      {choiceBoxes ? (
-        <div> {choiceBoxes} </div>
-      ) : (
-        <div> No Items In This Category</div>
-      )}
+    <div className="itemTabCont">
+      {choiceBoxes ? choiceBoxes : <div> No Items In This Category</div>}
     </div>
   );
 };
