@@ -35,13 +35,12 @@ const ShopPage = () => {
   };
 
   let clickViewCart = () => {
-    //grabs the cart element by class
-    //checks the displlay, make it visible
     let cartTab = document.querySelector(".cartTab");
-    console.log(cartTab);
-    cartTab.style.display == "none"
-      ? (cartTab.style.display = "block")
-      : (cartTab.style.display = "none");
+    if (cartTab.style.display === "none" || cartTab.style.display === "") {
+      cartTab.style.display = "block";
+    } else {
+      cartTab.style.display = "none";
+    }
   };
 
   //render tabs
