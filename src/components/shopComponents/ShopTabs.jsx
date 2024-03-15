@@ -44,7 +44,16 @@ const ShopTabs = () => {
           //creates the image link
           const imageRef = item.itemCategory + "/" + item.itemName + ".png";
           //random number generator from 50-200
-          const cost = (Math.floor(Math.random() * 21) + 10) * 5;
+          let cost = 0;
+          if (item.itemCategory == "skin"){
+            cost = 75;
+          }
+          else if (item.itemCategory == "eyes"){
+            cost = 80;
+          }
+          else{ 
+            cost = (Math.floor(Math.random() * 21) + 10) * 5;
+          }
           // console.log(imageRef)
           if (!shopItemRef.exists()) {
             console.log("Adding new item:");
