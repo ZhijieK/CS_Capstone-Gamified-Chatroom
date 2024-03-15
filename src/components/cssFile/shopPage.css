@@ -89,11 +89,12 @@
     padding: 5px;
   }
 
-  .viewCartButton img{
+  .viewCartButton img {
     margin-top: 2px;
     width: 30px;
     height: 25px;
-    filter: invert(88%) sepia(39%) saturate(108%) hue-rotate(349deg) brightness(99%) contrast(97%);
+    filter: invert(88%) sepia(39%) saturate(108%) hue-rotate(349deg)
+      brightness(99%) contrast(97%);
   }
 
   .charaTryOnView {
@@ -256,6 +257,84 @@
     padding-top: 10px;
   }
 
+  .cartItemCont {
+    margin: auto;
+    margin-top: 10px;
+    /* background-color: black; */
+    width: 190px;
+    height: 165px;
+    max-height: 175px;
+    border-radius: 10px;
+    overflow-y: scroll;
+  }
+
+  .cartItemCont::-webkit-scrollbar {
+    width: 12px; /* Set the width of the scrollbar */
+  }
+
+  .cartItemCont::-webkit-scrollbar-track {
+    background: rgb(
+      205,
+      180,
+      180,
+      0.2
+    ); /* Set the background color of the scrollbar track */
+    border-radius: 10px;
+  }
+
+  .cartItemCont::-webkit-scrollbar-thumb {
+    background: #6b4949; /* Set the background color of the scrollbar thumb */
+    border-radius: 6px; /* Optional: Add border-radius to the scrollbar thumb */
+  }
+
+  .cartItemCont::-webkit-scrollbar-thumb:hover {
+    background: #c6aeae; /* Set the background color of the scrollbar thumb when hovered */
+  }
+
+  .newCartItem{
+    /* background-color: black; */
+    width: 170px;
+    height: 100px;
+    margin: auto;
+    border-radius: 10px;
+    margin-top: 2px;
+    display: flex;
+    flex-direction: row;
+    border: 2px solid #362c2c;
+    margin-bottom: 5px;
+  }
+  
+  .rightPanel{
+    margin-top: -10px;
+  }
+
+  .leftPanel{
+    /* background-color: #362c2c; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: -5px;
+  }
+
+  .costCont{
+    margin-top: 5px;
+  }
+
+  .trashImg{
+    width: 20px;
+    height: 20px;
+    float: right;
+    margin-top: 13px;
+    margin-bottom: -20px;
+    padding: 3px;
+  }
+
+  .trashImg:hover{
+    background-color: #cdb4b4;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
   .close-button {
     float: right;
     margin-right: 3px;
@@ -295,7 +374,7 @@
 
   .shopBanner {
     font-family: "pixelFont";
-    margin-top: -90px;
+    margin-top: 20px;
     margin-bottom: -50px;
   }
 
@@ -317,7 +396,7 @@
   .charaScreen {
     height: 200px;
     position: relative;
-    margin-top: -40px;
+    margin-top: 40px;
     background-color: rgb(198, 174, 174, 0.3);
   }
 
@@ -361,11 +440,12 @@
     padding: 5px;
   }
 
-  .viewCartButton img{
+  .viewCartButton img {
     margin-top: 2px;
     width: 30px;
     height: 25px;
-    filter: invert(88%) sepia(39%) saturate(108%) hue-rotate(349deg) brightness(99%) contrast(97%);
+    filter: invert(88%) sepia(39%) saturate(108%) hue-rotate(349deg)
+      brightness(99%) contrast(97%);
   }
 
   .charaTryOnView {
@@ -527,6 +607,40 @@
     padding-top: 10px;
   }
 
+  .cartItemCont {
+    margin: auto;
+    margin-top: 5px;
+    /* background-color: black; */
+    width: 190px;
+    height: 170px;
+    max-height: 175px;
+    border-radius: 10px;
+    overflow-y: scroll;
+  }
+
+  .cartItemCont::-webkit-scrollbar {
+    width: 12px; /* Set the width of the scrollbar */
+  }
+
+  .cartItemCont::-webkit-scrollbar-track {
+    background: rgb(
+      205,
+      180,
+      180,
+      0.2
+    ); /* Set the background color of the scrollbar track */
+    border-radius: 10px;
+  }
+
+  .cartItemCont::-webkit-scrollbar-thumb {
+    background: #6b4949; /* Set the background color of the scrollbar thumb */
+    border-radius: 6px; /* Optional: Add border-radius to the scrollbar thumb */
+  }
+
+  .cartItemCont::-webkit-scrollbar-thumb:hover {
+    background: #c6aeae; /* Set the background color of the scrollbar thumb when hovered */
+  }
+
   .close-button {
     float: right;
     margin-right: 3px;
@@ -543,6 +657,50 @@
 
   .close-button:hover {
     background-color: #6b4949;
+    cursor: pointer;
+  }
+
+  .newCartItem{
+    /* background-color: black; */
+    width: 170px;
+    height: 100px;
+    margin: auto;
+    border-radius: 10px;
+    margin-top: 2px;
+    display: flex;
+    flex-direction: row;
+    border: 2px solid #362c2c;
+    margin-bottom: 5px;
+  }
+  
+  .rightPanel{
+    margin-top: -10px;
+  }
+
+  .leftPanel{
+    /* background-color: #362c2c; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: -5px;
+  }
+
+  .costCont{
+    margin-top: 5px;
+  }
+
+  .trashImg{
+    width: 20px;
+    height: 20px;
+    float: right;
+    margin-top: 13px;
+    margin-bottom: -20px;
+    padding: 3px;
+  }
+
+  .trashImg:hover{
+    background-color: #cdb4b4;
+    border-radius: 10px;
     cursor: pointer;
   }
 }

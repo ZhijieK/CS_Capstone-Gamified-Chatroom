@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 //components
 import ShopItems from "./shopItem";
+import trashCan from "../images/generalIcons/trashCan.png"
 
 //firebase related packages
 import { db, auth, storage } from "../../firebase";
@@ -26,8 +27,9 @@ const ShopTabs = () => {
 
   const category = useParams().category;
   // console.log(category);
-  const [containsItems, setContainsItems] = useState(false);
   const [choiceBoxes, setChoiceBoxes] = useState([]);
+  const [cartItemCards, setCartItemCards] = useState([]);
+  const [cartTotal, setCartTotal] = useState(0);
 
   //creates a shop database
   const addItemsToDatabase = async (storageRef) => {
@@ -101,11 +103,16 @@ const ShopTabs = () => {
                 className="indItem"
                 key={item.itemName}
                 id={item.itemName}
-                onClick={(event) => handleItemSelection({ item })}
+                onClick={(event) => handleItemSelection(item)}
               >
                 <img src={item.imageRef} alt={item.itemName} />
               </div>
-              <div className="addToCartButton">Add to Cart</div>
+              <div
+                className="addToCartButton"
+                onClick={(event) => clickAddToCart(item)}
+              >
+                Add to Cart
+              </div>
             </div>
           );
         });
@@ -132,7 +139,7 @@ const ShopTabs = () => {
     const allItems = document.querySelectorAll(".indItem");
     allItems.forEach((item) => {
       //shows that an item has been selected by changing the background color
-      if (item.id === clickedItem.item.itemName) {
+      if (item.id === clickedItem.itemName) {
         item.style.backgroundColor = "#c6aeae";
       } else {
         item.style.backgroundColor = "#faebd7";
@@ -141,7 +148,7 @@ const ShopTabs = () => {
 
     //selects the container that will hold the item
     const itemToAppear = document.querySelector(
-      `.${clickedItem.item.itemCategory}Cont`
+      `.${clickedItem.itemCategory}Cont`
     );
     //checks if there is an item already in the container
     // console.log(itemToAppear.hasChildNodes());
@@ -152,14 +159,65 @@ const ShopTabs = () => {
     }
 
     //if yes, remove item from container and add selected item
-    console.log("hello");
+    // console.log("hello");
     let itemToAppearImg = document.createElement("img");
-    console.log(clickedItem.item.imageRef);
-    itemToAppearImg.src = clickedItem.item.imageRef;
+    // console.log(clickedItem.item.imageRef);
+    itemToAppearImg.src = clickedItem.imageRef;
     itemToAppear.appendChild(itemToAppearImg);
   };
 
-  let clickAddToCart = () => {};
+  let clickAddToCart = (clickedItem) => {
+    setCartTotal((prevCartTotal) => prevCartTotal + clickedItem.cost);
+
+    setCartItemCards((prevCartItems) => {
+      if (!prevCartItems.find((itemCard) => itemCard.itemName === clickedItem.itemName)) {
+        return [...prevCartItems, clickedItem];
+      }
+      return prevCartItems;
+    });
+  };
+
+  const handleDeleteItem = (itemToDelete) => {
+    // cartTotal -= itemToDelete.cost;
+    console.log(itemToDelete)
+    setCartTotal((prevCartTotal) => prevCartTotal - itemToDelete.cost);
+
+    setCartItemCards((prevCartItems) => {
+        return prevCartItems.filter((cartItem) => cartItem.itemName !== itemToDelete.itemName);
+    });
+  };
+
+  useEffect(() => {
+    let totalValueCont = document.querySelector(".totalValueCont")
+    totalValueCont.textContent = `Total Cost: ${cartTotal} Coins`
+  }, [cartTotal]);
+  
+  useEffect(() => {
+    // Update cartItemCont when cartItemCards changes
+    let cartItemCont = document.querySelector(".cartItemCont");
+    let totalValueCont = document.querySelector(".totalValueCont")
+    cartItemCont.innerHTML = ""; // Clear previous items
+
+    cartItemCards.forEach((cartItem) => {
+      // cartTotal += cartItem.cost;
+      
+      // setCartTotal(cartTotal + cartItem.cost)
+      
+      let newCartItem = document.createElement("div");
+      newCartItem.className = "newCartItem"
+      newCartItem.innerHTML = `
+        <div class="rightPanel"> <img src="${cartItem.imageRef}" /> </div>
+        <div class="leftPanel"> <div class="costCont"> ${cartItem.cost} Coins </div> 
+            <div> <img class="trashImg" src="${trashCan}"/></div>
+        </div>
+      `;
+      cartItemCont.appendChild(newCartItem);
+      newCartItem.querySelector('.trashImg').addEventListener('click', () => handleDeleteItem(cartItem));
+      totalValueCont.textContent = `Total Cost: ${cartTotal} Coins`
+    });
+  }, [cartItemCards]); // Run this effect whenever cartItemCards changes
+  
+  
 
   return (
     <div className="itemTabCont">

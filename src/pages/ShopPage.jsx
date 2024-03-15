@@ -86,6 +86,10 @@ const ShopPage = () => {
           </div>
           <div className="cartTab"> Cart
             <div className="close-button" onClick={clickViewCart}> <b> X </b> </div>
+            <div className="cartItemCont">
+
+            </div>
+            <div className="totalValueCont"> Nothing in Cart </div>
           </div>
           <div className="shopPanel">
             {/* display the tabls */}
