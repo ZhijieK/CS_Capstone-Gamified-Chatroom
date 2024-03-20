@@ -24,3 +24,9 @@ We also accommodate those who wish for a fully anonymous environment - a place w
 ZG - Homepage, Login+Register, Chatting
 Kinji - Chatting, Character design. Profile
 Wei Lin - Chatting, Character assets, Shop
+
+# Running Instructions
+1. Clone the project into your computer and open it with the code editor of your choice
+2. Run the commands `npm install` and `npm install vite`
+3. Make sure that the files from the remote repo are properly added into your folder (such as vite.config.js)
+4. Once everything looks good, simply run `npm run dev` in the terminal and click the localhost link that's generated to access the webpage on your local network
