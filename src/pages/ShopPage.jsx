@@ -57,24 +57,26 @@ const ShopPage = () => {
   ));
 
   return (
-    <div className="view">
-      <div className="charaScreen">
-        <div className="goBack"> <Link to="../">  Go Back </Link> </div>
-        <div className="coinCont"> {coinAmount} </div>
-        <div className="itemCont backgroundFill"></div>
-        <div className="skinCont itemCont">{ShopItems[9].image}</div>
-        <div className="eyesCont itemCont"></div>
-        <div className="mouthCont itemCont"></div>
-        <div className="hairCont itemCont"></div>
-        <div className="clothesCont itemCont"></div>
+    <div className="shopBackground">
+      <div className="view">
+        <div className="charaScreen">
+          <Link to="../profile"> <div className="goBack"> Go Back </div> </Link>
+          <div className="coinCont"> {coinAmount} </div>
+          <div className="itemCont backgroundFill"></div>
+          <div className="skinCont itemCont">{ShopItems[9].image}</div>
+          <div className="eyesCont itemCont"></div>
+          <div className="mouthCont itemCont"></div>
+          <div className="hairCont itemCont"></div>
+          <div className="clothesCont itemCont"></div>
 
-        <div className="viewCartButton" onClick={clickViewCart}> Cart Image </div>
-        <div className="cartTab"> Cart </div>
-      </div>
-      <div className="shopPanel">
-        {/* display the tabls */}
-        <div className="tabName">{renderedTabs}</div>
-        <div>{tabLinkElements}</div>
+          <div className="viewCartButton" onClick={clickViewCart}> Cart Image </div>
+          <div className="cartTab"> Cart </div>
+        </div>
+        <div className="shopPanel">
+          {/* display the tabls */}
+          <div className="tabName">{renderedTabs}</div>
+          <div>{tabLinkElements}</div>
+        </div>
       </div>
     </div>
   );

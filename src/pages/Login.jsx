@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../firebase';
+import Homebar from '../components/profileComponents/Homebar';
+import Logo from '../components/images/generalIcons/Logo.png';
+import pic from '../components/images/generalIcons/User.png';
 
 const Login = () => {
 
@@ -22,20 +25,25 @@ const Login = () => {
   }
 
   return (
-    <div className="form_container">
-        <div className='form_wrapper'>
-            <span className="logo">Pixel Palz</span>
-            <img className='login_avatar' src='https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg'/>
-            <form onSubmit={handleSubmit}>
-                <input type='text' placeholder='Email'></input>
-                <input type='password' placeholder='Password'></input>
-                <button>Log in</button>
-                {err && <span>Something went wrong</span>}
-            </form>
-            <p>Don't have an account? <Link to="/register">Sign up</Link></p>
+    <div className="homepage">
+        <Homebar/>
+        <div className="homecontent">
+          <div className="home_img">
+            <img src={Logo} />
+          </div>
+          <div className='login_box'>
+              <span className="title">Pixel Palz</span>
+              <img className='login_pic' src={pic}/>
+              <form onSubmit={handleSubmit}>
+                  <input type='text' placeholder='Email'></input>
+                  <input type='password' placeholder='Password'></input>
+                  <button>Log in</button>
+                  {err && <span>Something went wrong</span>}
+              </form>
+              <p>Don't have an account? <Link to="/register">Sign up</Link></p>
+          </div>
         </div>
-    </div>
-        
+    </div>    
   )
 }
 
