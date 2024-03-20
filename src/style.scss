@@ -144,6 +144,14 @@ body {
             opacity:0%;
             animation: fadeIn 1s 0.3s forwards;
             
+            span{
+                text-align: center;
+            }
+
+            .error_message{
+                color: red;
+            }
+
             .title{
                 font-size: 40px;
             }
