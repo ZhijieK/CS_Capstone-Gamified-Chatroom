@@ -390,6 +390,12 @@ body {
                             border-radius: 50%;
                             object-fit: cover;
                         }
+
+                        span{
+                            font-size: 10px;
+                            width: 40px;
+                            text-align: center;
+                        }
                     }
                     .messageContent{
                         max-width: 80%;
