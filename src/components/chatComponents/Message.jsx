@@ -14,9 +14,9 @@ const Message = ({message}) => {
   }, [message])
 
   return (
-    <div ref={ref} className='message owner'>
+    <div ref={ref} className={`message ${message.senderId === currentUser.uid ? 'owner' : ''}`}>
       <div className="messageInfo">
-        <img src="https://i.kym-cdn.com/entries/icons/facebook/000/048/516/Screenshot_2024-02-20_at_10.43.43_AM.jpg" alt="" />
+        <img src= {message.senderId === currentUser.uid ? "https://i.kym-cdn.com/entries/icons/facebook/000/048/516/Screenshot_2024-02-20_at_10.43.43_AM.jpg" : "https://i.kym-cdn.com/photos/images/newsfeed/002/738/958/9e9"} alt="" />
         <span>now</span>
       </div>
       <div className="messageContent">
