@@ -19,7 +19,8 @@ const Login = () => {
       await signInWithEmailAndPassword(auth, email, password);
       navigate('/');
     } catch(err){
-      setErr(true);
+      const errorMessage = err.message.split('/')[1].slice(0, -2).replace(/-/g, ' ').replace(/^(.)/, match => match.toUpperCase()) + ". Please try again.";
+      setErr(errorMessage);
       console.log(err);
     }
   }
@@ -38,7 +39,7 @@ const Login = () => {
                   <input type='text' placeholder='Email'></input>
                   <input type='password' placeholder='Password'></input>
                   <button>Log in</button>
-                  {err && <span>Something went wrong</span>}
+                  {err && <span className='error_message'>{err}</span>}
               </form>
               <p>Don't have an account? <Link to="/register">Sign up</Link></p>
           </div>

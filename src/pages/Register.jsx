@@ -7,7 +7,7 @@ import Homebar from '../components/profileComponents/Homebar';
 import Logo from '../components/images/generalIcons/Logo.png';
 
 const Register = () => {
-  const [err,setErr] = useState(false);
+  const [err,setErr] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e)=>{
@@ -33,7 +33,8 @@ const Register = () => {
 
     
     } catch(err){
-      setErr(true);
+      const errorMessage = err.message.split('/')[1].slice(0, -2).replace(/-/g, ' ').replace(/^(.)/, match => match.toUpperCase()) + ". Please try again.";
+      setErr(errorMessage);
       console.log(err);
     }
   }
@@ -53,7 +54,7 @@ const Register = () => {
                   <input type='email' placeholder='Email'></input>
                   <input type='password' placeholder='Password'></input>
                   <button>Sign up</button>
-                  {err && <span>Something went wrong</span>}
+                  {err && <span className='error_message'>{err}</span>}
               </form>
               <p>Already have an account? <Link to="/login">Login</Link></p>
           </div>
