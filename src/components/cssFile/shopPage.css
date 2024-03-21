@@ -1,189 +1,713 @@
-.shopBackground{
-  background-color: #faebd7;
-  height:100vh;
-  display:flex;
-  align-items: center;
+@media all and (min-width: 800px) {
+  .view {
+    background-color: #faead6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    margin-top: 25px;
+    border: 1px solid #a18585;
+    border-radius: 10px;
+    width: 800px;
+    padding: 10px;
+    height: fit-content;
+    margin: auto;
+  }
 
-}
+  .storeCont {
+    display: flex;
+    flex-direction: row;
+  }
 
-.view {
-  background-color: #faebd7;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-evenly;
-  gap: 20px;
-  margin: auto;
-  max-height: 100vh;
-  border: 1px solid #a18585;
-  border-radius: 10px;
-  width: 65%;
-  padding: 10px;
-  height: 80vh;
-}
+  .shopBanner {
+    font-family: "pixelFont";
+    margin-top: -10px;
+    margin-bottom: -10px;
+  }
 
-.charaScreen,
-.shopPanel {
-  border: 1px solid #a18585;
-  border-radius: 10px;
-  padding: 5px;
-  justify-content: center;
-  text-align: center;
-  height: 90%;
-}
+  .charaScreen,
+  .shopPanel {
+    border: 1px solid #a18585;
+    border-radius: 10px;
+    padding: 5px;
+    justify-content: center;
+    text-align: center;
+  }
 
-.charaScreen {
-  width: 30%;
-  position: relative;
-}
+  .shopPanel {
+    height: 400px;
+    margin-left: 20px;
+    width: 460px;
+  }
 
-.coinCont,
-.goBack,
-.viewCartButton {
-  margin-top: 10%;
-  background-color: #a18585;
-  color: #faebd7;
-  padding: 10px;
-  border-radius: 20px;
-  border: 3px solid #faebd7; /* Outer border */
-  box-shadow: 0 0 0 3px #a18585; /* Inner border */
-}
+  .charaScreen {
+    width: 300px;
+    height: 400px;
+    position: relative;
+    background-color: rgb(198, 174, 174, 0.3);
+  }
 
-.coinCont {
-  float: right;
-  width: 20%;
-  margin-right: 10px;
-}
-
-.goBack {
-  float: left;
-  width: 20%;
-  margin-left: 10px;
-
-  a {
-    text-decoration: none;
+  .coinCont,
+  .goBack,
+  .viewCartButton {
+    background-color: #a18585;
     color: #faebd7;
-  }
-}
-
-.goBack:hover,
-.viewCartButton:hover {
-  background-color: #c6aeae;
-  cursor: pointer;
-}
-
-.viewCartButton {
-  position: absolute;
-  margin-top: 460px;
-  margin-left: 190px;
-  /* background-color: white; */
-}
-
-.itemCont {
-  width: 95%; /* Take up 100% of the width of charaScreen */
-  aspect-ratio: 1/1;
-  position: absolute;
-  margin-top: 30%;
-}
-
-.itemCont img {
-  width: 100%;
-  /* height: 100%; */
-  aspect-ratio: 1/1;
-}
-
-.backgroundFill {
-  background-color: #c6aeae;
-  border-radius: 50px;
-  border: 3px solid #a18585;
-}
-/* , .skinCont, .eyeCont, .mouthCont,  .clotheCont*/
-
-.shopPanel {
-  width: 60%;
-}
-
-.tabName {
-  margin: 5px;
-  display: flex;
-  height: 30px;
-  justify-content: space-evenly;
-  overflow: auto;
-}
-
-.tabLinks {
-  margin-top: 5px;
-  a:link {
-    text-decoration: none;
-    color: #a18585;
-    padding: 5px 15px;
+    padding: 10px;
+    border-radius: 20px;
+    border: 3px solid #faebd7;
+    box-shadow: 0 0 0 3px #a18585;
+    min-width: fit-content;
+    max-width: fit-content;
+    margin-top: 10px;
+    margin: 10px;
   }
 
-  a:link:hover {
-    padding: 5px 15px;
+  .coinCont {
+    float: right;
+  }
+
+  .goBack {
+    float: left;
+
+    a {
+      text-decoration: none;
+      color: #faebd7;
+    }
+  }
+
+  .goBack:hover,
+  .viewCartButton:hover {
+    background-color: #c6aeae;
+    cursor: pointer;
+  }
+
+  .viewCartButton {
+    float: left;
+    margin-left: 10px;
+    margin-top: -5%;
+    position: absolute;
+    padding: 5px;
+  }
+
+  .viewCartButton img {
+    margin-top: 2px;
+    width: 30px;
+    height: 25px;
+    filter: invert(88%) sepia(39%) saturate(108%) hue-rotate(349deg)
+      brightness(99%) contrast(97%);
+  }
+
+  .charaTryOnView {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    background-color: 100%;
+    aspect-ratio: 1/1;
+    justify-self: center;
+    align-self: center;
+  }
+
+  .itemCont {
+    width: 100%;
+    height: 100%;
+    margin-top: -100%;
+  }
+
+  .itemCont:first-child {
+    margin-top: 0;
+  }
+
+  .itemCont img {
+    width: 100%;
+    aspect-ratio: 1/1;
+  }
+
+  .tabName {
+    margin: 5px;
+    display: flex;
+    height: 20px;
+    justify-content: space-evenly;
+  }
+
+  .tabLinks {
+    margin-top: 5px;
+    a:link {
+      text-decoration: none;
+      color: #a18585;
+      padding: 5px 15px;
+    }
+
+    a:link:hover {
+      padding: 5px 15px;
+      border-radius: 5px;
+    }
+  }
+
+  .tabNameA:hover {
+    color: #cdb4b4;
+  }
+
+  .itemTabCont {
+    width: 420px;
+    height: 350px;
+    margin: auto;
+    margin-top: 15px;
     border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    overflow-y: scroll;
+  }
+
+  .itemTabCont::-webkit-scrollbar {
+    width: 12px; /* Set the width of the scrollbar */
+  }
+
+  .itemTabCont::-webkit-scrollbar-track {
+    background: rgb(
+      205,
+      180,
+      180,
+      0.2
+    ); /* Set the background color of the scrollbar track */
+    border-radius: 10px;
+  }
+
+  .itemTabCont::-webkit-scrollbar-thumb {
+    background: #6b4949; /* Set the background color of the scrollbar thumb */
+    border-radius: 6px; /* Optional: Add border-radius to the scrollbar thumb */
+  }
+
+  .itemTabCont::-webkit-scrollbar-thumb:hover {
+    background: #c6aeae; /* Set the background color of the scrollbar thumb when hovered */
+  }
+
+  .itemCard {
+    width: 120px;
+    height: 150px;
+    border: 1px solid #a18585;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 5px;
+  }
+
+  .itemCard:last-child {
+    margin-right: auto; /* Push all items to the right */
+  }
+
+  .costText {
+    color: #362c2c;
+    width: 100%;
+    margin-top: 7px;
+    /* margin-bottom: -13px; */
+    background-color: #faebd7;
+    z-index: 1;
+  }
+
+  .indItem {
+    width: 100px;
+    height: 90px;
+    border-radius: 10px;
+    margin-bottom: 3px;
+  }
+
+  .indItem img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+
+  .indItem:hover {
+    cursor: pointer;
+    background-color: rgb(201, 168, 161, 0.2);
+  }
+
+  .addToCartButton {
+    margin: 2px 1px;
+    width: 95px;
+    background-color: #cdb4b4;
+    border-radius: 10px;
+    border: 2px solid antiquewhite;
+  }
+
+  .addToCartButton:hover {
+    background-color: #a18585;
+    color: #faebd7;
+    cursor: pointer;
+  }
+
+  .cartTab {
+    background-color: #faead6;
+    min-height: 200px;
+    border-radius: 10px;
+    border: 1px solid #6b4949;
+    display: none;
+    position: absolute;
+    z-index: 10;
+    width: 200px;
+    padding: 5px;
+    text-align: center;
+    margin-top: 195px;
+    margin-left: 0px;
+    padding-top: 10px;
+  }
+
+  .cartItemCont {
+    margin: auto;
+    margin-top: 10px;
+    /* background-color: black; */
+    width: 190px;
+    height: 165px;
+    max-height: 175px;
+    border-radius: 10px;
+    overflow-y: scroll;
+  }
+
+  .cartItemCont::-webkit-scrollbar {
+    width: 12px; /* Set the width of the scrollbar */
+  }
+
+  .cartItemCont::-webkit-scrollbar-track {
+    background: rgb(
+      205,
+      180,
+      180,
+      0.2
+    ); /* Set the background color of the scrollbar track */
+    border-radius: 10px;
+  }
+
+  .cartItemCont::-webkit-scrollbar-thumb {
+    background: #6b4949; /* Set the background color of the scrollbar thumb */
+    border-radius: 6px; /* Optional: Add border-radius to the scrollbar thumb */
+  }
+
+  .cartItemCont::-webkit-scrollbar-thumb:hover {
+    background: #c6aeae; /* Set the background color of the scrollbar thumb when hovered */
+  }
+
+  .newCartItem{
+    /* background-color: black; */
+    width: 170px;
+    height: 100px;
+    margin: auto;
+    border-radius: 10px;
+    margin-top: 2px;
+    display: flex;
+    flex-direction: row;
+    border: 2px solid #362c2c;
+    margin-bottom: 5px;
+  }
+  
+  .rightPanel{
+    margin-top: -10px;
+  }
+
+  .leftPanel{
+    /* background-color: #362c2c; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: -5px;
+  }
+
+  .costCont{
+    margin-top: 5px;
+  }
+
+  .trashImg{
+    width: 20px;
+    height: 20px;
+    float: right;
+    margin-top: 13px;
+    margin-bottom: -20px;
+    padding: 3px;
+  }
+
+  .trashImg:hover{
+    background-color: #cdb4b4;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .close-button {
+    float: right;
+    margin-right: 3px;
+    margin-left: -30px;
+    margin-top: -5px;
+    background-color: #a18585;
+    width: 20px;
+    height: 18px;
+    padding: 2px;
+    border-radius: 20px;
+    font-family: "pixelFont";
+    color: #faead6;
+  }
+
+  .close-button:hover {
+    background-color: #6b4949;
+    cursor: pointer;
   }
 }
 
-.tabNameA:hover {
-  color: #faebd7;
-  background-color: #cdb4b4;
+@media all and (max-width: 800px) {
+  .view {
+    background-color: #faead6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 25px;
+    border: 1px solid #a18585;
+    border-radius: 10px;
+    width: 500px;
+    padding: 10px;
+    height: 100vh;
+    margin: 20px;
+    position: relative;
+  }
+
+  .shopBanner {
+    font-family: "pixelFont";
+    margin-top: 20px;
+    margin-bottom: -50px;
+  }
+
+  .charaScreen,
+  .shopPanel {
+    border: 1px solid #a18585;
+    border-radius: 10px;
+    padding: 5px;
+    justify-content: center;
+    text-align: center;
+    width: 95%;
+  }
+
+  .shopPanel {
+    margin-top: 20px;
+    height: 290px;
+  }
+
+  .charaScreen {
+    height: 200px;
+    position: relative;
+    margin-top: 40px;
+    background-color: rgb(198, 174, 174, 0.3);
+  }
+
+  .coinCont,
+  .goBack,
+  .viewCartButton {
+    background-color: #a18585;
+    color: #faebd7;
+    padding: 10px;
+    border-radius: 20px;
+    border: 3px solid #faebd7;
+    box-shadow: 0 0 0 3px #a18585;
+    min-width: fit-content;
+    max-width: fit-content;
+    margin-top: 10px;
+    margin: 10px;
+  }
+
+  .coinCont {
+    float: right;
+  }
+
+  .goBack {
+    float: left;
+
+    a {
+      text-decoration: none;
+      color: #faebd7;
+    }
+  }
+
+  .goBack:hover,
+  .viewCartButton:hover {
+    background-color: #c6aeae;
+    cursor: pointer;
+  }
+
+  .viewCartButton {
+    float: left;
+    margin-top: -12%;
+    padding: 5px;
+  }
+
+  .viewCartButton img {
+    margin-top: 2px;
+    width: 30px;
+    height: 25px;
+    filter: invert(88%) sepia(39%) saturate(108%) hue-rotate(349deg)
+      brightness(99%) contrast(97%);
+  }
+
+  .charaTryOnView {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 200px;
+    background-color: 100%;
+    aspect-ratio: 1/1;
+    justify-self: center;
+    align-self: center;
+  }
+
+  .itemCont {
+    width: 100%;
+    height: 100%;
+    margin-top: -100%;
+  }
+
+  .itemCont:first-child {
+    margin-top: 0;
+  }
+
+  .itemCont img {
+    width: 100%;
+    aspect-ratio: 1/1;
+  }
+
+  .tabName {
+    margin: 5px;
+    display: flex;
+    height: 20px;
+    justify-content: space-evenly;
+  }
+
+  .tabLinks {
+    margin-top: 5px;
+    a:link {
+      text-decoration: none;
+      color: #a18585;
+      padding: 5px 15px;
+    }
+
+    a:link:hover {
+      padding: 5px 15px;
+      border-radius: 5px;
+    }
+  }
+
+  .tabNameA:hover {
+    color: #cdb4b4;
+  }
+
+  .itemTabCont {
+    width: 420px;
+    height: 250px;
+    margin: auto;
+    margin-right: 10px;
+    margin-top: 15px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    overflow-y: scroll;
+  }
+
+  .itemTabCont::-webkit-scrollbar {
+    width: 12px; /* Set the width of the scrollbar */
+  }
+
+  .itemTabCont::-webkit-scrollbar-track {
+    background: rgb(
+      205,
+      180,
+      180,
+      0.2
+    ); /* Set the background color of the scrollbar track */
+    border-radius: 10px;
+  }
+
+  .itemTabCont::-webkit-scrollbar-thumb {
+    background: #6b4949; /* Set the background color of the scrollbar thumb */
+    border-radius: 6px; /* Optional: Add border-radius to the scrollbar thumb */
+  }
+
+  .itemTabCont::-webkit-scrollbar-thumb:hover {
+    background: #c6aeae; /* Set the background color of the scrollbar thumb when hovered */
+  }
+
+  .itemCard {
+    width: 120px;
+    height: 150px;
+    border: 1px solid #a18585;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 5px;
+  }
+
+  .itemCard:last-child {
+    margin-right: auto; /* Push all items to the right */
+  }
+
+  .costText {
+    color: #362c2c;
+    width: 100%;
+    margin-top: 7px;
+    /* margin-bottom: -13px; */
+    background-color: #faebd7;
+  }
+
+  .indItem {
+    width: 100px;
+    height: 90px;
+    border-radius: 10px;
+    margin-bottom: 3px;
+  }
+
+  .indItem img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+
+  .indItem:hover {
+    cursor: pointer;
+    background-color: rgb(201, 168, 161, 0.2);
+  }
+
+  .addToCartButton {
+    margin: 2px 1px;
+    width: 95px;
+    background-color: #cdb4b4;
+    border-radius: 10px;
+    border: 2px solid antiquewhite;
+  }
+
+  .addToCartButton:hover {
+    background-color: #a18585;
+    color: #faebd7;
+    cursor: pointer;
+  }
+
+  .cartTab {
+    background-color: #faead6;
+    min-height: 200px;
+    border-radius: 10px;
+    border: 2px solid #362c2c;
+    display: none;
+    position: absolute;
+    z-index: 10;
+    width: 200px;
+    padding: 5px;
+    text-align: center;
+    margin-top: -212px;
+    padding-top: 10px;
+  }
+
+  .cartItemCont {
+    margin: auto;
+    margin-top: 5px;
+    /* background-color: black; */
+    width: 190px;
+    height: 170px;
+    max-height: 175px;
+    border-radius: 10px;
+    overflow-y: scroll;
+  }
+
+  .cartItemCont::-webkit-scrollbar {
+    width: 12px; /* Set the width of the scrollbar */
+  }
+
+  .cartItemCont::-webkit-scrollbar-track {
+    background: rgb(
+      205,
+      180,
+      180,
+      0.2
+    ); /* Set the background color of the scrollbar track */
+    border-radius: 10px;
+  }
+
+  .cartItemCont::-webkit-scrollbar-thumb {
+    background: #6b4949; /* Set the background color of the scrollbar thumb */
+    border-radius: 6px; /* Optional: Add border-radius to the scrollbar thumb */
+  }
+
+  .cartItemCont::-webkit-scrollbar-thumb:hover {
+    background: #c6aeae; /* Set the background color of the scrollbar thumb when hovered */
+  }
+
+  .close-button {
+    float: right;
+    margin-right: 3px;
+    margin-left: -30px;
+    margin-top: -5px;
+    background-color: #a18585;
+    width: 20px;
+    height: 18px;
+    padding: 2px;
+    border-radius: 20px;
+    font-family: "pixelFont";
+    color: #faead6;
+  }
+
+  .close-button:hover {
+    background-color: #6b4949;
+    cursor: pointer;
+  }
+
+  .newCartItem{
+    /* background-color: black; */
+    width: 170px;
+    height: 100px;
+    margin: auto;
+    border-radius: 10px;
+    margin-top: 2px;
+    display: flex;
+    flex-direction: row;
+    border: 2px solid #362c2c;
+    margin-bottom: 5px;
+  }
+  
+  .rightPanel{
+    margin-top: -10px;
+  }
+
+  .leftPanel{
+    /* background-color: #362c2c; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: -5px;
+  }
+
+  .costCont{
+    margin-top: 5px;
+  }
+
+  .trashImg{
+    width: 20px;
+    height: 20px;
+    float: right;
+    margin-top: 13px;
+    margin-bottom: -20px;
+    padding: 3px;
+  }
+
+  .trashImg:hover{
+    background-color: #cdb4b4;
+    border-radius: 10px;
+    cursor: pointer;
+  }
 }
 
-.choiceBoxCont {
-  border: 1px solid #a18585;
-  margin: auto;
-  border-radius: 10px;
-  padding: 5px;
-  padding-left: 6px;
+.shopBackground {
+  background-color: #faebd7;
   display: flex;
-  gap: 5px;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-content: flex-start;
-  background-color: #a18585;
-  overflow: auto;
-  max-width: 530px;
-  overflow: auto;
-}
-
-.indItem {
-  background-color: #faebd7;
-  border: 1px solid #a18585;
-  border-radius: 10px;
-}
-
-.indItem:hover {
-  cursor: pointer;
-  background-color: rgb(201, 168, 161);
-}
-
-.addToCartButton {
-  margin: 2px 1px;
-  width: 95px;
-  background-color: #cdb4b4;
-  border-radius: 10px;
-  border: 2px solid antiquewhite;
-}
-
-.addToCartButton:hover {
-  background-color: #a18585;
-  color: #faebd7;
-  cursor: pointer;
-}
-
-.cartTab{
-  width: 75%;
-  min-height: 30%;
-  background-color: #faebd7;
-  border: solid 3px #a18585;
-  position: absolute;
-  margin-top: 105%;
-  margin-left: -20%;
-  border-radius: 25px;
-  border-bottom-right-radius: 0px;
-
-  text-align: center;
-  padding: 10px 3px;
-  display: none;
+  align-items: center;
+  min-height: 100vh;
 }
