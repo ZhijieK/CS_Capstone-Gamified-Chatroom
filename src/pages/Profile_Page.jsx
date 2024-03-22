@@ -1,32 +1,34 @@
 //import React from 'react';
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Avatar from '../components/profileComponents/Avatar.jsx';
 import { Link } from 'react-router-dom';
-
-//Clothes
-import red_shirt from '../components/images/characterAssets/clothes/red_shirt.png'
-import suit from '../components/images/characterAssets/clothes/suit.png'
-//eyes
-import blue_eyes from '../components/images/characterAssets/eyes/blue_eyes.png'
-import brown_eyes from '../components/images/characterAssets/eyes/brown_eyes.png'
-import green_eyes from '../components/images/characterAssets/eyes/green_eyes.png'
-
-//hair 
-import short_black_hair from '../components/images/characterAssets/hair/black_short_hair.png'
-import blonde_bob from '../components/images/characterAssets/hair/blonde_bob.png'
-
-//mouth
-import smile_with_teeth from '../components/images/characterAssets/mouth/smile_with_teeth.png'
-import smile from '../components/images/characterAssets/mouth/smile.png'
-
-//skin
-import skin1 from '../components/images/characterAssets/skin/skin1.png'
-import skin2 from '../components/images/characterAssets/skin/skin2.png'
-import skin3 from '../components/images/characterAssets/skin/skin3.png'
-import skin4 from '../components/images/characterAssets/skin/skin4.png'
-import skin5 from '../components/images/characterAssets/skin/skin5.png'
+import { ChatContext } from '../context/ChatContext.jsx';
+import { AuthContext } from '../context/AuthContext.jsx';
+import { getDoc, doc } from 'firebase/firestore';
+import { db } from '../firebase';
 
 const Profile = () => {
+    const [userInfo, setUserInfo] = useState([]);
+
+    const {currentUser} = useContext(AuthContext)
+    // console.log(currentUser.uid, typeof(currentUser.uid))
+    
+    const getUserInfoFromDB = async () =>{
+        try{
+            let userData = await getDoc(doc(db, "users", currentUser.uid));
+            setUserInfo(userData.data())
+            console.log(userInfo)
+            console.log(userInfo.inventory)
+            console.log(userInfo.profileIcon)
+        }catch(error){
+            console.log("Could not find user with data",error)
+        }
+        // console.log(Userdata)
+    }
+
+    useEffect(()=>{
+        getUserInfoFromDB();
+    }, []);
 
     /*Function to change avatar*/
     /*image - the img you wanna change it to, ID - ID of the image to be changed*/
@@ -41,9 +43,37 @@ const Profile = () => {
         
             <div className="container2"> {/*right side*/}
                 <h1>Inventory</h1>
-                <table>
+                {/* <h1 style={{padding:"10px"}}>Buy more in the shop!</h1> */}
+                <Link to="../shop_page" style={{color: 'black'}}> <div className="button"> Shop </div> </Link>
+
+                <div>
+                    <div> //hair 
+
+                    </div>
+                    <div> //skin
+
+                    </div>
+                    <div> // eyes
+
+                    </div>
+                    <div> //mouth
+
+                    </div>
+                    <div> //clothe
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    )
+}
+
+export default Profile
+
+{/* <table>
                     <thead>
-                        <tr>{/*Column Names*/}
+                        <tr>
                             <th>hair</th>
                             <th>eyes</th>
                             <th>shirt</th>
@@ -52,14 +82,14 @@ const Profile = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr> {/*Row 1*/}
+                        <tr> 
                             <td><button onClick={() => changeImage(blonde_bob, 'hair')}><img src={blonde_bob}/></button></td>
                             <td><button onClick={() => changeImage(brown_eyes, 'eyes')}><img src={brown_eyes}/></button></td>
                             <td><button onClick={() => changeImage(red_shirt, 'shirt')}><img src={red_shirt}/></button></td>
                             <td><button onClick={() => changeImage(smile, 'mouth')}><img src={smile}/></button></td>
                             <td><button onClick={() => changeImage(skin1, 'skin')}><img src={skin1}/></button></td>
                         </tr>
-                        <tr> {/*Row 2*/}
+                        <tr>
                             <td><button onClick={() => changeImage(short_black_hair, 'hair')}><img src={short_black_hair}/></button></td>
                             <td><button onClick={() => changeImage(blue_eyes, 'eyes')}><img src={blue_eyes}/></button></td>
                             <td><button onClick={() => changeImage(suit, 'shirt')}><img src={suit}/></button></td>
@@ -67,7 +97,7 @@ const Profile = () => {
                             <td><button onClick={() => changeImage(skin2, 'skin')}><img src={skin2}/></button></td>
                             
                         </tr>
-                        <tr> {/*Row 3*/}
+                        <tr>
                             <td></td>
                             <td><button onClick={() => changeImage(green_eyes, 'eyes')}><img src={green_eyes}/></button></td>
                             <td></td>
@@ -75,13 +105,4 @@ const Profile = () => {
                             <td><button onClick={() => changeImage(skin3, 'skin')}><img src={skin3}/></button></td>
                         </tr>
                     </tbody>
-                </table>
-                <h1 style={{padding:"10px"}}>Buy more in the shop!</h1>
-                <Link to="../shop_page" style={{color: 'black'}}> <div className="button"> Shop </div> </Link>
-            </div>
-        </div>
-
-    )
-}
-
-export default Profile
+                </table> */}
