@@ -66,8 +66,7 @@ const ShopPage = () => {
         <div className="storeCont">
           <div className="charaScreen">
             <Link to="../profile">
-              {" "}
-              <div className="goBack"> Back </div>{" "}
+              <div className="goBack"> Back </div>
             </Link>
             <div className="coinCont"> {coinAmount} </div>
             <div className="charaTryOnView">

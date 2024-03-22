@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom';
 import filler from '../images/generalIcons/filler.png'; /* Transparant img, placeholder for avatar before creation */
 import edit from '../images/generalIcons/edit.png';
 
-const Avatar = () => {
+const Avatar = ({userInfo}) => {
 
   const {currentUser} = useContext(AuthContext);
+  console.log(userInfo);
 
   return (
             <div className="container"> {/*Grey box on left side*/}

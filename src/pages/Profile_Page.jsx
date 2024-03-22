@@ -11,7 +11,6 @@ const Profile = () => {
     const [userInfo, setUserInfo] = useState([]);
 
     const {currentUser} = useContext(AuthContext)
-    // console.log(currentUser.uid, typeof(currentUser.uid))
     
     const getUserInfoFromDB = async () =>{
         try{
@@ -23,7 +22,7 @@ const Profile = () => {
         }catch(error){
             console.log("Could not find user with data",error)
         }
-        // console.log(Userdata)
+        console.log(userInfo)
     }
 
     useEffect(()=>{
@@ -39,7 +38,7 @@ const Profile = () => {
     
     return(
         <div className="profile">
-            <Avatar />
+            <Avatar userInfo={userInfo} />
         
             <div className="container2"> {/*right side*/}
                 <h1>Inventory</h1>

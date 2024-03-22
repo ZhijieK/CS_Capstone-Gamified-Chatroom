@@ -100,9 +100,6 @@ const ShopTabs = () => {
 
     Promise.all(promises)
       .then(() => {
-        // listOfItems.map((item) => {
-        //   console.log(item.cost, item.itemName, item.imageRef)
-        // })
         let box = listOfItems.map((item) => {
           return (
             // Add this return statement
