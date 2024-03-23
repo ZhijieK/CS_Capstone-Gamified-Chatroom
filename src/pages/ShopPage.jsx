@@ -1,5 +1,6 @@
 //modules
 import { useRoutes, Link, useParams, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 // styling
 import "../components/cssFile/shopPage.css";
@@ -18,7 +19,7 @@ const ShopPage = () => {
 
   //variables
   let shopTabsName = ["Skin", "Hair", "Eyes", "Mouth", "Clothes"];
-  let coinAmount = 100;
+  // let coinAmount = 100;
 
   //handle click function
   let handleTabClick = (tabName) => {

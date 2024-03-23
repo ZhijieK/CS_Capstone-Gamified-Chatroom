@@ -1,107 +1,228 @@
 //import React from 'react';
-import React, { useContext, useEffect, useState } from 'react'
-import Avatar from '../components/profileComponents/Avatar.jsx';
-import { Link } from 'react-router-dom';
-import { ChatContext } from '../context/ChatContext.jsx';
-import { AuthContext } from '../context/AuthContext.jsx';
-import { getDoc, doc } from 'firebase/firestore';
-import { db } from '../firebase';
+import React, { useContext, useEffect, useRef, useState } from "react";
+import Avatar from "../components/profileComponents/Avatar.jsx";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext.jsx";
+import { getDoc, doc, getDocs, query, collection, and } from "firebase/firestore";
+import { db, storage } from "../firebase";
+import { getDownloadURL, ref } from "firebase/storage";
+import { useDispatch } from "react-redux";
+import profileIcon, { 
+	setSkin,
+	setHair,
+	setEyes,
+	setMouth,
+	setClothes
+ } from "../redux/features/profileIconSlice.js";
 
 const Profile = () => {
-    const [userInfo, setUserInfo] = useState([]);
+  // const [userInfo, setUserInfo] = useState([]);
+  const { currentUser } = useContext(AuthContext);
+	//gets all the data of the items
+  const [hairItems, setHairItems] = useState([]);
+  const [skinItems, setSkinItems] = useState([]);
+  const [eyesItems, setEyesItems] = useState([]);
+  const [mouthItems, setMouthItems] = useState([]);
+  const [clothesItems, setClothesItems] = useState([]);
+	//states that'll render on the page
+	const [hairBoxes, setHairBoxes] = useState([]);
+	const [skinBoxes, setSkinBoxes] = useState([]);
+	const [eyesBoxes, setEyesBoxes] = useState([]);
+	const [mouthBoxes, setMouthsBoxes] = useState([]);
+	const [clothesBoxes, setClothesBoxes] = useState([]);
 
-    const {currentUser} = useContext(AuthContext)
-    
-    // const getUserInfoFromDB = async () =>{
-    //     try{
-    //         let userData = await getDoc(doc(db, "users", currentUser.uid));
-    //         setUserInfo(userData.data())
-    //     }catch(error){
-    //         console.log("Could not find user with data",error) 
-    //     }
-    // }
+	const dispatch = useDispatch();
 
-    // useEffect(()=>{
-    //     getUserInfoFromDB();
-    // }, []);
+	//click to try on outfit
+	let handleItemSelection = (clickedItem) => {
+		console.log(clickedItem)
+		switch (clickedItem.itemCategory) {
+      case "hair":
+        dispatch(setHair(clickedItem.imageRef));
+        break;
+      case "skin":
+        dispatch(setSkin(clickedItem.imageRef));
+        break;
+      case "eyes":
+        dispatch(setEyes(clickedItem.imageRef));
+        break;
+      case "mouth":
+        dispatch(setMouth(clickedItem.imageRef));
+        break;
+      case "clothes":
+        dispatch(setClothes(clickedItem.imageRef));
+        break;
+      default:
+        break;
+		}
 
-    // useEffect(()=>{
-    //     console.log(userInfo);
-    // }, [userInfo]);
+    const allItems = document.querySelectorAll(".invItem");
+    allItems.forEach((item) => {
+      //shows that an item has been selected by changing the background color
+      if (item.id === clickedItem.itemName && item.imageRef != profileIcon[item.itemCategory]) {
+        item.style.backgroundColor = "#c6aeae";
+      } else {
+        item.style.backgroundColor = "#faebd7";
+      }
+    });
+  };
 
-    /*Function to change avatar*/
-    /*image - the img you wanna change it to, ID - ID of the image to be changed*/
-    const changeImage = (image, ID) => {
-       var img = document.getElementById(ID);
-       img.src = image;
-    }
-    
-    return(
-        <div className="profile">
-            <Avatar userInfo={userInfo} />
-        
-            <div className="container2"> {/*right side*/}
-                <h1>Inventory</h1>
-                {/* <h1 style={{padding:"10px"}}>Buy more in the shop!</h1> */}
-                <Link to="../shop_page" style={{color: 'black'}}> <div className="button"> Shop </div> </Link>
+  useEffect(() => {
+    const getInventoryItemData = async () => {
+			const userData = await getDoc(doc(db, "users", currentUser.uid));
+			const arrayOfOwnedItems = Object.values(userData.data().inventory).flat();
 
-                <div>
-                    <div> //hair 
+			const itemSnapshot = await getDocs(query(collection(db, "shopItems")));
+			const promises = [];
+			itemSnapshot.forEach((doc) => {
+				if (arrayOfOwnedItems.includes(doc.data().itemName.trim())) {
+					promises.push(getDownloadURL(ref(storage, doc.data().imageRef)).then((url) => ({
+						cost: doc.data().cost,
+						imageRef: url,
+						itemCategory: doc.data().itemCategory,
+						itemName: doc.data().itemName,
+					})));
+				}
+			});
 
-                    </div>
-                    <div> //skin
+			const allItems = await Promise.all(promises);
+			const itemsByCategory = allItems.reduce((acc, item) => {
+				acc[item.itemCategory] = [...(acc[item.itemCategory] || []), item];
+				return acc;
+			}, {});
 
-                    </div>
-                    <div> // eyes
+			setHairItems(itemsByCategory.hair || []);
+			setSkinItems(itemsByCategory.skin || []);
+			setEyesItems(itemsByCategory.eyes || []);
+			setMouthItems(itemsByCategory.mouth || []);
+			setClothesItems(itemsByCategory.clothes || []);
+    };
 
-                    </div>
-                    <div> //mouth
+		const displayInventoryItems = async ( )=>{
+			let hairBox = hairItems.map((item) => {
+				return (
+					<div className="itemInvCard">
+              <div
+                className="invItem"
+                key={item.itemName}
+                id={item.itemName}
+                onClick={(event) => handleItemSelection(item)}
+              >
+                <img src={item.imageRef} alt={item.itemName} />
+						</div>
+					</div>
+				);
+			});
+			setHairBoxes(hairBox);
 
-                    </div>
-                    <div> //clothe
+			let skinBox = skinItems.map((item) => {
+				return (
+					<div className="itemInvCard">
+              <div
+                className="invItem"
+                key={item.itemName}
+                id={item.itemName}
+                onClick={(event) => handleItemSelection(item)}
+              >
+                <img src={item.imageRef} alt={item.itemName} />
+						</div>
+					</div>
+				);
+			})
+			setSkinBoxes(skinBox);
 
-                    </div>
-                </div>
-            </div>
+			let eyesBox = eyesItems.map((item) => {
+				return (
+					<div className="itemInvCard">
+              <div
+                className="invItem"
+                key={item.itemName}
+                id={item.itemName}
+                onClick={(event) => handleItemSelection(item)}
+              >
+                <img src={item.imageRef} alt={item.itemName} />
+						</div>
+					</div>
+				);
+			})
+			setEyesBoxes(eyesBox);
+
+			let mouthBox = mouthItems.map((item) => {
+				return (
+					<div className="itemInvCard">
+              <div
+                className="invItem"
+                key={item.itemName}
+                id={item.itemName}
+                onClick={(event) => handleItemSelection(item)}
+              >
+                <img src={item.imageRef} alt={item.itemName} />
+						</div>
+					</div>
+				);
+			})
+			setMouthsBoxes(mouthBox);
+
+			let clothesBox = clothesBoxes.map((item) => {
+				return (
+					<div className="itemInvCard">
+              <div
+                className="invItem"
+                key={item.itemName}
+                id={item.itemName}
+                onClick={(event) => handleItemSelection(item)}
+              >
+                <img src={item.imageRef} alt={item.itemName} />
+						</div>
+					</div>
+				);
+			})
+			setClothesBoxes(clothesBox)
+		};
+
+		getInventoryItemData();
+    displayInventoryItems();
+  }, []);
+
+  /*Function to change avatar*/
+  /*image - the img you wanna change it to, ID - ID of the image to be changed*/
+  const changeImage = (image, ID) => {
+    var img = document.getElementById(ID);
+    img.src = image;
+  };
+
+  return (
+    <div className="profile">
+      <Avatar />
+
+      <div className="container2">
+        {/*right side*/}
+        <h1>Inventory</h1>
+        {/* <h1 style={{padding:"10px"}}>Buy more in the shop!</h1> */}
+        <Link to="../shop_page" style={{ color: "black" }}>
+          {" "}
+          <div className="button"> Shop </div>{" "}
+        </Link>
+        <div>
+          <div className="itemContainer" id="hair">
+						{hairBoxes}
+					</div>
+          <div className="itemContainer" id="skin">
+            {skinBoxes}
+          </div>
+          <div className="itemContainer" id="eyes">
+            {eyesBoxes}
+          </div>
+          <div className="itemContainer" id="mouth">
+            {mouthBoxes}
+          </div>
+          <div className="itemContainer" id="clothes">
+            {clothesBoxes}
+          </div>
         </div>
+      </div>
+    </div>
+  );
+};
 
-    )
-}
-
-export default Profile
-
-{/* <table>
-                    <thead>
-                        <tr>
-                            <th>hair</th>
-                            <th>eyes</th>
-                            <th>shirt</th>
-                            <th>mouth</th>
-                            <th>skin</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr> 
-                            <td><button onClick={() => changeImage(blonde_bob, 'hair')}><img src={blonde_bob}/></button></td>
-                            <td><button onClick={() => changeImage(brown_eyes, 'eyes')}><img src={brown_eyes}/></button></td>
-                            <td><button onClick={() => changeImage(red_shirt, 'shirt')}><img src={red_shirt}/></button></td>
-                            <td><button onClick={() => changeImage(smile, 'mouth')}><img src={smile}/></button></td>
-                            <td><button onClick={() => changeImage(skin1, 'skin')}><img src={skin1}/></button></td>
-                        </tr>
-                        <tr>
-                            <td><button onClick={() => changeImage(short_black_hair, 'hair')}><img src={short_black_hair}/></button></td>
-                            <td><button onClick={() => changeImage(blue_eyes, 'eyes')}><img src={blue_eyes}/></button></td>
-                            <td><button onClick={() => changeImage(suit, 'shirt')}><img src={suit}/></button></td>
-                            <td><button onClick={() => changeImage(smile_with_teeth, 'mouth')}><img src={smile_with_teeth}/></button></td>
-                            <td><button onClick={() => changeImage(skin2, 'skin')}><img src={skin2}/></button></td>
-                            
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td><button onClick={() => changeImage(green_eyes, 'eyes')}><img src={green_eyes}/></button></td>
-                            <td></td>
-                            <td></td>
-                            <td><button onClick={() => changeImage(skin3, 'skin')}><img src={skin3}/></button></td>
-                        </tr>
-                    </tbody>
-                </table> */}
+export default Profile;

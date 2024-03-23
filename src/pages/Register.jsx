@@ -37,6 +37,7 @@ const Register = () => {
           mouth: ["smile"],
           clothes: ["red_shirt"],
         },
+        wallet: 100,
       });
       await updateProfile(res.user, {
         displayName,

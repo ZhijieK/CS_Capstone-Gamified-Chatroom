@@ -33,7 +33,7 @@ const Avatar = () => {
       try {
         const userData = await getDoc(doc(db, "users", currentUser.uid));
         console.log("successfully got user data: ", userData.data());
-
+  
         const promises = Object.values(userData.data().profileIcon).map(
           async (itemId) => {
             const itemRef = await getDoc(doc(db, "shopItems", itemId));
@@ -44,26 +44,38 @@ const Avatar = () => {
           }
         );
         const updatedProfile = await Promise.all(promises);
-        setCurrentProfile((prevProfile) => ({
-          ...prevProfile,
+        console.log("updated profile: ", updatedProfile)
+        const newProfile = {
+          ...currentProfile,
           ...Object.assign({}, ...updatedProfile),
-        }));
-
+        };
+        // setCurrentProfile(newProfile);
+  
         // Update Redux store with the fetched avatar information
-        dispatch(setSkin(currentProfile.skin));
-        dispatch(setHair(currentProfile.hair));
-        dispatch(setEyes(currentProfile.eyes));
-        dispatch(setMouth(currentProfile.mouth));
-        dispatch(setClothes(currentProfile.clothes));
-
-        console.log("updated profile with links: ", currentProfile);
+        dispatch(setSkin(newProfile.skin));
+        dispatch(setHair(newProfile.hair));
+        dispatch(setEyes(newProfile.eyes));
+        dispatch(setMouth(newProfile.mouth));
+        dispatch(setClothes(newProfile.clothes));
+  
+        console.log("updated profile with links: ", newProfile);
         console.log("Redux state:", profileIcon);
       } catch (error) {
         console.log("Could not fetch user data", error);
       }
     };
     fetchData();
-  }, []);
+  }, []);  
+
+  useEffect(() => {
+    setCurrentProfile({
+      skin: profileIcon.skin,
+      hair: profileIcon.hair,
+      eyes: profileIcon.eyes,
+      mouth: profileIcon.mouth,
+      clothes: profileIcon.clothes,
+    });
+  }, [profileIcon]);
 
   return (
     <div className="container">
