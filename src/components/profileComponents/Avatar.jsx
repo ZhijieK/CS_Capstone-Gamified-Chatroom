@@ -16,6 +16,8 @@ import {
 
 import tempIcon from "../images/generalIcons/User.png";
 
+import '../cssFile/profile.css'
+
 const Avatar = () => {
   const { currentUser } = useContext(AuthContext);
   const [currentProfile, setCurrentProfile] = useState({
@@ -93,9 +95,6 @@ const Avatar = () => {
       </div>
       {/*The Avatar*/}
       <div className="circle">
-        {/* <div className="charaTryOnView">
-          
-        </div> */}
         {Object.keys(currentProfile).map((category) => (
           <img
             key={category}
