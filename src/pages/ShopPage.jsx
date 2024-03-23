@@ -1,6 +1,6 @@
 //modules
 import { useRoutes, Link, useParams, Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { useContext, useEffect } from "react";
@@ -27,13 +27,17 @@ const ShopPage = () => {
   //variables
   let shopTabsName = ["Skin", "Hair", "Eyes", "Mouth", "Clothes"];
   let [userWallet, setUserWallet] = useState();
+  const profileIcon = useSelector((state) => state.profileIcon);
 
   useEffect(() => {
     const getWalletAmmount = async () => {
       const userData = await getDoc(doc(db, "users", currentUser.uid));
       setUserWallet(userData.data().wallet);
     };
+    // const loadUserAvatar = () => {
+    //   let itemCont = document.querySelector(".itemCont")
 
+    // }
     getWalletAmmount();
   }, []);
 
@@ -85,14 +89,27 @@ const ShopPage = () => {
             <Link to="../profile">
               <div className="goBack"> Back </div>
             </Link>
-            <div className="coinCont"> {userWallet ? userWallet :  100} Coins</div>
+            <div className="coinCont">
+              {" "}
+              {userWallet ? userWallet : 100} Coins
+            </div>
             <div className="charaTryOnView">
               <div className="itemCont backgroundFill"></div>
-              <div className="skinCont itemCont">{ShopItems[9].image}</div>
-              <div className="eyesCont itemCont"></div>
-              <div className="mouthCont itemCont"></div>
-              <div className="hairCont itemCont"></div>
-              <div className="clothesCont itemCont"></div>
+              <div className="skinCont itemCont">
+                <img src={profileIcon.skin} />
+              </div>
+              <div className="eyesCont itemCont">
+                  <img src={profileIcon.eyes} />
+              </div>
+              <div className="mouthCont itemCont">
+                <img src={profileIcon.mouth} />
+              </div>
+              <div className="hairCont itemCont">
+                <img src={profileIcon.hair} />
+              </div>
+              <div className="clothesCont itemCont">
+                <img src={profileIcon.clothes} />
+              </div>
             </div>
 
             <div className="viewCartButton" onClick={clickViewCart}>
