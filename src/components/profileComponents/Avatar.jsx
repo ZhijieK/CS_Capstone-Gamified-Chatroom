@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext.jsx";
 import { Link } from "react-router-dom";
 import edit from "../images/generalIcons/edit.png";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import { db, storage } from "../../firebase.js";
 import { getDownloadURL, ref } from "firebase/storage";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,8 +17,15 @@ import {
 import tempIcon from "../images/generalIcons/User.png";
 
 import '../cssFile/profile.css'
+import skin from '../images/characterAssets/skin/skin1.png';
+import hair from '../images/characterAssets/hair/black_short_hair.png';
+import eyes from '../images/characterAssets/eyes/brown_eyes.png';
+import mouth from '../images/characterAssets/mouth/smile.png';
+import shirt from '../images/characterAssets/clothes/suit.png';
+
 
 const Avatar = () => {
+  const [info, setInfo] = useState([])
   const { currentUser } = useContext(AuthContext);
   const [currentProfile, setCurrentProfile] = useState({
     skin: tempIcon,
@@ -38,6 +45,20 @@ const Avatar = () => {
       clothes: profileIcon.clothes,
     });
   }, [profileIcon]);
+
+  //Get snapshot of user data
+  useEffect(()=>{
+    const getInfo = ()=>{
+      const unsub = onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
+        setInfo(doc.data());
+      });
+  
+      return () => {
+        unsub();
+      };
+    };
+    currentUser.uid && getInfo()
+  });
 
   return (
     <div className="container">
@@ -67,16 +88,16 @@ const Avatar = () => {
       </div>
       {/*The Bio*/}
       <div className="bio">
-        <p style={{ fontSize: 25, padding: 10 }}>{currentUser.displayName}</p>
-        <p style={{ fontSize: 20 }}>Bio: I'm cool</p>
-      </div>
-      <div className="stats">
-        <p style={{ fontSize: 20 }}>Age: 23</p>
-        <p style={{ fontSize: 20 }}>Friends: 12</p>
-        <p style={{ fontSize: 25, padding: 10 }}>Gold: 100</p>
-        <p style={{ fontSize: 25 }}>Level 2: 300/500 xp</p>
-      </div>
-    </div>
+                  <p style={{fontSize: 25, padding: 10}}>{currentUser.displayName}</p>
+                  <p style={{fontSize: 20}}>Bio: I'm cool</p>
+                </div>
+                <div className="stats">
+                  <p style={{fontSize: 20}}>Age: 23</p>
+                  <p style={{fontSize: 20}}>Friends: 12</p>
+                  <p style={{fontSize:25,padding:10}}>Gold: 100</p>
+                  <p style={{fontSize:25}}>Level 2: 300/500 xp</p>
+                </div>
+            </div>
   );
 };
 
