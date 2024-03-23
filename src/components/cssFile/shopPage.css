@@ -257,12 +257,21 @@
     padding-top: 10px;
   }
 
+  .checkoutButton{
+    background-color: #a18585;
+    width: fit-content;
+    padding: 2px;
+    border-radius: 5px;
+    margin-left: -115px;
+    margin-top: 160px;
+  }
+
   .cartItemCont {
     margin: auto;
     margin-top: 10px;
     /* background-color: black; */
     width: 190px;
-    height: 165px;
+    height: 130px;
     max-height: 175px;
     border-radius: 10px;
     overflow-y: scroll;
@@ -300,7 +309,7 @@
     margin-top: 2px;
     display: flex;
     flex-direction: row;
-    border: 2px solid #362c2c;
+    border: 1px solid #362c2c;
     margin-bottom: 5px;
   }
   
