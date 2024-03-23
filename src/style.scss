@@ -524,6 +524,7 @@ body {
             padding:10px;
             border-radius:30px;
             position:absolute;
+            top:20px;
             right:20px;
 
             transition: transform 0.3s, background-color 0.3s;
@@ -629,6 +630,133 @@ body {
                 height:100px;
                 width:100px;
                 position:center;
+            }
+        }
+
+        .edit_profile{
+            background-color:#a18585;
+            border-radius:50px;
+            height:500px;
+            width:500px;
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            button {
+                background-color: #faebd7;
+                border-radius: 20px;
+                border:none;
+                height:30px;
+                width:100px;
+                padding: 5px;
+                cursor: pointer;
+                font-family: 'pixelFont';
+                font-size: 15px;
+                position:absolute;
+                bottom:70px;
+                right:200px;
+
+                transition: transform 0.3s, background-color 0.3s;
+            }
+
+            button:hover{
+                background-color: #c6aeae;
+                cursor: pointer;
+                transform: translateY(-5px);
+            }
+            
+
+            form{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+                border-radius: 20px;
+                margin-bottom:50px;
+
+                label{
+                    align-self:flex-start;
+                    position:relative;
+                    font-size:larger;
+                    right:10px;
+                }
+    
+                input {
+                    background-color: #a18585;
+                    width:370px;
+                    padding: 5px;
+                    border: 1px solid #faebd7;
+                    border-radius: 5px;
+                    box-sizing: border-box;
+                    box-shadow: 0px 0px 20px 0px rgba(0,0,0, 0.2);
+                    font-size:larger;
+                    font-family: 'pixelFont';
+                }
+
+                textarea{
+                    background-color:#faebd7;
+                    width:350px;
+                    height:100px;
+                    width:370px;
+                    border: 1px solid #faebd7;
+                    border-radius: 5px;
+                    resize: none;
+                    box-shadow: 0px 0px 20px 0px rgba(0,0,0, 0.2);
+                    font-size:medium;
+                    font-family: 'pixelFont';
+                }
+                
+                input::placeholder{
+                    color:white;
+                }
+
+                fieldset{
+                    display:flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    border: 1px solid #faebd7;
+                    border-radius: 5px;
+                    padding: 10px;
+                    height:50px;
+                    width:350px;
+
+                    legend{
+                        padding: 0 10px;
+                    }
+                    
+                    label{
+                        padding-right: 20px;
+                        left:10px;
+                    }
+                    
+                    input{
+                        width:40px;
+                    }
+
+                }
+    
+                button {
+                    background-color: #faebd7;
+                    border-radius: 20px;
+                    border:none;
+                    height:30px;
+                    width:100px;
+                    padding: 5px;
+                    cursor: pointer;
+                    font-family: 'pixelFont';
+                    font-size: 15px;
+                    left:200px;
+
+                    transition: transform 0.3s, background-color 0.3s;
+                }
+    
+                button:hover{
+                    background-color: #c6aeae;
+                    cursor: pointer;
+                    transform: translateY(-5px);
+                }
             }
         }
     }

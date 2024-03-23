@@ -15,6 +15,8 @@ const Register = () => {
     const displayName = e.target[0].value;
     const email = e.target[1].value;
     const password = e.target[2].value;
+    const bio = '';
+    const gender = '';
 
     try{
     const res = await createUserWithEmailAndPassword(auth, email, password)
@@ -23,6 +25,8 @@ const Register = () => {
       uid: res.user.uid,
       displayName,
       email,
+      bio,
+      gender,
     })
     await updateProfile(res.user, {
       displayName
@@ -49,7 +53,7 @@ const Register = () => {
               <span className="title">Pixel Palz</span>
               <span className="title2">Create Your Account</span>
               <form onSubmit={handleSubmit}>
-                  <input type='text' placeholder='Username'></input>
+                  <input type='text' placeholder='Username' ></input>
                   <input type='email' placeholder='Email'></input>
                   <input type='password' placeholder='Password'></input>
                   <button>Sign up</button>
