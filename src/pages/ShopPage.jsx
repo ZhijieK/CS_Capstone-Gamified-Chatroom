@@ -7,6 +7,7 @@ import { useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { current } from "@reduxjs/toolkit";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 // styling
 import "../components/cssFile/shopPage.css";
@@ -28,6 +29,7 @@ const ShopPage = () => {
   let shopTabsName = ["Skin", "Hair", "Eyes", "Mouth", "Clothes"];
   let [userWallet, setUserWallet] = useState();
   const profileIcon = useSelector((state) => state.profileIcon);
+  const walletAmount = useSelector((state) => state.userInfo.wallet)
 
   useEffect(() => {
     const getWalletAmmount = async () => {
@@ -38,7 +40,7 @@ const ShopPage = () => {
     //   let itemCont = document.querySelector(".itemCont")
 
     // }
-    getWalletAmmount();
+    // getWalletAmmount();
   }, []);
 
   //handle click function
@@ -91,7 +93,7 @@ const ShopPage = () => {
             </Link>
             <div className="coinCont">
               {" "}
-              {userWallet ? userWallet : 100} Coins
+              {/* {userWallet ? userWallet : 100} Coins */}
             </div>
             <div className="charaTryOnView">
               <div className="itemCont backgroundFill"></div>
@@ -99,7 +101,7 @@ const ShopPage = () => {
                 <img src={profileIcon.skin} />
               </div>
               <div className="eyesCont itemCont">
-                  <img src={profileIcon.eyes} />
+                <img src={profileIcon.eyes} />
               </div>
               <div className="mouthCont itemCont">
                 <img src={profileIcon.mouth} />

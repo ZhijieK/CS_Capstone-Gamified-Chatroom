@@ -21,6 +21,7 @@ import {
   where,
 } from "firebase/firestore";
 import { getDownloadURL, getStorage, list, ref } from "firebase/storage";
+import { useDispatch, useSelector } from "react-redux";
 
 const ShopTabs = () => {
   //variables
@@ -30,6 +31,9 @@ const ShopTabs = () => {
   const [choiceBoxes, setChoiceBoxes] = useState([]);
   const [cartItemCards, setCartItemCards] = useState([]);
   const [cartTotal, setCartTotal] = useState(0);
+  const arrayOfOwnedItems = useSelector((state) => state.userInfo.inventory);
+  // console.log(arrayOfOwnedItems)
+  
 
   //creates a shop database
   const addItemsToDatabase = async (storageRef) => {
@@ -82,21 +86,23 @@ const ShopTabs = () => {
 
     //query the snapshot to get the item attributes and url link for the array
     itemSnapshot.forEach((doc) => {
-      let promise = getDownloadURL(ref(storage, doc.data().imageRef))
-        .then((url) => {
-          console.log(url);
-          listOfItems.push({
-            cost: doc.data().cost,
-            imageRef: url,
-            itemCategory: doc.data().itemCategory,
-            itemName: doc.data().itemName,
-          });
-        })
-        .catch((error) => {
-          console.log("Error fetching image url", error);
-        });
-      promises.push(promise);
-    });
+      if (!arrayOfOwnedItems.includes(doc.data().itemName.trim())) {
+          let promise = getDownloadURL(ref(storage, doc.data().imageRef))
+              .then((url) => {
+                  console.log(url);
+                  listOfItems.push({
+                      cost: doc.data().cost,
+                      imageRef: url,
+                      itemCategory: doc.data().itemCategory,
+                      itemName: doc.data().itemName,
+                  });
+              })
+              .catch((error) => {
+                  console.log("Error fetching image url", error);
+              });
+          promises.push(promise);
+      }
+  });
 
     Promise.all(promises)
       .then(() => {

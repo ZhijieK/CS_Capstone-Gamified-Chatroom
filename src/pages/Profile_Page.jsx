@@ -14,7 +14,7 @@ import {
 import { db, storage } from "../firebase";
 import { getDownloadURL, ref } from "firebase/storage";
 import { useDispatch, useSelector } from "react-redux";
-import profileIcon, {
+import {
   setSkin,
   setHair,
   setEyes,
