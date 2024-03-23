@@ -12,22 +12,22 @@ const Profile = () => {
 
     const {currentUser} = useContext(AuthContext)
     
-    const getUserInfoFromDB = async () =>{
-        try{
-            let userData = await getDoc(doc(db, "users", currentUser.uid));
-            setUserInfo(userData.data())
-            console.log(userInfo)
-            console.log(userInfo.inventory)
-            console.log(userInfo.profileIcon)
-        }catch(error){
-            console.log("Could not find user with data",error)
-        }
-        console.log(userInfo)
-    }
+    // const getUserInfoFromDB = async () =>{
+    //     try{
+    //         let userData = await getDoc(doc(db, "users", currentUser.uid));
+    //         setUserInfo(userData.data())
+    //     }catch(error){
+    //         console.log("Could not find user with data",error) 
+    //     }
+    // }
 
-    useEffect(()=>{
-        getUserInfoFromDB();
-    }, []);
+    // useEffect(()=>{
+    //     getUserInfoFromDB();
+    // }, []);
+
+    // useEffect(()=>{
+    //     console.log(userInfo);
+    // }, [userInfo]);
 
     /*Function to change avatar*/
     /*image - the img you wanna change it to, ID - ID of the image to be changed*/

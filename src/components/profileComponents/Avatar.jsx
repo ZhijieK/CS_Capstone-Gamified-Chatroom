@@ -3,22 +3,48 @@ import { AuthContext } from "../../context/AuthContext.jsx";
 import { Link } from "react-router-dom";
 import filler from "../images/generalIcons/filler.png"; /* Transparant img, placeholder for avatar before creation */
 import edit from "../images/generalIcons/edit.png";
+import { doc, getDoc } from "firebase/firestore";
+import { db, storage } from "../../firebase.js";
+import { getDownloadURL, ref } from "firebase/storage";
 
-const Avatar = ({ userInfo }) => {
+import tempIcon from "../images/generalIcons/User.png";
+
+const Avatar = () => {
   const { currentUser } = useContext(AuthContext);
-  const inventoryInfo = userInfo.inventory;
-  const profileIconInfo = userInfo.profileIcon;
-  console.log(inventoryInfo, profileIconInfo);
+  const [currentProfile, setCurrentProfile] = useState({
+    skin: tempIcon,
+    hair: tempIcon,
+    eyes: tempIcon,
+    mouth: tempIcon,
+    clothes: tempIcon,
+  });
+  const [userInfo, setUserInfo] = useState({});
 
-  const getProfileItemsFromDatabase = async () => {
-    for (const item in profileIconInfo){
-      console.log(profileIconInfo[item]);
-    }
-  };  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userData = await getDoc(doc(db, "users", currentUser.uid));
+        console.log("successfully got user data: ", userData.data())
+        setUserInfo(userData.data());
+        console.log("updated userInfo: ", userInfo)
 
-  useEffect(() =>{
-    getProfileItemsFromDatabase();
-  }, [])
+        const promises = Object.values(userData.data().profileIcon).map(async (itemId) => {
+          const itemRef = await getDoc(doc(db, "shopItems", itemId));
+          const url = await getDownloadURL(ref(storage, itemRef.data().imageRef));
+          return { [itemRef.data().itemCategory]: url };
+        });
+        const updatedProfile = await Promise.all(promises);
+        setCurrentProfile((prevProfile) => ({
+          ...prevProfile,
+          ...Object.assign({}, ...updatedProfile),
+        }));
+        console.log("updated profile with links: ", currentProfile)
+      } catch (error) {
+        console.log("Could not fetch user data", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="container">
@@ -36,11 +62,12 @@ const Avatar = ({ userInfo }) => {
       </div>
       {/*The Avatar*/}
       <div className="circle">
-        <img src={filler} id="skin" />
-        <img src={filler} id="mouth" />
-        <img src={filler} id="hair" />
-        <img src={filler} id="eyes" />
-        <img src={filler} id="shirt" />
+        {/* <div className="charaTryOnView">
+          
+        </div> */}
+        {Object.keys(currentProfile).map((category) => (
+          <img key={category} className="avatar-image" data-category={category} src={currentProfile[category]} alt={category} />
+        ))}
       </div>
       {/*The Bio*/}
       <div className="bio">
