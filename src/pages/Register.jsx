@@ -15,6 +15,8 @@ const Register = () => {
     const displayName = e.target[0].value;
     const email = e.target[1].value;
     const password = e.target[2].value;
+    const bio = '';
+    const gender = '';
 
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
@@ -38,7 +40,9 @@ const Register = () => {
           clothes: ["red_shirt"],
         },
         wallet: 100,
-      });
+        bio,
+      gender,
+    });
       await updateProfile(res.user, {
         displayName,
       });
@@ -60,26 +64,24 @@ const Register = () => {
 
   return (
     <div className="homepage">
-      <Homebar />
-      <div className="homecontent">
-        <div className="home_img">
-          <img src={Logo} />
+        <Homebar/>
+        <div className="homecontent">
+          <div className="home_img">
+            <img src={Logo} />
+          </div>
+          <div className='login_box'>
+              <span className="title">Pixel Palz</span>
+              <span className="title2">Create Your Account</span>
+              <form onSubmit={handleSubmit}>
+                  <input type='text' placeholder='Username' ></input>
+                  <input type='email' placeholder='Email'></input>
+                  <input type='password' placeholder='Password'></input>
+                  <button>Sign up</button>
+                  {err && <span className='error_message'>{err}</span>}
+              </form>
+              <p>Already have an account? <Link to="/login">Login</Link></p>
+          </div>
         </div>
-        <div className="login_box">
-          <span className="title">Pixel Palz</span>
-          <span className="title2">Create Your Account</span>
-          <form onSubmit={handleSubmit}>
-            <input type="text" placeholder="Username"></input>
-            <input type="email" placeholder="Email"></input>
-            <input type="password" placeholder="Password"></input>
-            <button>Sign up</button>
-            {err && <span className="error_message">{err}</span>}
-          </form>
-          <p>
-            Already have an account? <Link to="/login">Login</Link>
-          </p>
-        </div>
-      </div>
     </div>
   );
 };
