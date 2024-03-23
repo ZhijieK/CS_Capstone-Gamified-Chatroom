@@ -1,11 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext.jsx";
 import { Link } from "react-router-dom";
-import filler from "../images/generalIcons/filler.png"; /* Transparant img, placeholder for avatar before creation */
 import edit from "../images/generalIcons/edit.png";
 import { doc, getDoc } from "firebase/firestore";
 import { db, storage } from "../../firebase.js";
 import { getDownloadURL, ref } from "firebase/storage";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setSkin,
+  setHair,
+  setEyes,
+  setMouth,
+  setClothes,
+} from "../../redux/features/profileIconSlice.js";
 
 import tempIcon from "../images/generalIcons/User.png";
 
@@ -18,27 +25,39 @@ const Avatar = () => {
     mouth: tempIcon,
     clothes: tempIcon,
   });
-  const [userInfo, setUserInfo] = useState({});
+  const dispatch = useDispatch();
+  const profileIcon = useSelector((state) => state.profileIcon);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const userData = await getDoc(doc(db, "users", currentUser.uid));
-        console.log("successfully got user data: ", userData.data())
-        setUserInfo(userData.data());
-        console.log("updated userInfo: ", userInfo)
+        console.log("successfully got user data: ", userData.data());
 
-        const promises = Object.values(userData.data().profileIcon).map(async (itemId) => {
-          const itemRef = await getDoc(doc(db, "shopItems", itemId));
-          const url = await getDownloadURL(ref(storage, itemRef.data().imageRef));
-          return { [itemRef.data().itemCategory]: url };
-        });
+        const promises = Object.values(userData.data().profileIcon).map(
+          async (itemId) => {
+            const itemRef = await getDoc(doc(db, "shopItems", itemId));
+            const url = await getDownloadURL(
+              ref(storage, itemRef.data().imageRef)
+            );
+            return { [itemRef.data().itemCategory]: url };
+          }
+        );
         const updatedProfile = await Promise.all(promises);
         setCurrentProfile((prevProfile) => ({
           ...prevProfile,
           ...Object.assign({}, ...updatedProfile),
         }));
-        console.log("updated profile with links: ", currentProfile)
+
+        // Update Redux store with the fetched avatar information
+        dispatch(setSkin(currentProfile.skin));
+        dispatch(setHair(currentProfile.hair));
+        dispatch(setEyes(currentProfile.eyes));
+        dispatch(setMouth(currentProfile.mouth));
+        dispatch(setClothes(currentProfile.clothes));
+
+        console.log("updated profile with links: ", currentProfile);
+        console.log("Redux state:", profileIcon);
       } catch (error) {
         console.log("Could not fetch user data", error);
       }
@@ -66,7 +85,13 @@ const Avatar = () => {
           
         </div> */}
         {Object.keys(currentProfile).map((category) => (
-          <img key={category} className="avatar-image" data-category={category} src={currentProfile[category]} alt={category} />
+          <img
+            key={category}
+            className="avatar-image"
+            data-category={category}
+            src={currentProfile[category]}
+            alt={category}
+          />
         ))}
       </div>
       {/*The Bio*/}
