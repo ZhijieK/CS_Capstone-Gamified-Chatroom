@@ -70,9 +70,7 @@ const Avatar = () => {
           <div className="button"> Go Back </div>{" "}
         </Link>
         <p style={{ fontSize: 35, padding: 20 }}>Profile</p>
-        <div className="button2">
-          <img src={edit} />
-        </div>
+        <Link to="../profile_edit" style={{color: 'black'}}> <div className="button2"><img src={edit} /></div> </Link>
       </div>
       {/*The Avatar*/}
       <div className="circle">
@@ -88,14 +86,13 @@ const Avatar = () => {
       </div>
       {/*The Bio*/}
       <div className="bio">
-                  <p style={{fontSize: 25, padding: 10}}>{currentUser.displayName}</p>
-                  <p style={{fontSize: 20}}>Bio: I'm cool</p>
+                  <p style={{fontSize: 25, padding: 5}}>{info.displayName}</p>
+                  <p style={{fontSize: 20, padding: 5}}>Bio: {info.bio}</p>
+                  <p style={{fontSize: 20, padding: 5}}>Gender: {info.gender}</p>
                 </div>
                 <div className="stats">
-                  <p style={{fontSize: 20}}>Age: 23</p>
                   <p style={{fontSize: 20}}>Friends: 12</p>
-                  <p style={{fontSize:25,padding:10}}>Gold: 100</p>
-                  <p style={{fontSize:25}}>Level 2: 300/500 xp</p>
+                  <p style={{fontSize:20,padding:10}}>Gold: {info.wallet}</p>
                 </div>
             </div>
   );
