@@ -26,7 +26,6 @@ import "../components/cssFile/profile.css";
 
 const Profile = () => {
   // const [userInfo, setUserInfo] = useState([]);
-  const { currentUser } = useContext(AuthContext);
   //gets all the data of the items
   const [hairItems, setHairItems] = useState([]);
   const [skinItems, setSkinItems] = useState([]);

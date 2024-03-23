@@ -27,47 +27,7 @@ const Avatar = () => {
     mouth: tempIcon,
     clothes: tempIcon,
   });
-  const dispatch = useDispatch();
-  const profileIcon = useSelector((state) => state.profileIcon);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const userData = await getDoc(doc(db, "users", currentUser.uid));
-        console.log("successfully got user data: ", userData.data());
-  
-        const promises = Object.values(userData.data().profileIcon).map(
-          async (itemId) => {
-            const itemRef = await getDoc(doc(db, "shopItems", itemId));
-            const url = await getDownloadURL(
-              ref(storage, itemRef.data().imageRef)
-            );
-            return { [itemRef.data().itemCategory]: url };
-          }
-        );
-        const updatedProfile = await Promise.all(promises);
-        console.log("updated profile: ", updatedProfile)
-        const newProfile = {
-          ...currentProfile,
-          ...Object.assign({}, ...updatedProfile),
-        };
-        // setCurrentProfile(newProfile);
-  
-        // Update Redux store with the fetched avatar information
-        dispatch(setSkin(newProfile.skin));
-        dispatch(setHair(newProfile.hair));
-        dispatch(setEyes(newProfile.eyes));
-        dispatch(setMouth(newProfile.mouth));
-        dispatch(setClothes(newProfile.clothes));
-  
-        console.log("updated profile with links: ", newProfile);
-        console.log("Redux state:", profileIcon);
-      } catch (error) {
-        console.log("Could not fetch user data", error);
-      }
-    };
-    fetchData();
-  }, []);  
+  const profileIcon = useSelector((state) => state.profileIcon); 
 
   useEffect(() => {
     setCurrentProfile({

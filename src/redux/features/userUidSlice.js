@@ -9,7 +9,7 @@ export const userUidSlice = createSlice({
     initialState,
     reducers: {
         setUid: (state, action) => {
-            state.uid = action,payload;
+            state.uid = action.payload;
         },
     }
 })
