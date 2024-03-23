@@ -10,14 +10,11 @@ const Profile_edit = () => {
   const navigate = useNavigate();
   const [err,setErr] = useState(false);
 
-  //Used to store gender
-  const[gender,setGender]=useState();
-  const[female,setFemale]=useState();
-  const[male,setMale]=useState();
-  const[other,setOther]=useState();
-
   //Used to store user data
   const [info, setInfo] = useState([])
+
+  //Used to store gender
+  const[gender,setGender]=useState();
 
   //Handle updating user profile
   const handleSubmit = async (e)=>{
@@ -31,7 +28,7 @@ const Profile_edit = () => {
     await updateDoc(doc(db, "users", currentUser.uid), {
       displayName: name,
       bio: bio,
-      gender: Gender
+      gender: Gender,
     })
 
     navigate('../profile');
@@ -40,7 +37,7 @@ const Profile_edit = () => {
       setErr(true);
       console.log(err);
     }
-    }
+  }
 
   //Get snapshot of user data
   useEffect(()=>{
@@ -56,20 +53,25 @@ const Profile_edit = () => {
     currentUser.uid && getInfo()
     });
 
+    const[female,setFemale]=useState();
+    const[male,setMale]=useState();
+    const[other,setOther]=useState();
+
     //Gets users gender to show during profile editing
     useEffect(()=>{
       const getGender = ()=>{
+        //setGender(info.gender);
         if(info.gender == 'female'){
           setFemale(true);
-          setGender('female');
+          //setGender('female');
         }
         else if(info.gender == 'male'){
           setMale(true);
-          setGender('male');
+          //setGender('male');
         }
-        else{
+        else if(info.gender == 'other'){
           setOther(true);
-          setGender('other');
+          //setGender('other');
         }
       };
       getGender()
