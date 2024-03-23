@@ -32,7 +32,6 @@ function App() {
     {path: "Profile_edit/", element: <ProfileEdit />},
   ])
   
-
   return (
     <div>
       {linkElements}
