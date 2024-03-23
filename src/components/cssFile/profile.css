@@ -1,15 +1,14 @@
 .itemContainer {
   /* background-color: aqua; */
-  border: 1px solid #a18585;
-  width: 95%;
-  height: 122px;
+  /* border: 1px solid #a18585; */
+  width: 85%;
   margin: 10px;
-  border-radius: 12px;
+  border-radius: 20px;
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
-  overflow-x: scroll;
-  overflow-y: hidden;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .itemContainer:first-child {
@@ -17,9 +16,7 @@
 }
 
 .itemContainer::-webkit-scrollbar {
-  /* width: 12px; Set the width of the scrollbar */
-  height: 7px;
-  width: 300px;
+  width: 12px;
 }
 
 .itemContainer::-webkit-scrollbar-track {
@@ -33,7 +30,7 @@
 }
 
 .itemContainer::-webkit-scrollbar-thumb {
-  background: #6b4949; /* Set the background color of the scrollbar thumb */
+  background: #6b4949; /* Set the background color of the scrollbar thumb *
   border-radius: 6px; /* Optional: Add border-radius to the scrollbar thumb */
 }
 
@@ -42,28 +39,24 @@
 }
 
 .itemInvCard {
-  width: 90px;
-  height: 90px;
+  width: 145px;
+  aspect-ratio: 1/1;
   border: 1px solid #a18585;
   border-radius: 10px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 10px;
-  margin-left: 10px;
+  margin: 1%;
+
+  img {
+    width: 150px;
+    padding: -10px;
+    margin: auto;
+  }
 }
 
-.invItem {
-  width: max-content;
+.itemInvCard:last-child {
+  margin-right: auto; /* Push all items to the right */
 }
 
 .itemInvCard:hover {
   background-color: #c6aeae;
   cursor: pointer;
-}
-
-.avatar-image {
-  width: 100%;
-  margin: auto;
-  /* background-color: aqua; */
 }

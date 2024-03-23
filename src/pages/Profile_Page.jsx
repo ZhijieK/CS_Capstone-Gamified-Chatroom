@@ -1,7 +1,7 @@
 //import React from 'react';
 import React, { useContext, useEffect, useRef, useState } from "react";
 import Avatar from "../components/profileComponents/Avatar.jsx";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext.jsx";
 import {
   getDoc,
@@ -13,7 +13,7 @@ import {
 } from "firebase/firestore";
 import { db, storage } from "../firebase";
 import { getDownloadURL, ref } from "firebase/storage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import profileIcon, {
   setSkin,
   setHair,
@@ -27,19 +27,16 @@ import "../components/cssFile/profile.css";
 const Profile = () => {
   // const [userInfo, setUserInfo] = useState([]);
   //gets all the data of the items
-  const [hairItems, setHairItems] = useState([]);
-  const [skinItems, setSkinItems] = useState([]);
-  const [eyesItems, setEyesItems] = useState([]);
-  const [mouthItems, setMouthItems] = useState([]);
-  const [clothesItems, setClothesItems] = useState([]);
+  let urlPage = useParams();
+  const [inventoryItems, setInventoryItems] = useState([]);
+
   //states that'll render on the page
-  const [hairBoxes, setHairBoxes] = useState([]);
-  const [skinBoxes, setSkinBoxes] = useState([]);
-  const [eyesBoxes, setEyesBoxes] = useState([]);
-  const [mouthBoxes, setMouthsBoxes] = useState([]);
-  const [clothesBoxes, setClothesBoxes] = useState([]);
+  const [inventoryBox, setInventoryBox] = useState([]);
+
 
   const dispatch = useDispatch();
+  const arrayOfOwnedItems = useSelector((state) => state.userInfo.inventory);
+  console.log(arrayOfOwnedItems);
 
   //click to try on outfit
   let handleItemSelection = (clickedItem) => {
@@ -67,9 +64,6 @@ const Profile = () => {
 
   useEffect(() => {
     const getInventoryItemData = async () => {
-      const userData = await getDoc(doc(db, "users", currentUser.uid));
-      const arrayOfOwnedItems = Object.values(userData.data().inventory).flat();
-
       const itemSnapshot = await getDocs(query(collection(db, "shopItems")));
       const promises = itemSnapshot.docs
         .filter((doc) => arrayOfOwnedItems.includes(doc.data().itemName.trim()))
@@ -82,118 +76,38 @@ const Profile = () => {
             itemName: doc.data().itemName,
           };
         });
-
+  
       const allItems = await Promise.all(promises);
-      const itemsByCategory = allItems.reduce((acc, item) => {
-        acc[item.itemCategory] = [...(acc[item.itemCategory] || []), item];
-        return acc;
-      }, {});
-
-      setHairItems(itemsByCategory.hair || []);
-      setSkinItems(itemsByCategory.skin || []);
-      setEyesItems(itemsByCategory.eyes || []);
-      setMouthItems(itemsByCategory.mouth || []);
-      setClothesItems(itemsByCategory.clothes || []);
+      setInventoryItems(allItems);
+  
+      // Move this logic inside the getInventoryItemData function
+      const inventoryBox = allItems.map((item) => {
+        return (
+          <div className="itemInvCard" key={item.itemName}>
+            <div
+              className="invItem"
+              id={item.itemName}
+              onClick={(event) => handleItemSelection(item)}
+            >
+              <img src={item.imageRef} alt={item.itemName} />
+            </div>
+          </div>
+        );
+      });
+      setInventoryBox(inventoryBox);
     };
-
-    const displayInventoryItems = async () => {
-      let hairBox = hairItems.map((item) => {
-        return (
-          <div className="itemInvCard">
-            <div
-              className="invItem"
-              key={item.itemName}
-              id={item.itemName}
-              onClick={(event) => handleItemSelection(item)}
-            >
-              <img src={item.imageRef} alt={item.itemName} />
-            </div>
-          </div>
-        );
-      });
-      setHairBoxes(hairBox);
-
-      let skinBox = skinItems.map((item) => {
-        return (
-          <div className="itemInvCard">
-            <div
-              className="invItem"
-              key={item.itemName}
-              id={item.itemName}
-              onClick={(event) => handleItemSelection(item)}
-            >
-              <img src={item.imageRef} alt={item.itemName} />
-            </div>
-          </div>
-        );
-      });
-      setSkinBoxes(skinBox);
-
-      let eyesBox = eyesItems.map((item) => {
-        return (
-          <div className="itemInvCard">
-            <div
-              className="invItem"
-              key={item.itemName}
-              id={item.itemName}
-              onClick={(event) => handleItemSelection(item)}
-            >
-              <img src={item.imageRef} alt={item.itemName} />
-            </div>
-          </div>
-        );
-      });
-      setEyesBoxes(eyesBox);
-
-      let mouthBox = mouthItems.map((item) => {
-        return (
-          <div className="itemInvCard">
-            <div
-              className="invItem"
-              key={item.itemName}
-              id={item.itemName}
-              onClick={(event) => handleItemSelection(item)}
-            >
-              <img src={item.imageRef} alt={item.itemName} />
-            </div>
-          </div>
-        );
-      });
-      setMouthsBoxes(mouthBox);
-
-      let clothesBox = clothesItems.map((item) => {
-        return (
-          <div className="itemInvCard">
-            <div
-              className="invItem"
-              key={item.itemName}
-              id={item.itemName}
-              onClick={(event) => handleItemSelection(item)}
-            >
-              <img src={item.imageRef} alt={item.itemName} />
-            </div>
-          </div>
-        );
-      });
-      setClothesBoxes(clothesBox);
-    };
-
+  
     getInventoryItemData();
-    displayInventoryItems();
-  }, []);
-	
+  }, [arrayOfOwnedItems]); // Add arrayOfOwnedItems as a dependency  
+
   /*Function to change avatar*/
   /*image - the img you wanna change it to, ID - ID of the image to be changed*/
-  const changeImage = (image, ID) => {
-    var img = document.getElementById(ID);
-    img.src = image;
-  };
 
   return (
     <div className="profile">
       <Avatar />
 
-      <div className="container2">
+      <div className="container2"> 
         {/*right side*/}
         <h1>Inventory</h1>
         {/* <h1 style={{padding:"10px"}}>Buy more in the shop!</h1> */}
@@ -202,19 +116,7 @@ const Profile = () => {
           <div className="button"> Shop </div>{" "}
         </Link>
         <div className="itemContainer" id="hair">
-          {hairBoxes}
-        </div>
-        <div className="itemContainer" id="skin">
-          {skinBoxes}
-        </div>
-        <div className="itemContainer" id="eyes">
-          {eyesBoxes}
-        </div>
-        <div className="itemContainer" id="mouth">
-          {mouthBoxes}
-        </div>
-        <div className="itemContainer" id="clothes">
-          {clothesBoxes}
+          {inventoryBox}
         </div>
       </div>
     </div>

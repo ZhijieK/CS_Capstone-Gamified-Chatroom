@@ -49,7 +49,7 @@ const Home = () => {
     mouth: tempIcon,
     clothes: tempIcon,
   });
-  const profileIcon = useSelector((state) => state.profileIcon);
+  // const profileIcon = useSelector((state) => state.profileIcon);
   const allUserInfo = useSelector((state) => state.userInfo)
 
 
@@ -97,7 +97,7 @@ const Home = () => {
         dispatch(setClothes(newProfile.clothes));
   
         console.log("updated profile with links: ", newProfile);
-        // console.log("Redux state:", profileIcon);
+        console.log("Redux state:", profileIcon);
       } catch (error) {
         console.log("Could not fetch user data", error);
       }
