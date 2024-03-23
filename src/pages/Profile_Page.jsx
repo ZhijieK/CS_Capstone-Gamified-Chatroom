@@ -40,7 +40,7 @@ const Profile = () => {
             <Avatar />
         
             <div className="container2"> {/*right side*/}
-                <h1>Inventory</h1>
+                <p style={{fontSize: 35,padding:20}}>Inventory</p>
                 <table>
                     <thead>
                         <tr>{/*Column Names*/}
@@ -76,7 +76,7 @@ const Profile = () => {
                         </tr>
                     </tbody>
                 </table>
-                <h1 style={{padding:"10px"}}>Buy more in the shop!</h1>
+                <p style={{fontSize: 35,padding:20}}>Buy more in the shop!</p>
                 <Link to="../shop_page" style={{color: 'black'}}> <div className="button"> Shop </div> </Link>
             </div>
         </div>

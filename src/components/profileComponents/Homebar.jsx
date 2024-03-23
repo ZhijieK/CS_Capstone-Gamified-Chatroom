@@ -1,3 +1,5 @@
+//Navbar for home page
+
 import React from 'react';
 import Logo from '../images/generalIcons/Logo.png';
 import { Link } from 'react-router-dom';
@@ -9,7 +11,7 @@ const Homebar = () => {
                 <Link to="/home_page"> <img src={Logo} /> </Link>
                 <h1>Pixel Palz</h1>
             </div>
-            <div className="right">
+            <div className="right"> {/* Login / Sign Up buttons */}
                 <Link to="/login" style={{color: 'black'}}> <div className="loginbuttons"> <p> Login </p> </div> </Link>
                 <Link to="/register" style={{color: 'black'}}> <div className="loginbuttons"> <p> Sign Up </p> </div> </Link>
             </div>
