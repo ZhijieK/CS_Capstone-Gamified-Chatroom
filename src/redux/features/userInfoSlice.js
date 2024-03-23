@@ -12,6 +12,9 @@ export const userInfoSlice = createSlice({
     name: 'userInfo',
     initialState,
     reducers: {
+        currentMoney: (state, action) => {
+            state.wallet = action.payload
+        },
         earnedMoney: (state, action) => {
             state.wallet += action.payload;
         },
@@ -25,7 +28,7 @@ export const userInfoSlice = createSlice({
             state.currentLevel += 1;
         },
         updateInventory: (state, action) => {
-            state.inventory = [...state.inventory, action.payload];
+            state.inventory = action.payload
         },
         setDisplayName: (state, action) =>{
             state.displayName = action.payload
@@ -34,5 +37,5 @@ export const userInfoSlice = createSlice({
     }
 });
 
-export const { earnedMoney, decreaseAmount, increaseExp, levelUp, updateInventory, setDisplayName, reset} = userInfoSlice.actions;
+export const { currentMoney, earnedMoney, decreaseAmount, increaseExp, levelUp, updateInventory, setDisplayName, reset} = userInfoSlice.actions;
 export default userInfoSlice.reducer;

@@ -24,7 +24,7 @@ import{
   setMouth,
   setClothes,
 } from "../redux/features/profileIconSlice.js";
-import { setDisplayName, updateInventory } from '../redux/features/userInfoSlice.js'
+import { currentMoney, setDisplayName, updateInventory } from '../redux/features/userInfoSlice.js'
 import { setUid } from '../redux/features/userUidSlice.js'
 import { useEffect, useState } from 'react'
 import tempIcon from "../components/images/generalIcons/User.png"
@@ -60,36 +60,43 @@ const Home = () => {
         const userData = await getDoc(doc(db, "users", UserUid));
         console.log("successfully got user data: ", userData.data());
         //sets the user display name in redux
+        //display name
         dispatch(setDisplayName(userData.data().displayName))
-        console.log("invent:", userData.data().inventory)
-        dispatch(updateInventory(userData.data().inventory))
+        // console.log("invent:", userData.data().inventory)
+        //inventory
+        dispatch(updateInventory(userData.data().inventory)) 
+        //wallet
+        dispatch(currentMoney(userData.data().wallet))
+        //exp 
+        //level
+        //console.log checkpoint
         console.log("user Display Name: ", allUserInfo)
   
-        // const promises = Object.values(userData.data().profileIcon).map(
-        //   async (itemId) => {
-        //     const itemRef = await getDoc(doc(db, "shopItems", itemId));
-        //     const url = await getDownloadURL(
-        //       ref(storage, itemRef.data().imageRef)
-        //     );
-        //     return { [itemRef.data().itemCategory]: url };
-        //   }
-        // );
-        // const updatedProfile = await Promise.all(promises);
-        // console.log("updated profile: ", updatedProfile)
-        // const newProfile = {
-        //   ...currentProfile,
-        //   ...Object.assign({}, ...updatedProfile),
-        // };
-        // setCurrentProfile(newProfile);
+        const promises = Object.values(userData.data().profileIcon).map(
+          async (itemId) => {
+            const itemRef = await getDoc(doc(db, "shopItems", itemId));
+            const url = await getDownloadURL(
+              ref(storage, itemRef.data().imageRef)
+            );
+            return { [itemRef.data().itemCategory]: url };
+          }
+        );
+        const updatedProfile = await Promise.all(promises);
+        console.log("updated profile: ", updatedProfile)
+        const newProfile = {
+          ...currentProfile,
+          ...Object.assign({}, ...updatedProfile),
+        };
+        setCurrentProfile(newProfile);
   
         // Update Redux store with the fetched avatar information
-        // dispatch(setSkin(newProfile.skin));
-        // dispatch(setHair(newProfile.hair));
-        // dispatch(setEyes(newProfile.eyes));
-        // dispatch(setMouth(newProfile.mouth));
-        // dispatch(setClothes(newProfile.clothes));
+        dispatch(setSkin(newProfile.skin));
+        dispatch(setHair(newProfile.hair));
+        dispatch(setEyes(newProfile.eyes));
+        dispatch(setMouth(newProfile.mouth));
+        dispatch(setClothes(newProfile.clothes));
   
-        // console.log("updated profile with links: ", newProfile);
+        console.log("updated profile with links: ", newProfile);
         // console.log("Redux state:", profileIcon);
       } catch (error) {
         console.log("Could not fetch user data", error);
