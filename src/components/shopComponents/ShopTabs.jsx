@@ -179,12 +179,14 @@ const ShopTabs = () => {
   };
 
   let clickAddToCart = (clickedItem) => {
-    setCartTotal((prevCartTotal) => prevCartTotal + clickedItem.cost);
-
     setCartItemCards((prevCartItems) => {
-      if (!prevCartItems.find((itemCard) => itemCard.itemName === clickedItem.itemName)) {
+      const itemExists = prevCartItems.some((itemCard) => itemCard.itemName === clickedItem.itemName);
+      if (!itemExists) {
+        // Item not in cart, add it and update the total
+        setCartTotal((prevCartTotal) => prevCartTotal + (clickedItem.cost)/2);
         return [...prevCartItems, clickedItem];
       }
+      // Item already in cart, don't add it again
       return prevCartItems;
     });
   };

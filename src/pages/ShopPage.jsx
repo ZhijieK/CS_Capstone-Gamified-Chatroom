@@ -78,6 +78,10 @@ const ShopPage = () => {
     </div>
   ));
 
+  let handleCheckOut = async () => {
+    
+  }
+
   return (
     <div className="shopBackground">
       <div className="view">
