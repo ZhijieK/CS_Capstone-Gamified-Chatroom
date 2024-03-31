@@ -62,6 +62,7 @@ const Search = () => {
     <div className='search'>
       <div className="searchForm">
         <input type="text" placeholder='Find a friend' onKeyDown={handleKey} onChange={e=>setUsername(e.target.value)} value={username}/>
+        <button className='random'>Random User</button>
       </div>
       {err && <span>User not found</span>}
       {user && <div className="userChat" onClick={handleSelect}>
