@@ -23,6 +23,7 @@ import {
 } from "../redux/features/profileIconSlice.js";
 
 import "../components/cssFile/profile.css";
+import { updateInventory } from "../redux/features/userInfoSlice.js";
 
 const Profile = () => {
   // const [userInfo, setUserInfo] = useState([]);
@@ -63,6 +64,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
+    
     const getInventoryItemData = async () => {
       const itemSnapshot = await getDocs(query(collection(db, "shopItems")));
       const promises = itemSnapshot.docs
@@ -96,7 +98,6 @@ const Profile = () => {
       });
       setInventoryBox(inventoryBox);
     };
-  
     getInventoryItemData();
   }, [arrayOfOwnedItems]); // Add arrayOfOwnedItems as a dependency  
 

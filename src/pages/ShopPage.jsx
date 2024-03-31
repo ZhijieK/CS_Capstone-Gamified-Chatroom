@@ -9,6 +9,7 @@ import { useState } from "react";
 // styling
 import "../components/cssFile/shopPage.css";
 import shopBasket from "../components/images/generalIcons/shoppingBasket.png";
+import trashCan from "../components/images/generalIcons/trashCan.png"
 
 //components
 import ShopTabs from "../components/shopComponents/ShopTabs";
@@ -18,6 +19,7 @@ import {
   addToInventory,
   decreaseAmount,
 } from "../redux/features/userInfoSlice";
+import { removeItemFromCart, resetCartItems, resetTotal, updateTotalCost } from "../redux/features/shopCartSlice";
 
 const ShopPage = () => {
   const currentUser = useContext(AuthContext);
@@ -36,6 +38,9 @@ const ShopPage = () => {
   const currentInventory = useSelector((state) => state.userInfo.inventory);
   const currentUserUID = useSelector((state) => state.userUID.uid);
   console.log(currentUserUID);
+  const itemsInCart = useSelector(state => state.shopCart.shopCart)
+  const [cartItemRender, setCartItemRender] = useState([])
+  const cartTotalCost = useSelector(state => state.shopCart.cartTotal)
 
   //handle click function
   let handleTabClick = (tabName) => {
@@ -77,49 +82,75 @@ const ShopPage = () => {
     // checks if user has enough money
 
     //if not, prevent them from checking out 
+    if (currentWallet >= cartTotalCost){
+      // Updates Redux inventory
+      let cartItems = document.querySelectorAll(".newCartItem");
+      let purchasedItem = [];
+      cartItems.forEach((item) => {
+        const itemId = item.id; // Access the id of the element
+        purchasedItem.push(itemId);
+      });
 
-    // Updates Redux inventory
-    let cartItems = document.querySelectorAll(".newCartItem");
-    let purchasedItem = [];
-    let totalCostOfItems = 0;
-    cartItems.forEach((item) => {
-      const itemId = item.id; // Access the id of the element
-      purchasedItem.push(itemId);
+      console.log("item added to dispatch");
+      // Dispatch the action to update the Redux state
+      dispatch(addToInventory(purchasedItem));
+      dispatch(decreaseAmount(cartTotalCost));
 
-      const className = Array.from(item.classList);
-      const price = className[1];
-      // console.log("price: ", price)
-      totalCostOfItems += price;
-    });
+      //clear items in the cart and cclear total
+      dispatch(resetCartItems());
+      dispatch(resetTotal());
+    }
+  };
 
-    console.log("item added to dispatch");
-    // Dispatch the action to update the Redux state
-    dispatch(addToInventory(purchasedItem));
-    dispatch(decreaseAmount(totalCostOfItems));
-
+  const updateInventoryInDB = async () => {
     // Update Firebase wallet and inventory
+    // console.log("current: ", currentInventory)
     try{
-      await updateDoc(doc(db, "users", currentUserUID, {
+      const userDocRef = doc(db, "users", currentUserUID);
+      await updateDoc(userDocRef, { // Pass the updates in the second argument
         inventory: currentInventory,
         wallet: currentWallet
-      }))
+      });
+      console.log("updated db")
     }
     catch{
       console.log("failed to update wallet and inventory in db")
     }
+  }
 
-    //clear items in the cart 
-    let cartItemCont = document.querySelector(".cartItemCont")
-    while (cartItemCont.hasChildNodes()){
-      cartItemCont.removeChild(cartItemCont.firstChild);
-    }
+  let renderItemsInCart = () =>{
+    let totalCost = 0
+    itemsInCart.forEach(item =>{
+      totalCost += item.cost
+    })
 
-    //make cart amount 0
-    let totalValueCont = document.querySelector(".totalValueCont")
-    totalValueCont.textContent = `Total Cost: 0 Coins`
+    let cartContainerRenderBox = itemsInCart.map(item => {
+      return (
+        <div className={`newCartItem ${item.cost}`} id={item.itemName}>
+          <div className="rightPanel"> <img src={item.imageRef} /> </div>
+          <div className="leftPanel"> <div className="costCont"> {item.cost} Coins </div> 
+          <div> <img className="trashImg" src={trashCan} onClick={() => handleDeleteItem(item)}/></div>
+          </div>
+        </div>
+      )
+    });
 
-    //set a message of purchase successful
+    setCartItemRender(cartContainerRenderBox)
+    dispatch(updateTotalCost(totalCost));
+  }
+
+  const handleDeleteItem = (itemToDelete) => {
+    dispatch(removeItemFromCart(itemToDelete))
   };
+
+  useEffect(() => {
+    console.log("items in itemsInCart: ", itemsInCart)
+    renderItemsInCart();
+  }, [itemsInCart])
+
+  useEffect(() => {
+    updateInventoryInDB();
+  }, [currentInventory])
 
   return (
     <div className="shopBackground">
@@ -167,8 +198,8 @@ const ShopPage = () => {
                 Checkout{" "}
               </div>
             </div>
-            <div className="cartItemCont"></div>
-            <div className="totalValueCont"> Nothing in Cart </div>
+            <div className="cartItemCont">{cartItemRender}</div>
+            <div className="totalValueCont"> Total: {cartTotalCost} </div>
           </div>
           <div className="shopPanel">
             {/* display the tabls */}

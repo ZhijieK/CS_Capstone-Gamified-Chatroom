@@ -10,10 +10,18 @@ export const shopCartSlice = createSlice({
     initialState,
     reducers: {
         addItemsToCart: (state, action) => {
-            state.shopCart = [...state.shopCart, action.payload]
+            const item = action.payload;
+            const itemExists = state.shopCart.some(cartItem => cartItem.itemName === item.itemName);
+      
+            if (!itemExists) {
+                state.shopCart.push(item);
+            }
         },
         removeItemFromCart: (state, action) => {
-            state.shopCart = state.shopCart.filter(item => item !== action.payload);
+            state.shopCart = state.shopCart.filter(item => item.itemName !== action.payload.itemName);
+        },
+        resetCartItems: (state) => {
+            state.shopCart = []
         },
         addToTotal: (state, action) => {
             state.cartTotal += action.payload
@@ -21,11 +29,14 @@ export const shopCartSlice = createSlice({
         subtractFromTotal: (state, action) => {
             state.cartTotal -= action.payload
         },
+        updateTotalCost: (state, action) => {
+            state.cartTotal = action.payload
+        },
         resetTotal: (state) => {
             state.cartTotal = 0
         }
     }
 })  
 
-export const {addItemsToCart, removeItemFromCart, addToTotal, subtractFromTotal, resetTotal} = shopCartSlice.actions
+export const {addItemsToCart, removeItemFromCart, resetCartItems, addToTotal, subtractFromTotal,updateTotalCost, resetTotal} = shopCartSlice.actions
 export default shopCartSlice.reducer

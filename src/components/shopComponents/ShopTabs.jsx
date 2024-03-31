@@ -22,6 +22,7 @@ import {
 } from "firebase/firestore";
 import { getDownloadURL, getStorage, list, ref } from "firebase/storage";
 import { useDispatch, useSelector } from "react-redux";
+import { addItemsToCart, addToTotal } from "../../redux/features/shopCartSlice";
 
 const ShopTabs = () => {
   //variables
@@ -33,6 +34,9 @@ const ShopTabs = () => {
   const [cartTotal, setCartTotal] = useState(0);
   const arrayOfOwnedItems = useSelector((state) => state.userInfo.inventory);
   // console.log(arrayOfOwnedItems)
+  const itemsInCart = useSelector(state => state.shopCart.shopCart)
+  const totalCost = useSelector(state => state.shopCart.cartTotal)
+  let dispatch = useDispatch();
   
 
   //creates a shop database
@@ -144,7 +148,7 @@ const ShopTabs = () => {
       console.log("Cannot get storage link", error);
     }
     getItemsFromDatabase();
-  }, [category]);
+  }, [category, arrayOfOwnedItems]);
 
   // //handle click selection
   let handleItemSelection = (clickedItem) => {
@@ -179,59 +183,8 @@ const ShopTabs = () => {
   };
 
   let clickAddToCart = (clickedItem) => {
-    setCartItemCards((prevCartItems) => {
-      const itemExists = prevCartItems.some((itemCard) => itemCard.itemName === clickedItem.itemName);
-      if (!itemExists) {
-        // Item not in cart, add it and update the total
-        setCartTotal((prevCartTotal) => prevCartTotal + (clickedItem.cost)/2);
-        return [...prevCartItems, clickedItem];
-      }
-      // Item already in cart, don't add it again
-      return prevCartItems;
-    });
+    dispatch(addItemsToCart(clickedItem))
   };
-
-  const handleDeleteItem = (itemToDelete) => {
-    // cartTotal -= itemToDelete.cost;
-    console.log(itemToDelete)
-    setCartTotal((prevCartTotal) => prevCartTotal - itemToDelete.cost);
-
-    setCartItemCards((prevCartItems) => {
-        return prevCartItems.filter((cartItem) => cartItem.itemName !== itemToDelete.itemName);
-    });
-  };
-
-  useEffect(() => {
-    let totalValueCont = document.querySelector(".totalValueCont")
-    totalValueCont.textContent = `Total Cost: ${cartTotal} Coins`
-  }, [cartTotal]);
-  
-  useEffect(() => {
-    // Update cartItemCont when cartItemCards changes
-    let cartItemCont = document.querySelector(".cartItemCont");
-    let totalValueCont = document.querySelector(".totalValueCont")
-    cartItemCont.innerHTML = ""; // Clear previous items
-
-    cartItemCards.forEach((cartItem) => {
-      // cartTotal += cartItem.cost;
-      
-      // setCartTotal(cartTotal + cartItem.cost)
-      
-      let newCartItem = document.createElement("div");
-      newCartItem.className = "newCartItem"
-      newCartItem.innerHTML = `
-        <div class="rightPanel"> <img src="${cartItem.imageRef}" /> </div>
-        <div class="leftPanel"> <div class="costCont"> ${cartItem.cost} Coins </div> 
-            <div> <img class="trashImg" src="${trashCan}"/></div>
-        </div>
-      `;
-      cartItemCont.appendChild(newCartItem);
-      newCartItem.querySelector('.trashImg').addEventListener('click', () => handleDeleteItem(cartItem));
-      totalValueCont.textContent = `Total Cost: ${cartTotal} Coins`
-    });
-  }, [cartItemCards]); // Run this effect whenever cartItemCards changes
-  
-  
 
   return (
     <div className="itemTabCont">
