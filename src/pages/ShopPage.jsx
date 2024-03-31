@@ -1,7 +1,6 @@
 //modules
 import { useRoutes, Link, useParams, Navigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
@@ -14,6 +13,11 @@ import shopBasket from "../components/images/generalIcons/shoppingBasket.png";
 //components
 import ShopTabs from "../components/shopComponents/ShopTabs";
 import ShopItems from "../components/shopComponents/shopItem";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToInventory,
+  decreaseAmount,
+} from "../redux/features/userInfoSlice";
 
 const ShopPage = () => {
   const currentUser = useContext(AuthContext);
@@ -27,24 +31,15 @@ const ShopPage = () => {
   let shopTabsName = ["Skin", "Hair", "Eyes", "Mouth", "Clothes"];
   const profileIcon = useSelector((state) => state.profileIcon);
   const currentWallet = useSelector((state) => state.userInfo.wallet);
-  console.log(currentWallet)
-
-  useEffect(() => {
-    const getWalletAmmount = async () => {
-      const userData = await getDoc(doc(db, "users", currentUser.uid));
-      setUserWallet(userData.data().wallet);
-    };
-    // const loadUserAvatar = () => {
-    //   let itemCont = document.querySelector(".itemCont")
-
-    // }
-    // getWalletAmmount();
-  }, []);
+  console.log(currentWallet);
+  let dispatch = useDispatch();
+  const currentInventory = useSelector((state) => state.userInfo.inventory);
+  const currentUserUID = useSelector((state) => state.userUID.uid);
+  console.log(currentUserUID);
 
   //handle click function
   let handleTabClick = (tabName) => {
     const tabNameA = document.querySelectorAll(".tabNameA");
-    // console.log(tabNameA);
     tabNameA.forEach((tabNameA) => {
       if (tabNameA.textContent === tabName.tabName) {
         tabNameA.style.backgroundColor = "#c6aeae";
@@ -79,8 +74,52 @@ const ShopPage = () => {
   ));
 
   let handleCheckOut = async () => {
-    
-  }
+    // checks if user has enough money
+
+    //if not, prevent them from checking out 
+
+    // Updates Redux inventory
+    let cartItems = document.querySelectorAll(".newCartItem");
+    let purchasedItem = [];
+    let totalCostOfItems = 0;
+    cartItems.forEach((item) => {
+      const itemId = item.id; // Access the id of the element
+      purchasedItem.push(itemId);
+
+      const className = Array.from(item.classList);
+      const price = className[1];
+      // console.log("price: ", price)
+      totalCostOfItems += price;
+    });
+
+    console.log("item added to dispatch");
+    // Dispatch the action to update the Redux state
+    dispatch(addToInventory(purchasedItem));
+    dispatch(decreaseAmount(totalCostOfItems));
+
+    // Update Firebase wallet and inventory
+    try{
+      await updateDoc(doc(db, "users", currentUserUID, {
+        inventory: currentInventory,
+        wallet: currentWallet
+      }))
+    }
+    catch{
+      console.log("failed to update wallet and inventory in db")
+    }
+
+    //clear items in the cart 
+    let cartItemCont = document.querySelector(".cartItemCont")
+    while (cartItemCont.hasChildNodes()){
+      cartItemCont.removeChild(cartItemCont.firstChild);
+    }
+
+    //make cart amount 0
+    let totalValueCont = document.querySelector(".totalValueCont")
+    totalValueCont.textContent = `Total Cost: 0 Coins`
+
+    //set a message of purchase successful
+  };
 
   return (
     <div className="shopBackground">
@@ -93,10 +132,7 @@ const ShopPage = () => {
             <Link to="../profile">
               <div className="goBack"> Back </div>
             </Link>
-            <div className="coinCont">
-              {" "}
-              {currentWallet} Coins
-            </div>
+            <div className="coinCont"> {currentWallet} Coins</div>
             <div className="charaTryOnView">
               <div className="itemCont backgroundFill"></div>
               <div className="skinCont itemCont">
@@ -126,7 +162,10 @@ const ShopPage = () => {
             <div className="close-button" onClick={clickViewCart}>
               {" "}
               <b> X </b>{" "}
-              <div className="checkoutButton"> Checkout </div>
+              <div className="checkoutButton" onClick={handleCheckOut}>
+                {" "}
+                Checkout{" "}
+              </div>
             </div>
             <div className="cartItemCont"></div>
             <div className="totalValueCont"> Nothing in Cart </div>

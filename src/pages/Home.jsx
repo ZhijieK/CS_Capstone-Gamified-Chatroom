@@ -38,7 +38,7 @@ const Home = () => {
 
   // //dispatch to set up current uid
   dispatch(setUid(currentUser.uid));
-  const UserUid = useSelector((state) => state.userUid.uid)
+  const UserUid = useSelector((state) => state.userUID.uid)
   console.log("UserUid: ", UserUid)
 
   //temperary profile holder
