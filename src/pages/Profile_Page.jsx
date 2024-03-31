@@ -33,10 +33,9 @@ const Profile = () => {
 
   //states that'll render on the page
   const [inventoryBox, setInventoryBox] = useState([]);
-
-
   const dispatch = useDispatch();
   const arrayOfOwnedItems = useSelector((state) => state.userInfo.inventory);
+  const profileIcon = useSelector((state) => state.profileIcon);
   console.log(arrayOfOwnedItems);
 
   //click to try on outfit
@@ -64,7 +63,6 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    
     const getInventoryItemData = async () => {
       const itemSnapshot = await getDocs(query(collection(db, "shopItems")));
       const promises = itemSnapshot.docs
@@ -98,11 +96,16 @@ const Profile = () => {
       });
       setInventoryBox(inventoryBox);
     };
-    getInventoryItemData();
+      getInventoryItemData();
   }, [arrayOfOwnedItems]); // Add arrayOfOwnedItems as a dependency  
 
-  /*Function to change avatar*/
-  /*image - the img you wanna change it to, ID - ID of the image to be changed*/
+  useEffect(() =>{
+    // const updateProfileIcondInDB = () =>{
+
+    // }
+
+    console.log("profile Icon: ", profileIcon)
+  }, [profileIcon])
 
   return (
     <div className="profile">

@@ -1,11 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    skin: null,
-    hair: null,
-    eyes: null,
-    mouth: null,
-    clothes: null,
+    skin: "",
+    skinLink: "",
+    hair: "",
+    hairLink: "",
+    eyes: "",
+    eyesLink: "",
+    mouth: "",
+    mouthLink: "",
+    clothes: "",
+    clothesLink: "",
   };
 
 export const profileIconSlice = createSlice({
@@ -27,9 +32,24 @@ export const profileIconSlice = createSlice({
       setClothes: (state, action) => {
         state.clothes = action.payload;
       },
+      setSkinLink: (state, action) => {
+        state.skinLink = action.payload;
+      },
+      setHairLink: (state, action) => {
+        state.hairLink = action.payload;
+      },
+      setEyesLink: (state, action) => {
+        state.eyesLink = action.payload;
+      },
+      setMouthLink: (state, action) => {
+        state.mouthLink = action.payload;
+      },
+      setClothesLink: (state, action) => {
+        state.clothesLink = action.payload;
+      },
     },
 })
 
-export const {setSkin, setHair, setEyes, setMouth, setClothes} = profileIconSlice.actions
+export const {setSkin, setHair, setEyes, setMouth, setClothes, setSkinLink, setHairLink, setEyesLink, setMouthLink, setClothesLink} = profileIconSlice.actions
 export default profileIconSlice.reducer
 

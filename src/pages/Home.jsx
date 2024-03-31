@@ -23,6 +23,11 @@ import{
   setEyes,
   setMouth,
   setClothes,
+  setSkinLink,
+  setHairLink,
+  setEyesLink,
+  setMouthLink,
+  setClothesLink,
 } from "../redux/features/profileIconSlice.js";
 import { currentMoney, setDisplayName, updateInventory } from '../redux/features/userInfoSlice.js'
 import { setUid } from '../redux/features/userUidSlice.js'
@@ -49,7 +54,7 @@ const Home = () => {
     mouth: tempIcon,
     clothes: tempIcon,
   });
-  // const profileIcon = useSelector((state) => state.profileIcon);
+  const profileIcon = useSelector((state) => state.profileIcon);
   const allUserInfo = useSelector((state) => state.userInfo)
 
 
@@ -78,7 +83,10 @@ const Home = () => {
             const url = await getDownloadURL(
               ref(storage, itemRef.data().imageRef)
             );
-            return { [itemRef.data().itemCategory]: url };
+            return { 
+              item: itemRef.data().itemName, 
+              [itemRef.data().itemCategory]: url, 
+            };
           }
         );
         const updatedProfile = await Promise.all(promises);
@@ -90,11 +98,17 @@ const Home = () => {
         setCurrentProfile(newProfile);
   
         // Update Redux store with the fetched avatar information
-        dispatch(setSkin(newProfile.skin));
-        dispatch(setHair(newProfile.hair));
-        dispatch(setEyes(newProfile.eyes));
-        dispatch(setMouth(newProfile.mouth));
-        dispatch(setClothes(newProfile.clothes));
+        dispatch(setSkin(newProfile.item));
+        dispatch(setHair(newProfile.item));
+        dispatch(setEyes(newProfile.item));
+        dispatch(setMouth(newProfile.item));
+        dispatch(setClothes(newProfile.item));
+        
+        dispatch(setSkinLink(newProfile.skin));
+        dispatch(setHairLink(newProfile.hair));
+        dispatch(setEyesLink(newProfile.eyes));
+        dispatch(setMouthLink(newProfile.mouth));
+        dispatch(setClothesLink(newProfile.clothes));
   
         console.log("updated profile with links: ", newProfile);
         console.log("Redux state:", profileIcon);
