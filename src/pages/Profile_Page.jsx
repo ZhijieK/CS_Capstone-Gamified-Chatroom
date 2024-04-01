@@ -1,16 +1,13 @@
-//import React from 'react';
-import React, { useContext, useEffect, useRef, useState } from "react";
-import Avatar from "../components/profileComponents/Avatar.jsx";
-import { Link, useParams } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext.jsx";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import {
-  getDoc,
   doc,
-  getDocs,
+  getDoc,
+  updateDoc,
   query,
   collection,
-  and,
-  updateDoc,
+  where,
+  getDocs,
 } from "firebase/firestore";
 import { db, storage } from "../firebase";
 import { getDownloadURL, ref } from "firebase/storage";
@@ -27,48 +24,46 @@ import {
   setMouthLink,
   setClothesLink,
 } from "../redux/features/profileIconSlice.js";
-
 import "../components/cssFile/profile.css";
-import { updateInventory } from "../redux/features/userInfoSlice.js";
+import Avatar from "../components/profileComponents/Avatar.jsx";
 
 const Profile = () => {
-  // const [userInfo, setUserInfo] = useState([]);
-  //gets all the data of the items
-  let urlPage = useParams();
-  const [inventoryItems, setInventoryItems] = useState([]);
-
-  //states that'll render on the page
-  const [inventoryBox, setInventoryBox] = useState([]);
+  const currentUserUID = useSelector((state) => state.userUID.uid);
   const dispatch = useDispatch();
   const arrayOfOwnedItems = useSelector((state) => state.userInfo.inventory);
   const profileIcon = useSelector((state) => state.profileIcon);
-  console.log(arrayOfOwnedItems);
-  const currentUserUID = useSelector((state) => state.userUID.uid);
+  const [inventoryItems, setInventoryItems] = useState([]);
+  const [loading, setLoading] = useState(false);
 
+  //states that'll render on the page
+  const [inventoryBox, setInventoryBox] = useState([]);
 
   //click to try on outfit
   let handleItemSelection = (clickedItem) => {
-    // console.log(clickedItem)
-    switch (clickedItem.itemCategory) {
+    console.log(clickedItem)
+    const itemCateq = clickedItem.itemCategory;
+    const itemName = clickedItem.itemName;
+    const imageRef = clickedItem.imageRef;
+    switch (itemCateq) {
       case "hair":
-        dispatch(setHair(clickedItem.itemName));
-        dispatch(setHairLink(clickedItem.imageRef));
+        dispatch(setHair(itemName));
+        dispatch(setHairLink(imageRef));
         break;
       case "skin":
-        dispatch(setSkin(clickedItem.itemName));
-        dispatch(setSkinLink(clickedItem.imageRef));
+        dispatch(setSkin(itemName));
+        dispatch(setSkinLink(imageRef));
         break;
       case "eyes":
-        dispatch(setEyes(clickedItem.itemName));
-        dispatch(setEyesLink(clickedItem.imageRef));
+        dispatch(setEyes(itemName));
+        dispatch(setEyesLink(imageRef));
         break;
       case "mouth":
-        dispatch(setMouth(clickedItem.itemName));
-        dispatch(setMouthLink(clickedItem.imageRef));
+        dispatch(setMouth(itemName));
+        dispatch(setMouthLink(imageRef));
         break;
       case "clothes":
-        dispatch(setClothes(clickedItem.item));
-        dispatch(setClothesLink(clickedItem.imageRef));
+        dispatch(setClothes(itemName));
+        dispatch(setClothesLink(imageRef));
         break;
       default:
         break;
@@ -89,10 +84,10 @@ const Profile = () => {
             itemName: doc.data().itemName,
           };
         });
-  
+
       const allItems = await Promise.all(promises);
       setInventoryItems(allItems);
-  
+
       // Move this logic inside the getInventoryItemData function
       const inventoryBox = allItems.map((item) => {
         return (
@@ -109,11 +104,11 @@ const Profile = () => {
       });
       setInventoryBox(inventoryBox);
     };
-      getInventoryItemData();
-  }, [arrayOfOwnedItems]); // Add arrayOfOwnedItems as a dependency  
+    getInventoryItemData();
+  }, [arrayOfOwnedItems]); // Add arrayOfOwnedItems as a dependency
 
-  useEffect(() =>{
-    const updateProfileIcondInDB = async () =>{
+  useEffect(() => {
+    const updateProfileIconInDB = async () => {
       try {
         const docRef = doc(db, "users", currentUserUID);
         await updateDoc(docRef, {
@@ -121,32 +116,40 @@ const Profile = () => {
           "profileIcon.eyes": profileIcon.eyes,
           "profileIcon.hair": profileIcon.hair,
           "profileIcon.mouth": profileIcon.mouth,
-          "profileIcon.skin": profileIcon.skin
+          "profileIcon.skin": profileIcon.skin,
         });
         console.log("Profile icon updated in DB");
       } catch (error) {
         console.error("Failed to update profile icon in DB", error);
       }
-    }
+    };
 
-    console.log("profile Icon: ", profileIcon)
-    updateProfileIcondInDB();
-  }, [profileIcon])
+    updateProfileIconInDB();
+  }, [profileIcon]);
 
   return (
     <div className="profile">
       <Avatar />
-
-      <div className="container2"> 
-        {/*right side*/}
+      <div className="container2">
         <h1>Inventory</h1>
-        {/* <h1 style={{padding:"10px"}}>Buy more in the shop!</h1> */}
         <Link to="../shop_page" style={{ color: "black" }}>
-          {" "}
-          <div className="button"> Shop </div>{" "}
+          <div className="button">Shop</div>
         </Link>
-        <div className="itemContainer" id="hair">
-          {inventoryBox}
+        <div className="itemContainer">
+          {loading ? (
+            <p>Loading inventory...</p>
+          ) : (
+            inventoryItems.map((item) => (
+              <div className="itemInvCard" key={item.itemName}>
+                <div
+                  className="invItem"
+                  onClick={() => handleItemSelection(item)}
+                >
+                  <img src={item.imageRef} alt={item.itemName} />
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>

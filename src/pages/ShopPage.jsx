@@ -151,19 +151,19 @@ const ShopPage = () => {
             <div className="charaTryOnView">
               <div className="itemCont backgroundFill"></div>
               <div className="skinCont itemCont">
-                <img src={profileIcon.skin} />
+                <img src={profileIcon.skinLink} />
               </div>
               <div className="eyesCont itemCont">
-                <img src={profileIcon.eyes} />
+                <img src={profileIcon.eyesLink} />
               </div>
               <div className="mouthCont itemCont">
-                <img src={profileIcon.mouth} />
+                <img src={profileIcon.mouthLink} />
               </div>
               <div className="hairCont itemCont">
-                <img src={profileIcon.hair} />
+                <img src={profileIcon.hairLink} />
               </div>
               <div className="clothesCont itemCont">
-                <img src={profileIcon.clothes} />
+                <img src={profileIcon.clothesLink} />
               </div>
             </div>
 
