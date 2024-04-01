@@ -47,9 +47,22 @@ export const profileIconSlice = createSlice({
       setClothesLink: (state, action) => {
         state.clothesLink = action.payload;
       },
+      setProfileIcon: (state, action) => {
+        const { skin, skinLink, hair, hairLink, eyes, eyesLink, mouth, mouthLink, clothes, clothesLink } = action.payload;
+        state.skin = skin || state.skin;
+        state.skinLink = skinLink || state.skinLink;
+        state.hair = hair || state.hair;
+        state.hairLink = hairLink || state.hairLink;
+        state.eyes = eyes || state.eyes;
+        state.eyesLink = eyesLink || state.eyesLink;
+        state.mouth = mouth || state.mouth;
+        state.mouthLink = mouthLink || state.mouthLink;
+        state.clothes = clothes || state.clothes;
+        state.clothesLink = clothesLink || state.clothesLink;
+      },
     },
 })
 
-export const {setSkin, setHair, setEyes, setMouth, setClothes, setSkinLink, setHairLink, setEyesLink, setMouthLink, setClothesLink} = profileIconSlice.actions
+export const {setSkin, setHair, setEyes, setMouth, setClothes, setSkinLink, setHairLink, setEyesLink, setMouthLink, setClothesLink, setProfileIcon} = profileIconSlice.actions
 export default profileIconSlice.reducer
 

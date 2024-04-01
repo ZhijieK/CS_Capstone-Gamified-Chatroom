@@ -27,23 +27,10 @@ import shirt from '../images/characterAssets/clothes/suit.png';
 const Avatar = () => {
   const [info, setInfo] = useState([])
   const { currentUser } = useContext(AuthContext);
-  const [currentProfile, setCurrentProfile] = useState({
-    skin: tempIcon,
-    hair: tempIcon,
-    eyes: tempIcon,
-    mouth: tempIcon,
-    clothes: tempIcon,
-  });
   const profileIcon = useSelector((state) => state.profileIcon); 
 
   useEffect(() => {
-    setCurrentProfile({
-      skin: profileIcon.skin,
-      hair: profileIcon.hair,
-      eyes: profileIcon.eyes,
-      mouth: profileIcon.mouth,
-      clothes: profileIcon.clothes,
-    });
+    //everytime profile icon changes, update the db
   }, [profileIcon]);
 
   //Get snapshot of user data
@@ -74,12 +61,12 @@ const Avatar = () => {
       </div>
       {/*The Avatar*/}
       <div className="circle">
-        {Object.keys(currentProfile).map((category) => (
+      {["skin", "hair", "eyes", "mouth", "clothes"].map((category) => (
           <img
             key={category}
             className="avatar-image"
             data-category={category}
-            src={currentProfile[category]}
+            src={profileIcon[`${category}Link`] || {tempIcon}}
             alt={category}
           />
         ))}

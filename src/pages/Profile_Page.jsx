@@ -10,6 +10,7 @@ import {
   query,
   collection,
   and,
+  updateDoc,
 } from "firebase/firestore";
 import { db, storage } from "../firebase";
 import { getDownloadURL, ref } from "firebase/storage";
@@ -20,6 +21,11 @@ import {
   setEyes,
   setMouth,
   setClothes,
+  setSkinLink,
+  setHairLink,
+  setEyesLink,
+  setMouthLink,
+  setClothesLink,
 } from "../redux/features/profileIconSlice.js";
 
 import "../components/cssFile/profile.css";
@@ -37,25 +43,32 @@ const Profile = () => {
   const arrayOfOwnedItems = useSelector((state) => state.userInfo.inventory);
   const profileIcon = useSelector((state) => state.profileIcon);
   console.log(arrayOfOwnedItems);
+  const currentUserUID = useSelector((state) => state.userUID.uid);
+
 
   //click to try on outfit
   let handleItemSelection = (clickedItem) => {
     // console.log(clickedItem)
     switch (clickedItem.itemCategory) {
       case "hair":
-        dispatch(setHair(clickedItem.imageRef));
+        dispatch(setHair(clickedItem.itemName));
+        dispatch(setHairLink(clickedItem.imageRef));
         break;
       case "skin":
-        dispatch(setSkin(clickedItem.imageRef));
+        dispatch(setSkin(clickedItem.itemName));
+        dispatch(setSkinLink(clickedItem.imageRef));
         break;
       case "eyes":
-        dispatch(setEyes(clickedItem.imageRef));
+        dispatch(setEyes(clickedItem.itemName));
+        dispatch(setEyesLink(clickedItem.imageRef));
         break;
       case "mouth":
-        dispatch(setMouth(clickedItem.imageRef));
+        dispatch(setMouth(clickedItem.itemName));
+        dispatch(setMouthLink(clickedItem.imageRef));
         break;
       case "clothes":
-        dispatch(setClothes(clickedItem.imageRef));
+        dispatch(setClothes(clickedItem.item));
+        dispatch(setClothesLink(clickedItem.imageRef));
         break;
       default:
         break;
@@ -100,11 +113,24 @@ const Profile = () => {
   }, [arrayOfOwnedItems]); // Add arrayOfOwnedItems as a dependency  
 
   useEffect(() =>{
-    // const updateProfileIcondInDB = () =>{
-
-    // }
+    const updateProfileIcondInDB = async () =>{
+      try {
+        const docRef = doc(db, "users", currentUserUID);
+        await updateDoc(docRef, {
+          "profileIcon.clothes": profileIcon.clothes,
+          "profileIcon.eyes": profileIcon.eyes,
+          "profileIcon.hair": profileIcon.hair,
+          "profileIcon.mouth": profileIcon.mouth,
+          "profileIcon.skin": profileIcon.skin
+        });
+        console.log("Profile icon updated in DB");
+      } catch (error) {
+        console.error("Failed to update profile icon in DB", error);
+      }
+    }
 
     console.log("profile Icon: ", profileIcon)
+    updateProfileIcondInDB();
   }, [profileIcon])
 
   return (

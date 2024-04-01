@@ -31,6 +31,7 @@ const ShopPage = () => {
   ]);
   //variables
   let shopTabsName = ["Skin", "Hair", "Eyes", "Mouth", "Clothes"];
+  const [activeTab, setActiveTab] = useState('skin')
   const profileIcon = useSelector((state) => state.profileIcon);
   const currentWallet = useSelector((state) => state.userInfo.wallet);
   console.log(currentWallet);
@@ -44,15 +45,7 @@ const ShopPage = () => {
 
   //handle click function
   let handleTabClick = (tabName) => {
-    const tabNameA = document.querySelectorAll(".tabNameA");
-    tabNameA.forEach((tabNameA) => {
-      if (tabNameA.textContent === tabName.tabName) {
-        tabNameA.style.backgroundColor = "#c6aeae";
-        tabNameA.style.borderRadius = "5px";
-      } else {
-        tabNameA.style.backgroundColor = "#faebd7";
-      }
-    });
+    setActiveTab(tabName);
   };
 
   let clickViewCart = () => {
@@ -68,9 +61,8 @@ const ShopPage = () => {
   let renderedTabs = shopTabsName.map((tabName) => (
     <div
       key={tabName}
-      className="tabLinks"
-      id={tabName}
-      onClick={(event) => handleTabClick({ tabName })}
+      className={`tabLinks ${activeTab === tabName.toLowerCase() ? 'active' : ''}`}
+      onClick={(event) => handleTabClick( tabName.toLowerCase())}
     >
       <Link to={tabName.toLowerCase()} className="tabNameA">
         {tabName}
@@ -84,18 +76,10 @@ const ShopPage = () => {
     //if not, prevent them from checking out 
     if (currentWallet >= cartTotalCost){
       // Updates Redux inventory
-      let cartItems = document.querySelectorAll(".newCartItem");
-      let purchasedItem = [];
-      cartItems.forEach((item) => {
-        const itemId = item.id; // Access the id of the element
-        purchasedItem.push(itemId);
-      });
-
       console.log("item added to dispatch");
       // Dispatch the action to update the Redux state
-      dispatch(addToInventory(purchasedItem));
+      dispatch(addToInventory(itemsInCart.map(item=>item.itemName)));
       dispatch(decreaseAmount(cartTotalCost));
-
       //clear items in the cart and cclear total
       dispatch(resetCartItems());
       dispatch(resetTotal());
