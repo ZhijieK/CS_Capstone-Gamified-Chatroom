@@ -33,7 +33,7 @@ const Register = () => {
           clothes: "red_shirt",
         },
         inventory: ["skin3", "black_short_hair", "brown_eyes", "smile", "red_shirt"],
-        wallet: 100,
+        wallet: 1000,
         bio,
       gender,
     });
