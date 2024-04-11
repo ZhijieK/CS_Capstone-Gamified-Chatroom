@@ -1,4 +1,3 @@
-//import React from 'react';
 import React, { useContext, useEffect, useRef, useState } from "react";
 import Avatar from "../components/profileComponents/Avatar.jsx";
 import { Link, useParams } from "react-router-dom";
@@ -99,9 +98,6 @@ const Profile = () => {
   
     getInventoryItemData();
   }, [arrayOfOwnedItems]); // Add arrayOfOwnedItems as a dependency  
-
-  /*Function to change avatar*/
-  /*image - the img you wanna change it to, ID - ID of the image to be changed*/
 
   return (
     <div className="profile">

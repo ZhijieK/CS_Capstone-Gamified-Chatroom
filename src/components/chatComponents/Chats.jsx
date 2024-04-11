@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { db } from '../../firebase';
 import { AuthContext } from '../../context/AuthContext';
 import { ChatContext } from '../../context/ChatContext';
+import Name from './Name.jsx';
 
 const Chats = () => {
 
@@ -33,12 +34,13 @@ const Chats = () => {
       <div className="userChat" key={chat[0]} onClick={()=>handleSelect(chat[1].userInfo)}>
         <img src="https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg" alt="" />
         <div className="userChatInfo">
-          <span>{chat[1].userInfo.displayName}</span>
+          <Name id={chat[1].userInfo.uid}/>
           <p>{chat[1].lastMessage?.text}</p>
         </div>
       </div>
       ))}
     </div>
+    
   );
 };
 

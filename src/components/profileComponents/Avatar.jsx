@@ -17,11 +17,6 @@ import {
 import tempIcon from "../images/generalIcons/User.png";
 
 import '../cssFile/profile.css'
-import skin from '../images/characterAssets/skin/skin1.png';
-import hair from '../images/characterAssets/hair/black_short_hair.png';
-import eyes from '../images/characterAssets/eyes/brown_eyes.png';
-import mouth from '../images/characterAssets/mouth/smile.png';
-import shirt from '../images/characterAssets/clothes/suit.png';
 
 
 const Avatar = () => {
@@ -63,7 +58,6 @@ const Avatar = () => {
   return (
     <div className="container">
       {" "}
-      {/*Grey box on left side*/}
       <div className="bar">
         <Link to="../" style={{ color: "black" }}>
           {" "}
