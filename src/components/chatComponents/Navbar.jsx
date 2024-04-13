@@ -5,7 +5,7 @@ import { doc, onSnapshot } from 'firebase/firestore';
 import { auth } from '../../firebase.js'
 import { AuthContext } from '../../context/AuthContext.jsx'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { reset } from '../../redux/features/userInfoSlice.js'
 
 
@@ -13,6 +13,7 @@ import { reset } from '../../redux/features/userInfoSlice.js'
 const Navbar = () => {
   const {currentUser} = useContext(AuthContext)
   const navigate = useNavigate();
+  const profileIcon = useSelector(state => state.profileIcon)
   
   const handleLogout = () => {
     const dispatch = useDispatch();
@@ -20,12 +21,12 @@ const Navbar = () => {
     dispatch(reset()); // Reset the Redux state
 
     signOut(auth) // Sign out the user with Firebase
-        .then(() => {
-            console.log('User signed out');
-        })
-        .catch((error) => {
-            console.error('Error signing out:', error);
-        });
+    .then(() => {
+        console.log('User signed out');
+    })
+    .catch((error) => {
+        console.error('Error signing out:', error);
+    });
   }
   
   const [info, setInfo] = useState([])
@@ -41,13 +42,26 @@ const Navbar = () => {
       };
     };
     currentUser.uid && getInfo()
-  });
+  }, []);
 
   return (
     <div className='navbar'>
       <span className="logo">Pixel Palz</span>
       <div className="user">
-        <img src='https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg' alt='profile picture' onClick={() => navigate('profile')}/>
+        <div onClick={() => navigate('profile')} className="miniProfileIcon">
+          <div className='iconBackground'> </div>
+          {["skin", "hair", "eyes", "mouth", "clothes"].map((category) => (
+            <img
+              key={category}
+              className="avatar-image"
+              data-category={category}
+              src={profileIcon[`${category}Link`] || 'https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg'}
+              alt={category}
+            />
+          ))}
+        </div >
+        
+        
         <span>{info.displayName}</span>
         <button onClick={()=>signOut(auth)}>Logout</button>
       </div>

@@ -5,7 +5,7 @@ const initialState = {
 }
 
 export const userUidSlice = createSlice({
-    name: 'userInfo',
+    name: 'userUID',
     initialState,
     reducers: {
         setUid: (state, action) => {

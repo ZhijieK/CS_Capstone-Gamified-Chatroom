@@ -257,18 +257,31 @@ body {
                 .user{
                     display: flex;
                     gap: 10px;
-                    
-                    span{
-                        padding-top: 2.5px;
+
+                    .miniProfileIcon{
+                        display: flex;
+                        flex-direction: column;
+
+                        .iconBackground{
+                            background-color: white;
+                            height: 24px;
+                            width: 24px;
+                            border-radius: 50%;
+                        }
+
+                        img{
+                            height: 24px;
+                            width: 24px;
+                            border-radius: 50%;
+                            object-fit: cover;
+                            cursor: pointer;
+                            margin-top: -100%;
+                        }
+
                     }
 
-                    img{
-                        background-color: white;
-                        height: 24px;
-                        width: 24px;
-                        border-radius: 50%;
-                        object-fit: cover;
-                        cursor: pointer;
+                    span{
+                        padding-top: 2.5px;
                     }
 
                     button{

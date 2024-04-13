@@ -38,6 +38,7 @@ const Login = () => {
               <form onSubmit={handleSubmit}>
                   <input type='text' placeholder='Email'></input>
                   <input type='password' placeholder='Password'></input>
+                  <Link style={{fontSize: "12px", textDecoration: "none"}} to="/forgot_password">Forgot Password?</Link>
                   <button>Log in</button>
                   {err && <span className='error_message'>{err}</span>}
               </form>
