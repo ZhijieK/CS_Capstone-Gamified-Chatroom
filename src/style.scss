@@ -331,6 +331,34 @@ body {
                 }
             }
 
+            /* Custom scrollbar for .chats container */
+            .chats {
+                height: 84%; /* Set an appropriate height */
+                overflow-y: auto;
+            }
+            
+            /* Scrollbar track */
+            .chats::-webkit-scrollbar {
+                width: 10px;
+            }
+            
+            /* Scrollbar thumb (handle) */
+            .chats::-webkit-scrollbar-thumb {
+                background: $dark_brown; /* Set the background color of the scrollbar thumb */
+                border-radius: 5px; /* Optional: Add border-radius to the scrollbar thumb */
+            }
+            
+            /* Scrollbar thumb on hover */
+            .chats::-webkit-scrollbar-thumb:hover {
+                background: #645452;
+            }
+            
+            /* Scrollbar thumb on active (e.g., when dragging) */
+            .chats::-webkit-scrollbar-thumb:active {
+                background: #533B30;
+            }
+  
+
             .userChat{
                 padding: 10px;
                 display: flex;
