@@ -55,7 +55,7 @@ const ChatPanel = ({chatUid, chat}) => {
         };
         fetchChatProfiles();
         console.log(chatProfiles.hairLink);
-    }, []);
+    }, [chatUid]);
 
 
     return(
