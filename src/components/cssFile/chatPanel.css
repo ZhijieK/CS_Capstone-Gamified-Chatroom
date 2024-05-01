@@ -1,0 +1,18 @@
+
+.chatProfileIcon img{
+    margin-left: -50px;
+}
+
+.chatProfileIcon:first-child{
+    margin-left: 50px;
+}
+
+/* 
+  .itemCont:first-child {
+    margin-top: 0;
+  }
+
+  .itemCont img {
+    width: 100%;
+    aspect-ratio: 1/1;
+   */
