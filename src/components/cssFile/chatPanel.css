@@ -7,6 +7,22 @@
     margin-left: 50px;
 }
 
+.chatMiniProfileIconOwner img{
+    margin-right: -40px;
+}
+
+.chatMiniProfileIconOwner:first-child{
+    margin-right: 40px;
+}
+
+.chatMiniProfileIcon img{
+    margin-left: -40px;
+}
+
+.chatMiniProfileIcon:first-child{
+    margin-left: 40px;
+}
+
 /* 
   .itemCont:first-child {
     margin-top: 0;

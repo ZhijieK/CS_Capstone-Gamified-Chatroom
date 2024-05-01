@@ -33,7 +33,7 @@ const Home = () => {
   dispatch(setUid(currentUser.uid));
   const UserUid = useSelector((state) => state.userUID.uid)
   const profileIcon = useSelector((state) => state.profileIcon);
-  console.log(profileIcon)
+  // console.log(profileIcon)
 
 
   useEffect(() => {
@@ -43,9 +43,9 @@ const Home = () => {
 
         const userDataRef = doc(db, "users", UserUid);
         const userDataSnap = await getDoc(userDataRef);
-        console.log(userDataSnap.data())
+        // console.log(userDataSnap.data())
         const userData = userDataSnap.data();
-        console.log(userData)
+        // console.log(userData)
         //sets the user display name in redux
         //display name
         dispatch(setDisplayName(userData.displayName))
@@ -53,7 +53,7 @@ const Home = () => {
         dispatch(updateInventory(userData.inventory)) 
         //wallet
         dispatch(currentMoney(userData.wallet))
-        console.log(userData)
+        // console.log(userData)
 
   
         // Batch Firestore reads

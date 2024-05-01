@@ -19,11 +19,11 @@ const ChatPanel = ({chatUid, chat}) => {
     useEffect(() => {
         const fetchChatProfiles = async () => {
             const profiles = {};
-            console.log(uid)
+            // console.log(uid)
             // const userData = doc(db, "users", uid);
             const userDataRef = await getDoc(doc(db, "users", uid)); 
             const userData = userDataRef.data();
-            console.log(userData);
+            // console.log(userData);
 
             const docRefs = Object.values(userData.profileIcon).map((itemId) =>
               doc(db, "shopItems", itemId)
@@ -36,25 +36,25 @@ const ChatPanel = ({chatUid, chat}) => {
             const shopItemsData = docSnapshots.map((docSnapshot) =>
               docSnapshot.data()
             );
-            console.log(shopItemsData);
+            // console.log(shopItemsData);
             let profileUpdates = {};
             for (const docSnap of docSnapshots) {
               const itemData = docSnap.data(); 
-              console.log(itemData)
+            //   console.log(itemData)
               const category = itemData.itemCategory;
               if (category) {
                 const url = await getDownloadURL(ref(storage, itemData.imageRef));
-                console.log(url)
+                // console.log(url)
                 profileUpdates[`${category}Link`] = url;
                 profileUpdates[`${category}`] = itemData.itemName;
               }
             }
-            console.log(profileUpdates)
+            // console.log(profileUpdates)
             setChatProfiles(profileUpdates);
-            console.log(chatProfiles.profileUpdates);
+            // console.log(chatProfiles.profileUpdates);
         };
         fetchChatProfiles();
-        console.log(chatProfiles.hairLink);
+        // console.log(chatProfiles.hairLink);
     }, [chatUid]);
 
 
