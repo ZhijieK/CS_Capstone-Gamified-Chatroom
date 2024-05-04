@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 
 import skin from '../images/characterAssets/skin/skin3.png';
@@ -9,6 +9,14 @@ import shirt from '../images/characterAssets/clothes/red_shirt.png';
 
 const otherUserProfile = (props) => {
     const info = props.info;
+    const [friends, setFriends] = useState();
+
+    useEffect(()=>{
+      //Finds # of friends
+      const array = info.friends || [];
+      const size = array.length;
+      setFriends(size);
+    });
 
     return (
         <div className="popup">
@@ -36,7 +44,7 @@ const otherUserProfile = (props) => {
                   <p style={{fontSize: 20, padding: 5}}>Gender: {info.gender} </p>
               </div>
               <div className="stats">
-                  <p style={{fontSize: 20}}>Friends: 12</p>
+                  <p style={{fontSize: 20}}>Friends: {friends}</p>
                   <p style={{fontSize:20,padding:10}}>Gold: {info.wallet}</p>
               </div>
           </div>

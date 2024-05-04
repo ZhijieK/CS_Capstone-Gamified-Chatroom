@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FriendsList from '../profileComponents/FriendsList.jsx';
 
+/* Options on the main chatroom screen */
 const Options = () => {
     const navigate = useNavigate();
     const [popup, setPopup] = useState(false);

@@ -230,7 +230,7 @@ body {
             width: 90%;
         }
 
-        .popup, .overlay{
+        .popup, .overlay, .overlay2{
             width:100vw;
             height:100vh;
             top: 0;
@@ -238,10 +238,64 @@ body {
             right: 0;
             bottom: 0;
             position: fixed;
+            color:black;
+            font-family:'pixelFont';
         }
         
         .overlay{
             background: rgba(49,49,49,0.8);
+        }
+
+        .overlay2{
+            background: rgba(49,49,49,0.8);
+            display:flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .request{
+            background: #a18585;
+            border-radius: 30px;
+            height:20%;
+            width:40%;
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            p{
+                position:relative;
+            }
+
+            .buttons{
+                display:flex;
+                gap:50px;
+            }
+
+            .button2:hover,
+            .button:hover {
+                background-color: $dark_brown;
+                cursor: pointer;
+                transform: translateY(-5px);
+            }
+        
+            .button { /* Close button */
+                background-color: $light_coffee;
+                padding:10px;
+                border-radius:30px;
+                transition: transform 0.3s, background-color 0.3s;
+            }
+        
+            .button2 { /* Friend Requests button */
+                background-color: $light_coffee;
+                padding:10px;
+                border-radius:30px;
+                //position:absolute;
+                top:7%;
+                right:3%;
+        
+                transition: transform 0.3s, background-color 0.3s;
+            }
         }
         
         .profile{
@@ -382,6 +436,20 @@ body {
             .chatIcons{
                 display: flex;
                 gap: 10px;
+
+                .notif{
+                    width:20px;
+                    height:20px;
+                    background-color: red;
+                    border-radius: 50%;
+                    position: absolute;
+                    right:17.5%;
+                    top:12%;
+                    display:flex;
+                    align-items: center;
+                    justify-content: center;
+                    justify-self:flex-end;
+                }
             }
 
             .messages{
@@ -551,6 +619,20 @@ body {
     padding:10px;
 }
 
+.accept,
+.decline{
+    padding:5px;
+    border-radius:30px;
+
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.accept:hover,
+.decline:hover {
+    cursor: pointer;
+    transform: translateY(-3px);
+}
+
 .friend:hover{
     background-color: $dark_brown;
     cursor:pointer;
@@ -585,14 +667,14 @@ body {
     overflow-y: scroll;
     border: 1px solid black;
 
-
+    .button2:hover,
     .button:hover {
         background-color: $dark_brown;
         cursor: pointer;
         transform: translateY(-5px);
-        }
+    }
 
-    .button { /* Back button */
+    .button { /* Close button */
             background-color: $light_coffee;
             padding:5px;
             border-radius:30px;
@@ -602,6 +684,18 @@ body {
 
             transition: transform 0.3s, background-color 0.3s;
     }
+
+    .button2 { /* Friend Requests button */
+        background-color: $light_coffee;
+        padding:5px;
+        border-radius:30px;
+        position:absolute;
+        top:7%;
+        right:3%;
+
+        transition: transform 0.3s, background-color 0.3s;
+    }
+
 }
 
 .drag{

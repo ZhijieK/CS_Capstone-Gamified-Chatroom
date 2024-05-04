@@ -5,27 +5,43 @@ import person from '../images/generalIcons/person.png';
 import Messages from './Messages';
 import Input from "./Input";
 import { ChatContext } from '../../context/ChatContext';
-import { doc, onSnapshot } from "firebase/firestore";
+import { AuthContext } from '../../context/AuthContext';
+import { doc, onSnapshot, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../../firebase.js";
 import Options from "./Options.jsx";
 import OtherUserProfile from "../profileComponents/otherUserProfile.jsx";
+import { current } from '@reduxjs/toolkit';
 
 const Chat = () => {
   const { data } = useContext(ChatContext);
   
+  const {currentUser} = useContext(AuthContext);
   const [info, setInfo] = useState([])
+  const [info2, setInfo2] = useState([])
+  const [notif, setNotif] = useState(false);
   const [popup, setPopup] = useState(false);
   const [dropDown, setDropDown] = useState(false);
+  const [request, setRequest] = useState(false);
+  const [err,setErr] = useState(false);
 
+  const [notifNum, setNotifNum] = useState();
+
+  /* Handles the options dropdown menu */
   const toggleDropDown = () => {
     setDropDown(!dropDown)
   }
 
+  /* Handles other user profile popup */
   const togglePopup = () => {
     setPopup(!popup)
   }
 
-  //Get snapshot of user data
+  /* Handles friend request confirmation popup */
+  const toggleRequest = () => {
+    setRequest(!request)
+  }
+
+  //Get snapshot of other user data
   useEffect(()=>{
     const getInfo = ()=>{
       const unsub = onSnapshot(doc(db, "users", data.user?.uid), (doc) => {
@@ -39,6 +55,46 @@ const Chat = () => {
     data.user?.uid && getInfo()
   });
 
+  //Handles Notifications
+  useEffect(()=>{
+    const getInfo2 = ()=>{
+      const unsub = onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
+        setInfo2(doc.data());
+        //Find # of friend requests
+        const array = info2.requests || [];
+        const size = array.length;
+        setNotifNum(size);
+        //show notifications if you have any
+        if(size > 0){
+          setNotif(true);
+        }
+        else{
+          setNotif(false);
+        }
+      });
+  
+      return () => {
+        unsub();
+      };
+    };
+    currentUser.uid && getInfo2()
+  });
+
+  /* Send a friend request */
+  const handleRequest = async () => {
+
+    try{
+      //Update user data
+      await updateDoc(doc(db, "users", data.user?.uid), {
+          requests: arrayUnion(currentUser.uid),
+      })
+      
+      } catch(err){
+          setErr(true);
+          console.log(err);
+      } 
+  }
+
   return (
     <div className='chat'>
       <div className='chatInfo'>
@@ -46,8 +102,11 @@ const Chat = () => {
         <p> {}</p>
         <div className="chatIcons">
           <img src={person} alt="" onClick={togglePopup} />
-          <img src={Add} alt="" />
+          <img src={Add} alt="" onClick={toggleRequest} />
           <img src={options} alt="" onClick={toggleDropDown} />
+          {notif && <div className="notif">
+            <p>{notifNum}</p>
+          </div>}
           {/* Options drop down menu */}
           {
             dropDown && <Options />
@@ -59,6 +118,23 @@ const Chat = () => {
       {
         popup && <OtherUserProfile info={info} /> 
       }
+
+      {/* Add friend popup */}
+      {
+        request && 
+        <div className="popup">
+          <div className="overlay2" onClick={toggleRequest}>
+            <div className="request">
+              <p>Would you like to add {info.displayName} as a friend?</p>
+              <div className="buttons">
+                <div className="button" onClick={handleRequest} > Yes </div>
+                <div className="button2" onClick={toggleRequest} > No </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+
       <Messages />
       <Input/>
     </div>

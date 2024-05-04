@@ -36,6 +36,8 @@ const Register = () => {
         wallet: 100,
         bio,
         gender,
+        friends: [],
+        requests: [],
     });
       await updateProfile(res.user, {
         displayName,

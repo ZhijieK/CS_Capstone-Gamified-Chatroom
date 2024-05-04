@@ -30,6 +30,7 @@ const Avatar = () => {
     clothes: tempIcon,
   });
   const profileIcon = useSelector((state) => state.profileIcon); 
+  const [friends, setFriends] = useState();
 
   useEffect(() => {
     setCurrentProfile({
@@ -46,6 +47,10 @@ const Avatar = () => {
     const getInfo = ()=>{
       const unsub = onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
         setInfo(doc.data());
+        //Finds # of friends
+        const array = info.friends || [];
+        const size = array.length;
+        setFriends(size);
       });
   
       return () => {
@@ -85,7 +90,7 @@ const Avatar = () => {
                   <p style={{fontSize: 20, padding: 5}}>Gender: {info.gender}</p>
                 </div>
                 <div className="stats">
-                  <p style={{fontSize: 20}}>Friends: 12</p>
+                  <p style={{fontSize: 20}}>Friends: {friends}</p>
                   <p style={{fontSize:20,padding:10}}>Gold: {info.wallet}</p>
                 </div>
             </div>

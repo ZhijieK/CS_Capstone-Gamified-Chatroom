@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase.js";
 
-
+/* Returns current displayname for given uid */
 const Name = (props) => {
     const id = props.id;
     const [info, setInfo] = useState([])

@@ -14,7 +14,7 @@ const Profile_edit = () => {
   const [info, setInfo] = useState([])
 
   //Used to store gender
-  const[gender,setGender]=useState();
+  const[gender,setGender]=useState(info.gender);
 
   //Handle updating user profile
   const handleSubmit = async (e)=>{
@@ -60,18 +60,18 @@ const Profile_edit = () => {
     //Gets users gender to show during profile editing
     useEffect(()=>{
       const getGender = ()=>{
-        //setGender(info.gender);
-        if(info.gender == 'female'){
+        setGender(info.gender);
+        if(gender == 'female'){
           setFemale(true);
-          //setGender('female');
+          setGender('female');
         }
-        else if(info.gender == 'male'){
+        else if(gender == 'male'){
           setMale(true);
-          //setGender('male');
+          setGender('male');
         }
-        else if(info.gender == 'other'){
+        else if(gender == 'other'){
           setOther(true);
-          //setGender('other');
+          setGender('other');
         }
       };
       getGender()
@@ -85,7 +85,7 @@ const Profile_edit = () => {
                 <div className="edit_profile">
                 <form onSubmit={handleSubmit}>
                   <label> Name </label>
-                  <input type='text' defaultValue={info.displayName}></input>
+                  <input required type='text' defaultValue={info.displayName}></input>
                   <label> Bio </label>
                   <textarea placeholder='Tell us something about yourself' defaultValue={info.bio}></textarea>
                   
