@@ -71,6 +71,7 @@ const ChatPanel = ({chatUid, chat}) => {
                       alt={chatProfiles[category]}
                   />
               ))}
+              <div className='background'></div>
             </div>
             <div className="userChatInfo">
               <span>{chat.userInfo.displayName}</span>
