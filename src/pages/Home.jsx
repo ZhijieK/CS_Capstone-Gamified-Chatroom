@@ -27,14 +27,13 @@ import { useEffect, useState } from 'react'
 const Home = () => {
   //get current user and set that uid in my reducer
   const { currentUser } = useContext(AuthContext);
-  console.log(currentUser.uid)
   const dispatch = useDispatch();
 
   // //dispatch to set up current uid
   dispatch(setUid(currentUser.uid));
   const UserUid = useSelector((state) => state.userUID.uid)
-  console.log("UserUid: ", UserUid)
   const profileIcon = useSelector((state) => state.profileIcon);
+  // console.log(profileIcon)
 
 
   useEffect(() => {
@@ -44,8 +43,9 @@ const Home = () => {
 
         const userDataRef = doc(db, "users", UserUid);
         const userDataSnap = await getDoc(userDataRef);
+        // console.log(userDataSnap.data())
         const userData = userDataSnap.data();
-        console.log("userData: ", userData)
+        // console.log(userData)
         //sets the user display name in redux
         //display name
         dispatch(setDisplayName(userData.displayName))
@@ -53,6 +53,8 @@ const Home = () => {
         dispatch(updateInventory(userData.inventory)) 
         //wallet
         dispatch(currentMoney(userData.wallet))
+        // console.log(userData)
+
   
         // Batch Firestore reads
         const docRefs = Object.values(userData.profileIcon).map(itemId =>
@@ -74,9 +76,7 @@ const Home = () => {
         });
 
         await Promise.all(urlPromises);
-        console.log(profileUpdates)
         dispatch(setProfileIcon(profileUpdates))
-        console.log(profileIcon)
       } catch (error) {
         console.log("Could not fetch user data", error);
       }

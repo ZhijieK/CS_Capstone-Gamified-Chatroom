@@ -1,45 +1,41 @@
-import { doc, onSnapshot } from 'firebase/firestore';
-import React, { useContext, useEffect, useState } from 'react'
-import { db } from '../../firebase';
-import { AuthContext } from '../../context/AuthContext';
-import { ChatContext } from '../../context/ChatContext';
+import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import React, { useContext, useEffect, useState } from "react";
+import { db, storage } from "../../firebase";
+import { AuthContext } from "../../context/AuthContext";
+import { ChatContext } from "../../context/ChatContext";
+import { getDownloadURL, ref } from "firebase/storage";
+
+import ChatPanel from "./ChatPanel";
 
 const Chats = () => {
+  const [chats, setChats] = useState([]);
+  const [chatProfiles, setChatProfiles] = useState({});
+  // console.log(chatProfiles["Ytraq2tkQ8PajFBj0s9cH7GPnQK2"].eyesLink)
 
-  const [chats, setChats] = useState([])
-  const {currentUser} = useContext(AuthContext)
-  const {dispatch} = useContext(ChatContext)
+  const { currentUser } = useContext(AuthContext);
+  const { dispatch } = useContext(ChatContext);
 
-  useEffect(()=>{
-    const getChats = ()=>{
+  useEffect(() => {
+    const getChats = () => {
       const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
         setChats(doc.data());
       });
-  
       return () => {
         unsub();
       };
     };
-    currentUser.uid && getChats()
-  },[currentUser.uid]);
-
-  const handleSelect = (u)=>{
-    dispatch({type:"CHANGE_USER", payload: u})
-  }
+    currentUser.uid && getChats();
+  }, [currentUser.uid]);
 
   return (
-    <div className='chats'>
-      {Object.entries(chats)?.sort((a,b)=>b[1].date - a[1].date).map((chat) => (
-      <div className="userChat" key={chat[0]} onClick={()=>handleSelect(chat[1].userInfo)}>
-        <img src="https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg" alt="" />
-        <div className="userChatInfo">
-          <span>{chat[1].userInfo.displayName}</span>
-          <p>{chat[1].lastMessage?.text}</p>
-        </div>
-      </div>
-      ))}
+    <div className="chats">
+      {Object.entries(chats)
+        ?.sort((a, b) => b[1].date - a[1].date)
+        .map(([uid, chat]) => (
+          <ChatPanel chatUid={uid} chat={chat} />
+        ))}
     </div>
   );
 };
 
-export default Chats
+export default Chats;
