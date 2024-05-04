@@ -20,7 +20,7 @@ import '../cssFile/profile.css'
 
 
 const Avatar = () => {
-  const [info, setInfo] = useState([])
+  const [info, setInfo] = useState([]);
   const { currentUser } = useContext(AuthContext);
   const [currentProfile, setCurrentProfile] = useState({
     skin: tempIcon,
@@ -43,8 +43,8 @@ const Avatar = () => {
   }, [profileIcon]);
 
   //Get snapshot of user data
-  useEffect(()=>{
-    const getInfo = ()=>{
+  useEffect(() => {
+    const getInfo = () => {
       const unsub = onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
         setInfo(doc.data());
         //Finds # of friends
@@ -52,13 +52,13 @@ const Avatar = () => {
         const size = array.length;
         setFriends(size);
       });
-  
+
       return () => {
         unsub();
       };
     };
-    currentUser.uid && getInfo()
-  });
+    currentUser.uid && getInfo();
+  }, []);
 
   return (
     <div className="container">
@@ -69,16 +69,21 @@ const Avatar = () => {
           <div className="button"> Go Back </div>{" "}
         </Link>
         <p style={{ fontSize: 35, padding: 20 }}>Profile</p>
-        <Link to="../profile_edit" style={{color: 'black'}}> <div className="button2"><img src={edit} /></div> </Link>
+        <Link to="../profile_edit" style={{ color: "black" }}>
+          {" "}
+          <div className="button2">
+            <img src={edit} />
+          </div>{" "}
+        </Link>
       </div>
       {/*The Avatar*/}
       <div className="circle">
-        {Object.keys(currentProfile).map((category) => (
+        {["skin", "hair", "eyes", "mouth", "clothes"].map((category) => (
           <img
             key={category}
             className="avatar-image"
             data-category={category}
-            src={currentProfile[category]}
+            src={profileIcon[`${category}Link`] || "fallback-image-url"}
             alt={category}
           />
         ))}

@@ -23,79 +23,90 @@ import skin3 from '../images/characterAssets/skin/skin3.png'
 import skin4 from '../images/characterAssets/skin/skin4.png'
 import skin5 from '../images/characterAssets/skin/skin5.png'
 
+// =================================================
+import blue_shirt from "../images/characterAssets/clothes/blue_shirt.png"
+import green_shirt from "../images/characterAssets/clothes/green_shirt.png"
+import purple_shirt from "../images/characterAssets/clothes/purple_shirt.png"
+
+import blue_oval_eyes from "../images/characterAssets/eyes/blue_oval_eyes.png"
+import brown_circle_eyes from "../images/characterAssets/eyes/brown_circle_eyes.png"
+import brown_oval_eyes from "../images/characterAssets/eyes/brown_oval_eyes.png"
+import green_circle_eyes from "../images/characterAssets/eyes/green_circle_eyes.png"
+import green_oval_eyes from "../images/characterAssets/eyes/green_oval_eyes.png"
+import sunglasses from "../images/characterAssets/eyes/sunglasses.png"
+
+import black_bob from "../images/characterAssets/hair/black_bob.png"
+import black_bowl_hair from "../images/characterAssets/hair/black_bowl_hair.png"
+import black_long_hair from "../images/characterAssets/hair/black_long_hair.png"
+import black_side_pigtails from "../images/characterAssets/hair/black_side_pigtails.png"
+
+import blonde_bowl_hair from "../images/characterAssets/hair/blonde_bowl_hair.png"
+import blonde_long_hair from "../images/characterAssets/hair/blonde_long_hair.png"
+import blonde_side_pigtails from "../images/characterAssets/hair/blonde_side_pigtails.png"
+import blonde_short_hair from "../images/characterAssets/hair/blonde_short_hair.png"
+import brown_bob from "../images/characterAssets/hair/brown_bob.png"
+import brown_bowl_hair from "../images/characterAssets/hair/brown_bowl_hair.png"
+import brown_long_hair from "../images/characterAssets/hair/brown_long_hair.png"
+import brown_side_pigtails from "../images/characterAssets/hair/brown_side_pigtails.png"
+import brown_short_hair from "../images/characterAssets/hair/brown_short_hair.png"
+import red_bob from "../images/characterAssets/hair/red_bob.png"
+import red_bowl_hair from "../images/characterAssets/hair/red_bowl_hair.png"
+import red_long_hair from "../images/characterAssets/hair/red_long_hair.png"
+import red_side_pigtails from "../images/characterAssets/hair/red_side_pigtails.png"
+import red_short_hair from "../images/characterAssets/hair/red_short_hair.png"
+
+import bandaid_nose from "../images/characterAssets/mouth/bandaid_nose.png"
+import cat_mouth from "../images/characterAssets/mouth/cat_mouth.png" 
+import pout from "../images/characterAssets/mouth/pout.png"
+import shocked_mouth from "../images/characterAssets/mouth/shocked_mouth.png"
+import side_bandage from "../images/characterAssets/mouth/side_bandage.png"
+import small_smile from "../images/characterAssets/mouth/small_smile.png"
+import tongue_out from "../images/characterAssets/mouth/tongue_out.png"
+
+
+bandaid_nose
+cat_mouth
+pout
+shocked_mouth
+side_bandage
+small_smile
+tongue_out
 const ShopItems = [
     {
-        itemName: "red_shirt", 
-        itemCategory: "clothes", 
-        image: <img src={red_shirt}/>,
+        itemName: "bandaid_nose", 
+        itemCategory: "mouth", 
+        image: <img src={bandaid_nose}/>,
     },
     {
-        itemName: "suit",
-        itemCategory: "clothes",
-        image: <img src={suit}/>, 
+        itemName: "cat_mouth", 
+        itemCategory: "mouth", 
+        image: <img src={cat_mouth}/>,
     },
     {
-        itemName: "black_short_hair",
-        itemCategory: "hair",
-        image: <img src={short__black_hair}/>
+        itemName: "pout", 
+        itemCategory: "mouth", 
+        image: <img src={pout}/>,
     },
     {
-        itemName: "blonde_bob",
-        itemCategory: "hair",
-        image: <img src={blonde_bob}/>
+        itemName: "shocked_mouth", 
+        itemCategory: "mouth", 
+        image: <img src={shocked_mouth}/>,
     },
     {
-        itemName: "blue_eyes",
-        itemCategory: "eyes",
-        image: <img src={blue_eyes}/>,
+        itemName: "side_bandage", 
+        itemCategory: "mouth", 
+        image: <img src={side_bandage}/>,
     },
     {
-        itemName: "brown_eyes",
-        itemCategory: "eyes",
-        image: <img src={brown_eyes}/>,
+        itemName: "small_smile", 
+        itemCategory: "mouth", 
+        image: <img src={small_smile}/>,
     },
     {
-        itemName: "green_eyes",
-        itemCategory: "eyes",
-        image: <img src={green_eyes}/>,
+        itemName: "tongue_out", 
+        itemCategory: "mouth", 
+        image: <img src={tongue_out}/>,
     },
-    {
-        itemName: "smile_with_teeth",
-        itemCategory: "mouth",
-        image: <img src={smile_with_teeth}/>,
-    },
-    {
-        itemName: "smile",
-        itemCategory: "mouth",
-        image: <img src={smile}/>,
-    },
-    {
-        itemName: "skin1",
-        itemCategory: "skin",
-        image: <img src={skin1}/>,
-    },
-    {
-        itemName: "skin2",
-        itemCategory: "skin",
-        inInventory : false, 
-        image: <img src={skin2}/>,
-    },
-    {
-        itemName: "skin3",
-        itemCategory: "skin",
-        image: <img src={skin3}/>,
-    },
-    {
-        itemName: "skin4",
-        itemCategory: "skin",
-        image: <img src={skin4}/>,
-    },
-    {
-        itemName: "skin5",
-        itemCategory: "skin",
-        image: <img src={skin5}/>,
-    }
-
 ]
 
 export default ShopItems

@@ -1,7 +1,6 @@
 //modules
 import { useRoutes, Link, useParams, Navigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
@@ -10,10 +9,17 @@ import { useState } from "react";
 // styling
 import "../components/cssFile/shopPage.css";
 import shopBasket from "../components/images/generalIcons/shoppingBasket.png";
+import trashCan from "../components/images/generalIcons/trashCan.png"
 
 //components
 import ShopTabs from "../components/shopComponents/ShopTabs";
 import ShopItems from "../components/shopComponents/shopItem";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToInventory,
+  decreaseAmount,
+} from "../redux/features/userInfoSlice";
+import { removeItemFromCart, resetCartItems, resetTotal, updateTotalCost } from "../redux/features/shopCartSlice";
 
 const ShopPage = () => {
   const currentUser = useContext(AuthContext);
@@ -25,34 +31,21 @@ const ShopPage = () => {
   ]);
   //variables
   let shopTabsName = ["Skin", "Hair", "Eyes", "Mouth", "Clothes"];
+  const [activeTab, setActiveTab] = useState('skin')
   const profileIcon = useSelector((state) => state.profileIcon);
   const currentWallet = useSelector((state) => state.userInfo.wallet);
-  console.log(currentWallet)
-
-  useEffect(() => {
-    const getWalletAmmount = async () => {
-      const userData = await getDoc(doc(db, "users", currentUser.uid));
-      setUserWallet(userData.data().wallet);
-    };
-    // const loadUserAvatar = () => {
-    //   let itemCont = document.querySelector(".itemCont")
-
-    // }
-    // getWalletAmmount();
-  }, []);
+  console.log(currentWallet);
+  let dispatch = useDispatch();
+  const currentInventory = useSelector((state) => state.userInfo.inventory);
+  const currentUserUID = useSelector((state) => state.userUID.uid);
+  console.log(currentUserUID);
+  const itemsInCart = useSelector(state => state.shopCart.shopCart)
+  const [cartItemRender, setCartItemRender] = useState([])
+  const cartTotalCost = useSelector(state => state.shopCart.cartTotal)
 
   //handle click function
   let handleTabClick = (tabName) => {
-    const tabNameA = document.querySelectorAll(".tabNameA");
-    // console.log(tabNameA);
-    tabNameA.forEach((tabNameA) => {
-      if (tabNameA.textContent === tabName.tabName) {
-        tabNameA.style.backgroundColor = "#c6aeae";
-        tabNameA.style.borderRadius = "5px";
-      } else {
-        tabNameA.style.backgroundColor = "#faebd7";
-      }
-    });
+    setActiveTab(tabName);
   };
 
   let clickViewCart = () => {
@@ -68,15 +61,80 @@ const ShopPage = () => {
   let renderedTabs = shopTabsName.map((tabName) => (
     <div
       key={tabName}
-      className="tabLinks"
-      id={tabName}
-      onClick={(event) => handleTabClick({ tabName })}
+      className={`tabLinks ${activeTab === tabName.toLowerCase() ? 'active' : ''}`}
+      onClick={(event) => handleTabClick( tabName.toLowerCase())}
     >
       <Link to={tabName.toLowerCase()} className="tabNameA">
         {tabName}
       </Link>
     </div>
   ));
+
+  let handleCheckOut = async () => {
+    // checks if user has enough money
+
+    //if not, prevent them from checking out 
+    if (currentWallet >= cartTotalCost){
+      // Updates Redux inventory
+      console.log("item added to dispatch");
+      // Dispatch the action to update the Redux state
+      dispatch(addToInventory(itemsInCart.map(item=>item.itemName)));
+      dispatch(decreaseAmount(cartTotalCost));
+      //clear items in the cart and cclear total
+      dispatch(resetCartItems());
+      dispatch(resetTotal());
+    }
+  };
+
+  const updateInventoryInDB = async () => {
+    // Update Firebase wallet and inventory
+    // console.log("current: ", currentInventory)
+    try{
+      const userDocRef = doc(db, "users", currentUserUID);
+      await updateDoc(userDocRef, { // Pass the updates in the second argument
+        inventory: currentInventory,
+        wallet: currentWallet
+      });
+      console.log("updated db")
+    }
+    catch{
+      console.log("failed to update wallet and inventory in db")
+    }
+  }
+
+  let renderItemsInCart = () =>{
+    let totalCost = 0
+    itemsInCart.forEach(item =>{
+      totalCost += item.cost
+    })
+
+    let cartContainerRenderBox = itemsInCart.map(item => {
+      return (
+        <div className={`newCartItem ${item.cost}`} id={item.itemName}>
+          <div className="rightPanel"> <img src={item.imageRef} /> </div>
+          <div className="leftPanel"> <div className="costCont"> {item.cost} Coins </div> 
+          <div> <img className="trashImg" src={trashCan} onClick={() => handleDeleteItem(item)}/></div>
+          </div>
+        </div>
+      )
+    });
+
+    setCartItemRender(cartContainerRenderBox)
+    dispatch(updateTotalCost(totalCost));
+  }
+
+  const handleDeleteItem = (itemToDelete) => {
+    dispatch(removeItemFromCart(itemToDelete))
+  };
+
+  useEffect(() => {
+    console.log("items in itemsInCart: ", itemsInCart)
+    renderItemsInCart();
+  }, [itemsInCart])
+
+  useEffect(() => {
+    updateInventoryInDB();
+  }, [currentInventory])
 
   return (
     <div className="shopBackground">
@@ -89,26 +147,23 @@ const ShopPage = () => {
             <Link to="../profile">
               <div className="goBack"> Back </div>
             </Link>
-            <div className="coinCont">
-              {" "}
-              {currentWallet} Coins
-            </div>
+            <div className="coinCont"> {currentWallet} Coins</div>
             <div className="charaTryOnView">
               <div className="itemCont backgroundFill"></div>
               <div className="skinCont itemCont">
-                <img src={profileIcon.skin} />
+                <img src={profileIcon.skinLink} />
               </div>
               <div className="eyesCont itemCont">
-                <img src={profileIcon.eyes} />
+                <img src={profileIcon.eyesLink} />
               </div>
               <div className="mouthCont itemCont">
-                <img src={profileIcon.mouth} />
+                <img src={profileIcon.mouthLink} />
               </div>
               <div className="hairCont itemCont">
-                <img src={profileIcon.hair} />
+                <img src={profileIcon.hairLink} />
               </div>
               <div className="clothesCont itemCont">
-                <img src={profileIcon.clothes} />
+                <img src={profileIcon.clothesLink} />
               </div>
             </div>
 
@@ -122,10 +177,13 @@ const ShopPage = () => {
             <div className="close-button" onClick={clickViewCart}>
               {" "}
               <b> X </b>{" "}
-              <div className="checkoutButton"> Checkout </div>
+              <div className="checkoutButton" onClick={handleCheckOut}>
+                {" "}
+                Checkout{" "}
+              </div>
             </div>
-            <div className="cartItemCont"></div>
-            <div className="totalValueCont"> Nothing in Cart </div>
+            <div className="cartItemCont">{cartItemRender}</div>
+            <div className="totalValueCont"> Total: {cartTotalCost} </div>
           </div>
           <div className="shopPanel">
             {/* display the tabls */}

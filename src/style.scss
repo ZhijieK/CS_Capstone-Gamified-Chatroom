@@ -34,7 +34,7 @@ $brown: #A18585;
 $beige: #faebd7;
 $coffee: #AD8B73;
 $light_coffee: #E3CAA5;
-$cream: #FFFBE9;
+$cream: #chatProfileIcon;
 
 body {
     margin: 0;
@@ -329,18 +329,31 @@ body {
                 .user{
                     display: flex;
                     gap: 10px;
-                    
-                    span{
-                        padding-top: 2.5px;
+
+                    .miniProfileIcon{
+                        display: flex;
+                        flex-direction: column;
+
+                        .iconBackground{
+                            background-color: white;
+                            height: 24px;
+                            width: 24px;
+                            border-radius: 50%;
+                        }
+
+                        img{
+                            height: 24px;
+                            width: 24px;
+                            border-radius: 50%;
+                            object-fit: cover;
+                            cursor: pointer;
+                            margin-top: -100%;
+                        }
+
                     }
 
-                    img{
-                        background-color: white;
-                        height: 24px;
-                        width: 24px;
-                        border-radius: 50%;
-                        object-fit: cover;
-                        cursor: pointer;
+                    span{
+                        padding-top: 2.5px;
                     }
 
                     button{
@@ -364,6 +377,8 @@ body {
 
                 .searchForm{
                     padding: 10px;
+                    display: flex;
+                    justify-content: space-between;
 
                     input{
                         background-color: transparent;
@@ -375,8 +390,46 @@ body {
                         }
                         font-family: 'Courier New', Courier, monospace;
                     }
+
+                    .random{
+                        background-color: $beige;
+                        color: $dark_brown;
+                        font-size: 10px;
+                        padding: 5px;
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                    }
                 }
             }
+
+            /* Custom scrollbar for .chats container */
+            .chats {
+                height: 84%; /* Set an appropriate height */
+                overflow-y: auto;
+            }
+            
+            /* Scrollbar track */
+            .chats::-webkit-scrollbar {
+                width: 10px;
+            }
+            
+            /* Scrollbar thumb (handle) */
+            .chats::-webkit-scrollbar-thumb {
+                background: $dark_brown; /* Set the background color of the scrollbar thumb */
+                border-radius: 5px; /* Optional: Add border-radius to the scrollbar thumb */
+            }
+            
+            /* Scrollbar thumb on hover */
+            .chats::-webkit-scrollbar-thumb:hover {
+                background: #645452;
+            }
+            
+            /* Scrollbar thumb on active (e.g., when dragging) */
+            .chats::-webkit-scrollbar-thumb:active {
+                background: #533B30;
+            }
+  
 
             .userChat{
                 padding: 10px;
@@ -515,6 +568,26 @@ body {
                         }
                     }
                 }
+            }
+
+            .messages::-webkit-scrollbar {
+                width: 10px;
+            }
+            
+            /* Handle */
+            .messages::-webkit-scrollbar-thumb {
+                background: $coffee; /* Set the background color of the scrollbar thumb */
+                border-radius: 5px; /* Optional: Add border-radius to the scrollbar thumb */
+            }
+            
+            /* Handle on hover */
+            .messages::-webkit-scrollbar-thumb:hover {
+                background: $brown;
+            }
+            
+            /* Handle on active */
+            .messages::-webkit-scrollbar-thumb:active {
+                background: $dark_brown;
             }
 
             .input{

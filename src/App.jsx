@@ -6,6 +6,7 @@ import ShopPage from "./pages/ShopPage";
 import ProfilePage from './pages/Profile_Page.jsx';
 import ProfileEdit from './pages/Profile_edit.jsx';
 import HomePage from './pages/Home_Page.jsx';
+import ForgotPassword from "./pages/Forgot_Password.jsx";
 import "./style.scss"
 
 import { Link, useRoutes, Navigate } from "react-router-dom";
@@ -30,6 +31,7 @@ function App() {
     {path: "shop_page/*", element: <ShopPage />},
     {path: "profile/", element: <ProfilePage />},
     {path: "Profile_edit/", element: <ProfileEdit />},
+    {path: "forgot_password/", element: <ForgotPassword />},
   ])
   
   return (
