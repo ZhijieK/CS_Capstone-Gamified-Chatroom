@@ -35,7 +35,9 @@ const Register = () => {
         inventory: ["skin3", "black_short_hair", "brown_eyes", "smile", "red_shirt"],
         wallet: 1000,
         bio,
-      gender,
+        gender,
+        friends: [],
+        requests: [],
     });
       await updateProfile(res.user, {
         displayName,

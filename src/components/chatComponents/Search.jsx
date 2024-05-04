@@ -33,6 +33,8 @@ const Search = () => {
   };
   
 
+  const [info, setInfo] = useState([])
+
   const handleSearch = async () => {
     const q = query(collection(db, "users"), where("displayName", "==", username));
 

@@ -6,6 +6,7 @@ import { ChatContext } from '../../context/ChatContext';
 import { getDownloadURL, ref} from 'firebase/storage';
 import "../cssFile/chatPanel.css"
 
+import Name from './Name.jsx';
 
 const ChatPanel = ({chatUid, chat}) => {
     const [chatProfiles, setChatProfiles] = useState([]);
@@ -74,7 +75,7 @@ const ChatPanel = ({chatUid, chat}) => {
               <div className='background'></div>
             </div>
             <div className="userChatInfo">
-              <span>{chat.userInfo.displayName}</span>
+              <Name id={chat.userInfo.uid} />
               <p>{chat.lastMessage?.text}</p>
             </div>
           </div>

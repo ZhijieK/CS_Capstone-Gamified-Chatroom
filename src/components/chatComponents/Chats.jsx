@@ -7,6 +7,7 @@ import { getDownloadURL, ref } from "firebase/storage";
 
 import ChatPanel from "./ChatPanel";
 
+
 const Chats = () => {
   const [chats, setChats] = useState([]);
   const [chatProfiles, setChatProfiles] = useState({});
@@ -35,6 +36,7 @@ const Chats = () => {
           <ChatPanel chatUid={uid} chat={chat} />
         ))}
     </div>
+    
   );
 };
 

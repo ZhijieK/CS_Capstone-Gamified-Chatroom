@@ -16,24 +16,41 @@ import {
 
 import tempIcon from "../images/generalIcons/User.png";
 
-import "../cssFile/profile.css";
-import skin from "../images/characterAssets/skin/skin1.png";
-import hair from "../images/characterAssets/hair/black_short_hair.png";
-import eyes from "../images/characterAssets/eyes/brown_eyes.png";
-import mouth from "../images/characterAssets/mouth/smile.png";
-import shirt from "../images/characterAssets/clothes/suit.png";
+import '../cssFile/profile.css'
+
 
 const Avatar = () => {
   const [info, setInfo] = useState([]);
   const { currentUser } = useContext(AuthContext);
-  const profileIcon = useSelector((state) => state.profileIcon);
-  console.log("profileIcon: ", profileIcon);
+  const [currentProfile, setCurrentProfile] = useState({
+    skin: tempIcon,
+    hair: tempIcon,
+    eyes: tempIcon,
+    mouth: tempIcon,
+    clothes: tempIcon,
+  });
+  const profileIcon = useSelector((state) => state.profileIcon); 
+  const [friends, setFriends] = useState();
+
+  useEffect(() => {
+    setCurrentProfile({
+      skin: profileIcon.skin,
+      hair: profileIcon.hair,
+      eyes: profileIcon.eyes,
+      mouth: profileIcon.mouth,
+      clothes: profileIcon.clothes,
+    });
+  }, [profileIcon]);
 
   //Get snapshot of user data
   useEffect(() => {
     const getInfo = () => {
       const unsub = onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
         setInfo(doc.data());
+        //Finds # of friends
+        const array = info.friends || [];
+        const size = array.length;
+        setFriends(size);
       });
 
       return () => {
@@ -46,7 +63,6 @@ const Avatar = () => {
   return (
     <div className="container">
       {" "}
-      {/*Grey box on left side*/}
       <div className="bar">
         <Link to="../" style={{ color: "black" }}>
           {" "}
@@ -74,15 +90,15 @@ const Avatar = () => {
       </div>
       {/*The Bio*/}
       <div className="bio">
-        <p style={{ fontSize: 25, padding: 5 }}>{info.displayName}</p>
-        <p style={{ fontSize: 20, padding: 5 }}>Bio: {info.bio}</p>
-        <p style={{ fontSize: 20, padding: 5 }}>Gender: {info.gender}</p>
-      </div>
-      <div className="stats">
-        <p style={{ fontSize: 20 }}>Friends: 12</p>
-        <p style={{ fontSize: 20, padding: 10 }}>Gold: {info.wallet}</p>
-      </div>
-    </div>
+                  <p style={{fontSize: 25, padding: 5}}>{info.displayName}</p>
+                  <p style={{fontSize: 20, padding: 5}}>Bio: {info.bio}</p>
+                  <p style={{fontSize: 20, padding: 5}}>Gender: {info.gender}</p>
+                </div>
+                <div className="stats">
+                  <p style={{fontSize: 20}}>Friends: {friends}</p>
+                  <p style={{fontSize:20,padding:10}}>Gold: {info.wallet}</p>
+                </div>
+            </div>
   );
 };
 

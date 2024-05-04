@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import Avatar from "../components/profileComponents/Avatar.jsx";
+import { Link, useParams } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext.jsx";
 import {
   doc,
   getDoc,
@@ -25,7 +27,6 @@ import {
   setClothesLink,
 } from "../redux/features/profileIconSlice.js";
 import "../components/cssFile/profile.css";
-import Avatar from "../components/profileComponents/Avatar.jsx";
 
 const Profile = () => {
   const currentUserUID = useSelector((state) => state.userUID.uid);
