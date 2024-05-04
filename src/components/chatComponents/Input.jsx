@@ -13,7 +13,9 @@ const Input = () => {
   const {currentUser} = useContext(AuthContext)
   const {data} = useContext(ChatContext)
 
-  const handleSend = async ()=>{
+//Handles sending the message
+const handleSend = async ()=>{
+  if (text !== "") {
     if(img){
       const storageRef = ref(storage, uuid());
       const uploadTask = uploadBytesResumable(storageRef, img);
@@ -42,10 +44,10 @@ const Input = () => {
       [data.chatId+".date"]: serverTimestamp()
     })
 
-
     setText("")
     setImg(null)
-  };
+  }
+};
 
   return (
     <div className='input'>

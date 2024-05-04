@@ -8,6 +8,30 @@ const Search = () => {
   const [user, setUser] = useState(null)
   const [err, setErr] = useState(false)
   const {currentUser} = useContext(AuthContext)
+  
+  const fetchRandomUser = async () => {
+    const usersRef = collection(db, "users");
+  
+    try {
+      // Get all user documents
+      const querySnapshot = await getDocs(usersRef);
+      const allUsers = querySnapshot.docs.map((doc) => doc.data());
+  
+      let randomIndex;
+      let randomUser;
+  
+      // Keep generating a new random index until it's a different user
+      do {
+        randomIndex = Math.floor(Math.random() * allUsers.length);
+        randomUser = allUsers[randomIndex];
+      } while (randomUser.uid === currentUser.uid); // Check if it's the same user
+  
+      setUser(randomUser);
+    } catch (err) {
+      setErr(true);
+    }
+  };
+  
 
   const handleSearch = async () => {
     const q = query(collection(db, "users"), where("displayName", "==", username));
@@ -58,10 +82,19 @@ const Search = () => {
     setUsername("");
   }
 
+  const handleRandomUserClick = () => {
+    try{
+      fetchRandomUser(); // Call the function to fetch a random user
+    } catch (err){
+      console.error("Error occurred:", err);
+    }
+  };
+
   return (
     <div className='search'>
       <div className="searchForm">
         <input type="text" placeholder='Find a friend' onKeyDown={handleKey} onChange={e=>setUsername(e.target.value)} value={username}/>
+        <button className='random' onClick={handleRandomUserClick}>Random User</button>
       </div>
       {err && <span>User not found</span>}
       {user && <div className="userChat" onClick={handleSelect}>
