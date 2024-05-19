@@ -126,7 +126,6 @@ const handleSend = async ()=>{
 
   //Handles fetching the question and sending it as a message
   const handleQuiz = async () => {
-
     try{
       /* Remove the persons uid from your game_request list */
       await updateDoc(doc(db, "users", currentUser.uid), {
