@@ -55,7 +55,7 @@ const Chat = () => {
       };
     };
     data.user?.uid && getInfo()
-  });
+  }, []);
 
   //Handle giving the user money for # of messages sent
   const updateWallet = async ()=>{
@@ -106,7 +106,7 @@ const Chat = () => {
       };
     };
     currentUser.uid && getInfo2()
-  });
+  }, []);
 
   /* Send a friend request */
   const handleRequest = async () => {

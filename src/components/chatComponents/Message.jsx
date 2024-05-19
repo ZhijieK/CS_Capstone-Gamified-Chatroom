@@ -1,23 +1,35 @@
-import React, { useContext, useEffect, useRef } from 'react'
-import { AuthContext } from '../../context/AuthContext';
-import { ChatContext } from '../../context/ChatContext';
-import { useSelector, useDispatch } from 'react-redux';
-import ChatMiniIcon from './ChatMiniIcon';
+import React, { useContext, useEffect, useRef } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { ChatContext } from "../../context/ChatContext";
+import { useSelector, useDispatch } from "react-redux";
+import ChatMiniIcon from "./ChatMiniIcon";
+import { doc, updateDoc } from "firebase/firestore";
 
-const Message = ({message, userUid, chatProfile}) => {
+import {
+  earnedMoney,
+} from "../../redux/features/userInfoSlice";
+import { db } from "../../firebase";
 
-  const {currentUser} = useContext(AuthContext)
-  const {data} = useContext(ChatContext)
+const Message = ({
+  message,
+  chatProfile,
+  answeredCorrectly,
+  isAnswer
+}) => {
+  const answer = "answer";
+  const { currentUser } = useContext(AuthContext);
+  const { data } = useContext(ChatContext);
 
   // console.log(chatProfile)
   const profileIcon = useSelector((state) => state.profileIcon);
   // console.log("Profile: ", profileIcon)
-  
-  const ref = useRef()
+  const wallet = useSelector((state) => state.userInfo.wallet);
+  const ref = useRef();
+  const dispatch = useDispatch();
 
-  useEffect(()=> {
-    ref.current?.scrollIntoView({behavior:"smooth"})
-  }, [message])
+  useEffect(() => {
+    ref.current?.scrollIntoView({ behavior: "smooth" });
+  }, [message]);
 
   const messageDate = message.date.toDate();
   const now = new Date();
@@ -34,24 +46,60 @@ const Message = ({message, userUid, chatProfile}) => {
   } else if (diffInHours > 0) {
     timeAgo = diffInHours + (diffInHours === 1 ? " hour ago" : " hours ago");
   } else if (diffInMinutes > 0) {
-    timeAgo = diffInMinutes + (diffInMinutes === 1 ? " minute ago" : " minutes ago");
+    timeAgo =
+      diffInMinutes + (diffInMinutes === 1 ? " minute ago" : " minutes ago");
   } else {
-    timeAgo = diffInSeconds + (diffInSeconds === 1 ? " second ago" : " seconds ago");
+    timeAgo =
+      diffInSeconds + (diffInSeconds === 1 ? " second ago" : " seconds ago");
+  }
+  
+  const updateWalletInDB = async () => {
+    try {
+      // const userDocRef = doc(db, "users", currentUser.uid);
+      // await updateDoc(userDocRef, { wallet });
+      console.log("Wallet successfully updated in DB to:", wallet);
+    } catch (error) {
+      console.log("Failed to update wallet in DB:", error);
+    }
   }
 
+  const awardPlayer = (uid) => {
+    if (uid === currentUser.uid){
+      dispatch(earnedMoney(5));
+      updateWalletInDB();
+    }
+  }
+
+  useEffect(() => {
+    if (isAnswer && answeredCorrectly) {
+      awardPlayer(message.senderId);
+    }
+  }, [message]);
+
   return (
-    <div ref={ref} className={`message ${message.senderId === currentUser.uid ? 'owner' : ''}`}>
+    <div
+      ref={ref}
+      className={`message ${
+        message.senderId === currentUser.uid ? "owner" : ""
+      }`}
+    >
       <div className="messageInfo">
-        {/* <img src= {message.senderId === currentUser.uid ? "https://i.kym-cdn.com/entries/icons/facebook/000/048/516/Screenshot_2024-02-20_at_10.43.43_AM.jpg" : "https://i.kym-cdn.com/photos/images/newsfeed/002/738/958/9e9"} alt="" /> */}
-        <ChatMiniIcon profileProp={message.senderId === currentUser.uid ? profileIcon : chatProfile} isOwner={message.senderId === currentUser.uid ? true: false}/>
+        <ChatMiniIcon
+          profileProp={
+            message.senderId === currentUser.uid ? profileIcon : chatProfile
+          }
+          isOwner={message.senderId === currentUser.uid ? true : false}
+        />
         <span>{timeAgo}</span>
       </div>
       <div className="messageContent">
         <p>{message.text}</p>
-        {message.img && <img src={message.img} alt=""/>}
       </div>
+        {
+          isAnswer? answeredCorrectly ? <p> Your answer is correct! You recieved 10 coins! </p> : <p> Your answer is incorrect! No prize recieved </p> : <p> </p>
+        }
     </div>
   );
 };
 
-export default Message
+export default Message;

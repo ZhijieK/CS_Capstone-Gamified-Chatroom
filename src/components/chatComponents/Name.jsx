@@ -19,7 +19,7 @@ const Name = (props) => {
         };
         };
         id && getInfo()
-    });
+    }, []);
 
     return (
         <span>{info.displayName}</span> 

@@ -3,7 +3,7 @@ import File from '../images/generalIcons/File.png'
 import Quiz from '../images/generalIcons/quiz.png'
 import { AuthContext } from '../../context/AuthContext'
 import { ChatContext } from '../../context/ChatContext'
-import { Timestamp, arrayUnion, doc, serverTimestamp, updateDoc, onSnapshot, arrayRemove } from 'firebase/firestore'
+import { Timestamp, arrayUnion, doc, serverTimestamp, updateDoc, onSnapshot, arrayRemove, getDoc } from 'firebase/firestore'
 import { db } from '../../firebase'
 import { v4 as uuid } from 'uuid'
 import trivia from '../images/generalIcons/trivia.png'
@@ -47,7 +47,7 @@ const Input = () => {
       };
     };
     data.user?.uid && getInfo2()
-  });
+  }, []);
 
 //Handles sending the message
 const handleSend = async ()=>{
@@ -56,12 +56,36 @@ const handleSend = async ()=>{
       const storageRef = ref(storage, uuid());
       const uploadTask = uploadBytesResumable(storageRef, img);
     } else {
+      // Retrieve the current messages from the Firestore document
+      console.log("istext")
+      const chatDoc = await getDoc(doc(db, "chats", data.chatId));
+      let answeredCorrectly = false;
+      let isAnswer = false;
+      let expectedAnswer = ""
+
+      if (chatDoc.exists()) {
+        const messages = chatDoc.data().messages;
+
+        if (messages.length > 0 && messages[messages.length - 1].isQuiz) {
+          isAnswer = true;
+          expectedAnswer = messages[messages.length - 1].expectedAnswer
+          console.log(expectedAnswer)
+          if (text.toLowerCase().trim() != "" &&  text.toLowerCase().trim() == expectedAnswer.toLowerCase().trim()){
+            answeredCorrectly = true;
+          }
+        }
+      }
+
       await updateDoc(doc(db, "chats", data.chatId), {
         messages: arrayUnion({
           id: uuid(),
           text,
           senderId: currentUser.uid,
           date:Timestamp.now(),
+          isQuiz: quizClicked ? true : false,
+          expectedAnswer: quizClicked ? correctAnswer : "",
+          answeredCorrectly: answeredCorrectly,
+          isAnswer: isAnswer
         }),
       });
     }
@@ -117,8 +141,10 @@ const handleSend = async ()=>{
     setGame2(!game2)
     const response = await fetch('https://the-trivia-api.com/v2/questions');
     const data = await response.json();
+    console.log(data)
     const question = data[0].question.text;
-    const answer = data[0].question.answer; // Adjust this line based on the actual structure of your data
+    const answer = data[0].correctAnswer.toLowerCase().trim(); // Adjust this line based on the actual structure of your data
+    console.log(answer)
 
     setText(question);
     setCorrectAnswer(answer); // Store the correct answer
