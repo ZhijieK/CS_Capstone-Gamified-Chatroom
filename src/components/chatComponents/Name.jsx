@@ -22,9 +22,7 @@ const Name = (props) => {
     });
 
     return (
-        <div className="userChatInfo">
-            <span>{info.displayName}</span>
-        </div>
+        <span>{info.displayName}</span> 
     )
 }
 

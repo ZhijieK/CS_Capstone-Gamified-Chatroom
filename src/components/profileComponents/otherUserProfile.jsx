@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
+import { doc, getDoc } from 'firebase/firestore'
+import { db, storage } from '../../firebase'
+import { getDownloadURL, ref } from 'firebase/storage'
+import ChatMiniIcon from '../chatComponents/ChatMiniIcon';
+import Icon from '../chatComponents/Icon';
 
 import skin from '../images/characterAssets/skin/skin3.png';
 import hair from '../images/characterAssets/hair/black_short_hair.png';
@@ -31,11 +36,7 @@ const otherUserProfile = (props) => {
               </div>
               {/*The Avatar*/}
               <div className="circle">
-                <img src={skin} />
-                <img src={hair} />
-                <img src={eyes} />
-                <img src={mouth} />
-                <img src={shirt} />
+              <Icon uid = {info.uid}/>
               </div>
               {/*The Bio*/}
               <div className="bio">

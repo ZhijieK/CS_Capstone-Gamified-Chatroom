@@ -34,10 +34,12 @@ const Register = () => {
         },
         inventory: ["skin3", "black_short_hair", "brown_eyes", "smile", "red_shirt"],
         wallet: 1000,
+        messages_sent: 0,
         bio,
         gender,
         friends: [],
         requests: [],
+        game_request: [],
     });
       await updateProfile(res.user, {
         displayName,

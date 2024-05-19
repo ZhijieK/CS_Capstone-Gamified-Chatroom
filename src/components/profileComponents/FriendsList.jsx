@@ -5,6 +5,7 @@ import { doc, onSnapshot, updateDoc, arrayUnion, arrayRemove } from "firebase/fi
 import { db } from "../../firebase.js";
 import { ChatContext } from '../../context/ChatContext';
 import Name from "../chatComponents/Name.jsx";
+import Icon from "../chatComponents/Icon.jsx";
 import accept from "../images/generalIcons/checkmark.png";
 import decline from "../images/generalIcons/x.png";
 import msg from "../images/generalIcons/msg.png";
@@ -19,7 +20,6 @@ const FriendsList = () => {
     const [err,setErr] = useState(false);
     const {dispatch} = useContext(ChatContext)
     const navigate = useNavigate();
-    const [test, setTest] = useState(false);
 
     const [chat, setChat] = useState([
         {
@@ -127,14 +127,16 @@ const FriendsList = () => {
 
                     {/* List of friends */}
                     {popup && friends.map((friend, index) => (
-                            <>
-                                <div key={index} className="friend">
-                                    <img src="https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg" alt="" />
-                                    <Name id={friend}/>
-                                    <img className="accept" src={msg} onClick={() =>handleSelect(friend)} />
-                                    <img className="decline" src={decline} onClick={() =>handleRemove(friend)}/>
+                        <>
+                            <div key={index} className="friend">
+                                <div className="tinyfriend">
+                                    <Icon uid={friend}/>
                                 </div>
-                            </>
+                                <Name id={friend}/>
+                                <img className="accept" src={msg} onClick={() =>handleSelect(friend)} />
+                                <img className="decline" src={decline} onClick={() =>handleRemove(friend)}/>
+                            </div>
+                        </>
                     ))}
 
                     {/* List of friend requests */}

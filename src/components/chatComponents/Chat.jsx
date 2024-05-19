@@ -6,7 +6,7 @@ import Messages from './Messages';
 import Input from "./Input";
 import { ChatContext } from '../../context/ChatContext';
 import { AuthContext } from '../../context/AuthContext';
-import { doc, onSnapshot, updateDoc, arrayUnion } from "firebase/firestore";
+import { doc, onSnapshot, updateDoc, arrayUnion, arrayRemove, collection, query, where } from "firebase/firestore";
 import { db } from "../../firebase.js";
 import Options from "./Options.jsx";
 import OtherUserProfile from "../profileComponents/otherUserProfile.jsx";
@@ -22,7 +22,9 @@ const Chat = () => {
   const [popup, setPopup] = useState(false);
   const [dropDown, setDropDown] = useState(false);
   const [request, setRequest] = useState(false);
+  const [game, setGame] = useState(false);
   const [err,setErr] = useState(false);
+  const [test, setTest] = useState();
 
   const [notifNum, setNotifNum] = useState();
 
@@ -41,6 +43,11 @@ const Chat = () => {
     setRequest(!request)
   }
 
+  /* Handles game invite popup */
+  const toggleGame = () => {
+    setGame(!game)
+  }
+
   //Get snapshot of other user data
   useEffect(()=>{
     const getInfo = ()=>{
@@ -54,6 +61,32 @@ const Chat = () => {
     };
     data.user?.uid && getInfo()
   });
+
+  //Handle giving the user money for # of messages sent
+  const updateWallet = async ()=>{
+    try{
+      //Update user data
+      await updateDoc(doc(db, "users", currentUser.uid), {
+        messages_sent: 0,
+        wallet: (info2.wallet + 25),
+      })
+      
+      } catch(err){
+        setErr(true);
+        console.log(err);
+      }
+  }
+
+  //Give user money for # of messages sent
+  useEffect(()=>{
+    setTest(info2.messages_sent);
+
+    if(test > 4){
+      updateWallet();
+      setTest(0);
+    }
+
+  }, [info2]);
 
   //Handles Notifications
   useEffect(()=>{

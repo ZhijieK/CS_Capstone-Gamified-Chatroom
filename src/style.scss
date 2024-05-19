@@ -34,7 +34,7 @@ $brown: #A18585;
 $beige: #faebd7;
 $coffee: #AD8B73;
 $light_coffee: #E3CAA5;
-$cream: #chatProfileIcon;
+//$cream: #chatProfileIcon;
 
 body {
     margin: 0;
@@ -692,8 +692,19 @@ body {
     padding:10px;
 }
 
+.tinyfriend{
+    height:25px;
+    width:25px;
+
+    img{
+        position:absolute;
+        object-fit:fill;
+    }
+}
+
 .accept,
 .decline{
+    position: relative;
     padding:5px;
     border-radius:30px;
 

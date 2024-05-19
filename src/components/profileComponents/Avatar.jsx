@@ -47,10 +47,6 @@ const Avatar = () => {
     const getInfo = () => {
       const unsub = onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
         setInfo(doc.data());
-        //Finds # of friends
-        const array = info.friends || [];
-        const size = array.length;
-        setFriends(size);
       });
 
       return () => {
@@ -59,6 +55,13 @@ const Avatar = () => {
     };
     currentUser.uid && getInfo();
   }, []);
+
+  useEffect(()=>{
+    //Finds # of friends
+    const array = info.friends || [];
+    const size = array.length;
+    setFriends(size);
+  });
 
   return (
     <div className="container">
