@@ -9,7 +9,7 @@ const Messages = () => {
   const [messages, setMessages] = useState([])
   const { data } = useContext(ChatContext);
 
-  console.log(data.user.uid)
+  //console.log(data.user.uid)
   const uid = data.user.uid; 
 
   const [chatProfiles, setChatProfiles] = useState([]);
@@ -17,10 +17,10 @@ const Messages = () => {
   useEffect(() => {
     const fetchChatProfiles = async () => {
       const profiles = {};
-      console.log(uid)
+      //console.log(uid)
       const userDataRef = await getDoc(doc(db, "users", uid)); 
       const userData = userDataRef.data();
-      console.log(userData); 
+      //console.log(userData); 
 
       const docRefs = Object.values(userData.profileIcon).map((itemId) =>
         doc(db, "shopItems", itemId)
@@ -33,15 +33,15 @@ const Messages = () => {
       const shopItemsData = docSnapshots.map((docSnapshot) =>
         docSnapshot.data()
       );
-      console.log(shopItemsData);
+      //console.log(shopItemsData);
       let profileUpdates = {};
       for (const docSnap of docSnapshots) {
         const itemData = docSnap.data(); 
-        console.log(itemData)
+        //console.log(itemData)
         const category = itemData.itemCategory;
         if (category) {
           const url = await getDownloadURL(ref(storage, itemData.imageRef));
-          console.log(url)
+          //console.log(url)
           profileUpdates[`${category}Link`] = url;
           profileUpdates[`${category}`] = itemData.itemName;
         }
@@ -51,7 +51,7 @@ const Messages = () => {
       // console.log(chatProfiles);
     };
     fetchChatProfiles();
-    console.log(chatProfiles.hairLink);
+    //console.log(chatProfiles.hairLink);
   }, [data]);
 
   useEffect(()=>{

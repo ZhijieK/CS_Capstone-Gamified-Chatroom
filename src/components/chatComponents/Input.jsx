@@ -1,8 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react'
 import File from '../images/generalIcons/File.png'
+import Quiz from '../images/generalIcons/quiz.png'
 import { AuthContext } from '../../context/AuthContext'
 import { ChatContext } from '../../context/ChatContext'
-import { Timestamp, arrayUnion, doc, serverTimestamp, updateDoc, onSnapshot } from 'firebase/firestore'
+import { Timestamp, arrayUnion, doc, serverTimestamp, updateDoc, onSnapshot, arrayRemove } from 'firebase/firestore'
 import { db } from '../../firebase'
 import { v4 as uuid } from 'uuid'
 import trivia from '../images/generalIcons/trivia.png'
@@ -15,6 +16,9 @@ const Input = () => {
   const [game, setGame] = useState(false);
   const [game2, setGame2] = useState(false);
   const [info, setInfo] = useState([]);
+  const [info2, setInfo2] = useState([]);
+  const [quizClicked, setQuizClicked] = useState(false); // Add this line
+  const [correctAnswer, setCorrectAnswer] = useState(""); // Add this line
 
   const {currentUser} = useContext(AuthContext)
   const {data} = useContext(ChatContext)
@@ -30,6 +34,20 @@ const Input = () => {
     };
     currentUser.uid && getInfo();
   }, [currentUser.uid]);
+
+  //Get snapshot of other user data
+  useEffect(()=>{
+    const getInfo2 = ()=>{
+      const unsub = onSnapshot(doc(db, "users", data.user?.uid), (doc) => {
+        setInfo2(doc.data());
+      });
+  
+      return () => {
+        unsub();
+      };
+    };
+    data.user?.uid && getInfo2()
+  });
 
 //Handles sending the message
 const handleSend = async ()=>{
@@ -66,10 +84,47 @@ const handleSend = async ()=>{
       messages_sent: (info.messages_sent + 1),
     });
 
+    if(quizClicked) {
+      // Do something with the message here
+      console.log("Quiz was clicked, message is: ", text);
+      setQuizClicked(false); // Reset the quizClicked state
+    }
+
     setText("")
     setImg(null)
   }
 };
+
+  /* Handles game invite popup */
+  const toggleGame = () => {
+    setGame2(!game2)
+  }
+
+  //Handles fetching the question and sending it as a message
+  const handleQuiz = async () => {
+
+    try{
+      /* Remove the persons uid from your game_request list */
+      await updateDoc(doc(db, "users", currentUser.uid), {
+          game_request: arrayRemove(info2.uid),
+      })
+      
+      } catch(err){
+          setErr(true);
+          console.log(err);
+    }
+
+    setGame2(!game2)
+    const response = await fetch('https://the-trivia-api.com/v2/questions');
+    const data = await response.json();
+    const question = data[0].question.text;
+    const answer = data[0].question.answer; // Adjust this line based on the actual structure of your data
+
+    setText(question);
+    setCorrectAnswer(answer); // Store the correct answer
+    setQuizClicked(true); // Set the quizClicked state to true
+    handleSend();
+  };
 
   /* Handles trivia invite confirmation popup */
   const toggleTrivia = () => {
@@ -104,6 +159,7 @@ const handleSend = async ()=>{
   /* Handle declining game invite */
   const handleDecline = async (e) => {
 
+    setGame2(!game2);
     try{
       /* Remove the persons uid from your game_request list */
       await updateDoc(doc(db, "users", currentUser.uid), {
@@ -116,23 +172,22 @@ const handleSend = async ()=>{
       } 
   }
 
-  const handleGame = () => {
-    /* Start the game */
-  }
-
-  return (
-    <div className='input'>
-      <input type="text" placeholder='Type your message...' onChange={e=>setText(e.target.value)} value={text}/>
-      <div className="send">
+return (
+  <div className='input'>
+    <input type="text" placeholder='Type your message...' onChange={e=>setText(e.target.value)} value={text}/>
+    <div className="send">
         <img src={trivia} onClick={toggleTrivia}/>
+      {/*<button className='quizButton' onClick={handleQuiz}>
+        <img src={Quiz} alt="Quiz" />
+</button>*/}
         <input type="file" style={{display:"none"}} id="file" onChange={e=>setImg(e.target.files[0])}/>
-        <label htmlFor="file">
-          <img className='addFile' src={File} alt=''/>
-        </label>
-        <button onClick={handleSend}>Send</button>
-      </div>
+      <label htmlFor="file">
+        <img className='addFile' src={File} alt=''/>
+      </label>
+      <button className='sendButton' onClick={handleSend}>Send</button>
+    </div>
 
-      {/* Add friend popup */}
+      {/* Invite friend popup */}
       {
         game && 
         <div className="popup">
@@ -147,23 +202,23 @@ const handleSend = async ()=>{
           </div>
         </div>
       }
-      {/* Add game invite popup */}
+      {/* Invitation popup */}
       {
         game2 && 
         <div className="popup">
           <div className="overlay2" onClick={toggleGame}>
             <div className="request">
-              <p>{data.user.displayName} has invited you to a game of trivia, would you like to accept?</p>
+              <p>{info2.displayName} has invited you to a game of trivia, would you like to accept?</p>
               <div className="buttons">
-                <div className="button" onClick={() => handleGame} > Yes </div>
-                <div className="button2" onClick={() => handleDecline(data.user.uid)} > No </div>
+                <div className="button" onClick={() => handleQuiz()} > Yes </div>
+                <div className="button2" onClick={() => handleDecline(info2.uid)} > No </div>
               </div>
             </div>
           </div>
         </div>
       }
-    </div>
-  )
+  </div>
+)
 }
 
 export default Input

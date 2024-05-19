@@ -1,6 +1,6 @@
 const ChatMiniIcon = ({profileProp, isOwner}) =>{
 
-    console.log(isOwner)
+    //console.log(isOwner)
 // "chatMiniProfileIconOwner"
     return(
         <div className={isOwner ? "chatMiniProfileIconOwner" : "chatMiniProfileIcon"}>

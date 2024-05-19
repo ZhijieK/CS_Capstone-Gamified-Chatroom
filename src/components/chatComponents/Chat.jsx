@@ -43,11 +43,6 @@ const Chat = () => {
     setRequest(!request)
   }
 
-  /* Handles game invite popup */
-  const toggleGame = () => {
-    setGame(!game)
-  }
-
   //Get snapshot of other user data
   useEffect(()=>{
     const getInfo = ()=>{

@@ -34,7 +34,7 @@ $brown: #A18585;
 $beige: #faebd7;
 $coffee: #AD8B73;
 $light_coffee: #E3CAA5;
-//$cream: #chatProfileIcon;
+$cream: #FFFBE9;
 
 body {
     margin: 0;
@@ -623,7 +623,16 @@ body {
                         cursor: pointer;
                     }
 
-                    button{
+                    .quizButton{
+                        width: 25%;
+                        border: none;
+                        outline: none;
+                        font-size: 20px;
+                        background-color: $light_coffee;
+                        font-family: 'Courier New', Courier, monospace;
+                    }
+
+                    .sendButton{
                         border: none;
                         padding: 10px 15px;
                         color: white;
