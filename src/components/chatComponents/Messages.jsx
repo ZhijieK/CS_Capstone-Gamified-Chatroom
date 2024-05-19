@@ -70,8 +70,6 @@ const Messages = () => {
         <Message message={m} key={m.id} userUid={data.user.uid} chatProfile={chatProfiles}/>
       ))}
     </div>
-
-
   )
 }
 
