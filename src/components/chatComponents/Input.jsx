@@ -17,6 +17,7 @@ const Input = () => {
   const [game2, setGame2] = useState(false);
   const [info, setInfo] = useState([]);
   const [info2, setInfo2] = useState([]);
+  const [err, setErr] = useState(false);
   const [quizClicked, setQuizClicked] = useState(false); // Add this line
   const [correctAnswer, setCorrectAnswer] = useState(""); // Add this line
 
