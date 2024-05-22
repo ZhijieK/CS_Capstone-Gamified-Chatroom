@@ -126,11 +126,11 @@ const handleSend = async ()=>{
   }
 
   //Handles fetching the question and sending it as a message
-  const handleQuiz = async () => {
+  const handleQuiz = async (e) => {
     try{
       /* Remove the persons uid from your game_request list */
       await updateDoc(doc(db, "users", currentUser.uid), {
-          game_request: arrayRemove(info2.uid),
+          game_request: arrayRemove(e),
       })
       
       } catch(err){
@@ -203,9 +203,6 @@ return (
     <input type="text" placeholder='Type your message...' onChange={e=>setText(e.target.value)} value={text}/>
     <div className="send">
         <img src={trivia} onClick={toggleTrivia}/>
-      {/*<button className='quizButton' onClick={handleQuiz}>
-        <img src={Quiz} alt="Quiz" />
-</button>*/}
         <input type="file" style={{display:"none"}} id="file" onChange={e=>setImg(e.target.files[0])}/>
       <label htmlFor="file">
         <img className='addFile' src={File} alt=''/>
@@ -234,9 +231,9 @@ return (
         <div className="popup">
           <div className="overlay2" onClick={toggleGame}>
             <div className="request">
-              <p>{info2.displayName} has invited you to a game of trivia, would you like to accept?</p>
+              <p> {<Name id={data.user?.uid} />} has invited you to a game of trivia, would you like to accept?</p>
               <div className="buttons">
-                <div className="button" onClick={() => handleQuiz()} > Yes </div>
+                <div className="button" onClick={() => handleQuiz(info2.uid)} > Yes </div>
                 <div className="button2" onClick={() => handleDecline(info2.uid)} > No </div>
               </div>
             </div>

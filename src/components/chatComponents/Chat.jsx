@@ -55,7 +55,7 @@ const Chat = () => {
       };
     };
     data.user?.uid && getInfo()
-  }, []);
+  });
 
   //Handle giving the user money for # of messages sent
   const updateWallet = async ()=>{
@@ -127,7 +127,7 @@ const Chat = () => {
     <div className='chat'>
       <div className='chatInfo'>
         <span>{info.displayName}</span>
-        <p> {}</p>
+        {/*<p> {}</p>*/}
         <div className="chatIcons">
           <img src={person} alt="" onClick={togglePopup} />
           <img src={Add} alt="" onClick={toggleRequest} />
